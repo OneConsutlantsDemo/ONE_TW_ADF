@@ -1,0 +1,73 @@
+{
+	"name": "DS_LKP_VENDOR_ADLS_SRC_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": "CT_VENDORS.txt",
+				"folderPath": "ONE_TE_LOOKUP_DATASET"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id_vendor",
+				"type": "String"
+			},
+			{
+				"name": "name_vendor",
+				"type": "String"
+			},
+			{
+				"name": "type_vendor",
+				"type": "String"
+			},
+			{
+				"name": "street",
+				"type": "String"
+			},
+			{
+				"name": "street_number",
+				"type": "String"
+			},
+			{
+				"name": "postalcode",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			},
+			{
+				"name": "country_code",
+				"type": "String"
+			},
+			{
+				"name": "telephone",
+				"type": "String"
+			},
+			{
+				"name": "latitude",
+				"type": "String"
+			},
+			{
+				"name": "longitude",
+				"type": "String"
+			},
+			{
+				"name": "location.ST_ASSVG(ATTRIBUTE=>'fill=\"lightgrey\" stroke=\"none\"')",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

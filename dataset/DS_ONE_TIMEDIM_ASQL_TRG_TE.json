@@ -1,0 +1,155 @@
+{
+	"name": "DS_ONE_TIMEDIM_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DATETIMESTAMP",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DATE_SQL",
+				"type": "date"
+			},
+			{
+				"name": "DATETIME_SAP",
+				"type": "varchar"
+			},
+			{
+				"name": "DATE_SAP",
+				"type": "varchar"
+			},
+			{
+				"name": "YEAR",
+				"type": "varchar"
+			},
+			{
+				"name": "QUARTER",
+				"type": "varchar"
+			},
+			{
+				"name": "MONTH",
+				"type": "varchar"
+			},
+			{
+				"name": "WEEK",
+				"type": "varchar"
+			},
+			{
+				"name": "WEEK_YEAR",
+				"type": "varchar"
+			},
+			{
+				"name": "DAY_OF_WEEK",
+				"type": "varchar"
+			},
+			{
+				"name": "DAY",
+				"type": "varchar"
+			},
+			{
+				"name": "HOUR",
+				"type": "varchar"
+			},
+			{
+				"name": "MINUTE",
+				"type": "varchar"
+			},
+			{
+				"name": "SECOND",
+				"type": "varchar"
+			},
+			{
+				"name": "CALQUARTER",
+				"type": "varchar"
+			},
+			{
+				"name": "CALMONTH",
+				"type": "varchar"
+			},
+			{
+				"name": "CALWEEK",
+				"type": "varchar"
+			},
+			{
+				"name": "YEAR_INT",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QUARTER_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "MONTH_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "WEEK_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "WEEK_YEAR_INT",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DAY_OF_WEEK_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "DAY_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "HOUR_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "MINUTE_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "SECOND_INT",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "MONTH_LAST_DAY",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "TZNTSTMPS",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 0
+			},
+			{
+				"name": "TZNTSTMPL",
+				"type": "decimal",
+				"precision": 21,
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_TIME_DIM"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

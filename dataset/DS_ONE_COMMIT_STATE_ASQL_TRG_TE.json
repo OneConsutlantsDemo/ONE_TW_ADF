@@ -1,0 +1,31 @@
+{
+	"name": "DS_ONE_COMMIT_STATE_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "commit_state",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "commit_description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "timestamp"
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_COMMIT_STATE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

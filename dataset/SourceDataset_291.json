@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_291",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapHanaOne",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "_SYS_BI",
+			"table": "M_TIME_DIMENSION"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,14 @@
+{
+	"name": "ADLS_Gen1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://onedatalakeadls.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "8a7bb8e8-a0ba-4b1a-95cb-5169eb7ae0f0",
+			"subscriptionId": "11ebd399-8f6c-46af-b26f-71fc4572151b",
+			"resourceGroupName": "ONE-Azure"
+		}
+	}
+}

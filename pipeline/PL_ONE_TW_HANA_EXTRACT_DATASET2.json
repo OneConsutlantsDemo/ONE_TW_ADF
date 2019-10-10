@@ -1,0 +1,595 @@
+{
+	"name": "PL_ONE_TW_HANA_EXTRACT_DATASET2",
+	"properties": {
+		"activities": [
+			{
+				"name": "For_Each_Lookup",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_Lookup",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().source.schema}.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "ONE.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "SapHanaSource"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "truncate table ONE.@{item().destination.table}",
+										"type": "Expression"
+									},
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_LKP_PHANA_SRC_TE",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_schema": "@item().source.schema",
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_LKP_ASQL_TRG_TE",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().destination.table"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"schema": "ONE",
+							"table": "one.hr.dd::CT_EMPLOYEE"
+						},
+						"destination": {
+							"table": "TE_EMPLOYEE_DETAIL"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "User_Logon_Name"
+										},
+										"sink": {
+											"type": "String",
+											"name": "User_Logon_Name"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Name"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Name"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "First_Name"
+										},
+										"sink": {
+											"type": "String",
+											"name": "First_Name"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Last_Name"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Last_Name"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Type"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Type"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Status"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Status"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "City"
+										},
+										"sink": {
+											"type": "String",
+											"name": "City"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Company"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Company"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Country"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Country"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Department"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Department"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Job_Title"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Job_Title"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Display_Name"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Display_Name"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Email"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Email"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Mobile"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Mobile"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Employee_Number"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Employee_Number"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Office"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Office"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "State"
+										},
+										"sink": {
+											"type": "String",
+											"name": "State"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Street"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Street"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Street_Number"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Street_Number"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Postal_Code"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Postal_Code"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Personal_Country"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Personal_Country"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Personal_City"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Personal_City"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Personal_Street"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Personal_Street"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "Personal_Street_Number"
+										},
+										"sink": {
+											"type": "String",
+											"name": "Personal_Street_Number"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "Personal_Latitude"
+										},
+										"sink": {
+											"type": "Double",
+											"name": "Personal_Latitude"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "Personal_Longitude"
+										},
+										"sink": {
+											"type": "Double",
+											"name": "Personal_Longitude"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"schema": "ONE_TE",
+							"table": "one.te.dd::CT_COMMIT_STATE"
+						},
+						"destination": {
+							"table": "TE_COMMIT_STATE"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "Int32",
+											"name": "commit_state"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "commit_state"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "commit_description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "commit_description"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"schema": "ONE_TE",
+							"table": "one.te.dd::CT_SHEET_STATE"
+						},
+						"destination": {
+							"table": "TE_SHEET_STATE"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "Double",
+											"name": "sheet_state"
+										},
+										"sink": {
+											"type": "Double",
+											"name": "sheet_state"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "sheet_description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "sheet_description"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"schema": "ONE_TE",
+							"table": "one.te.dd::CT_VENDORS"
+						},
+						"destination": {
+							"table": "TE_VENDOR_LIST"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "Int32",
+											"name": "id_vendor"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "id_vendor"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "name_vendor"
+										},
+										"sink": {
+											"type": "String",
+											"name": "name_vendor"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "type_vendor"
+										},
+										"sink": {
+											"type": "String",
+											"name": "type_vendor"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "street"
+										},
+										"sink": {
+											"type": "String",
+											"name": "street"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "street_number"
+										},
+										"sink": {
+											"type": "String",
+											"name": "street_number"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "postalcode"
+										},
+										"sink": {
+											"type": "String",
+											"name": "postalcode"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "city"
+										},
+										"sink": {
+											"type": "String",
+											"name": "city"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "country_code"
+										},
+										"sink": {
+											"type": "String",
+											"name": "country_code"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "telephone"
+										},
+										"sink": {
+											"type": "String",
+											"name": "telephone"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "latitude"
+										},
+										"sink": {
+											"type": "Double",
+											"name": "latitude"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "longitude"
+										},
+										"sink": {
+											"type": "Double",
+											"name": "longitude"
+										}
+									},
+									{
+										"source": {
+											"type": "Byte[]",
+											"name": "location"
+										},
+										"sink": {
+											"type": "String",
+											"name": "location"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": [
+			"Vendor, Commit State, Sheet State , ONE Employee"
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

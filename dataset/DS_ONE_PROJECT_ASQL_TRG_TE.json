@@ -1,0 +1,17 @@
+{
+	"name": "DS_ONE_PROJECT_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_PROJECTS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,37 @@
+{
+	"name": "DS_LKP_SHEET_STATE_ADLS_SRC_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": "SHEET_STATE.txt",
+				"folderPath": "ONE_TE_LOOKUP_DATASET"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "sheet_state",
+				"type": "String"
+			},
+			{
+				"name": "sheet_description",
+				"type": "String"
+			},
+			{
+				"name": "load_time",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

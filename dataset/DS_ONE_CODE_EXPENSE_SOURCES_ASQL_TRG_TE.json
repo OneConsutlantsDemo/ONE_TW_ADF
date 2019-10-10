@@ -1,0 +1,50 @@
+{
+	"name": "DS_ONE_CODE_EXPENSE_SOURCES_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_table": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "expense_source_description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "is_hidden",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "loggable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "expense_source_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_CODES_EXPENSE_SOURCES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

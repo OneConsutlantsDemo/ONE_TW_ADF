@@ -1,0 +1,33 @@
+{
+	"name": "DS_ONE_SHEET_STATE_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sheet_state",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sheet_description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_SHEET_STATE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

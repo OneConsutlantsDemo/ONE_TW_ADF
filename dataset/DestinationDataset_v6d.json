@@ -1,0 +1,198 @@
+{
+	"name": "DestinationDataset_v6d",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DATETIMESTAMP",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DATE_SQL",
+				"type": "date",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "DATETIME_SAP",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "DATE_SAP",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "YEAR",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "QUARTER",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "MONTH",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "WEEK",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "WEEK_YEAR",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "DAY_OF_WEEK",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "DAY",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "HOUR",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "MINUTE",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "SECOND",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "CALQUARTER",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "CALMONTH",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "CALWEEK",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "YEAR_INT",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "QUARTER_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "MONTH_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "WEEK_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "WEEK_YEAR_INT",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "DAY_OF_WEEK_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "DAY_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "HOUR_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "MINUTE_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "SECOND_INT",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "MONTH_LAST_DAY",
+				"type": "tinyint",
+				"precision": 3,
+				"scale": 0
+			},
+			{
+				"name": "TZNTSTMPS",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 0
+			},
+			{
+				"name": "TZNTSTMPL",
+				"type": "decimal",
+				"precision": 21,
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_TIME_DIM"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

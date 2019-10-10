@@ -1,0 +1,63 @@
+{
+	"name": "PL_ONE_TW_SQL_TRANSFORM_DATASET1",
+	"properties": {
+		"activities": [
+			{
+				"name": "DF_TRM_ASQL1_TE",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_TRM_ASQL_TE",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"CodeExpense": {
+								"cw_table": "NULL"
+							},
+							"CodeExpenseSourceTRM": {
+								"cw_table": "NULL"
+							}
+						}
+					}
+				}
+			},
+			{
+				"name": "Update_Vendor_ID",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "DF_TRM_ASQL1_TE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[ONE].[TE_UPDATE_EXPENSE_LODGE_VENDORID]"
+				},
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

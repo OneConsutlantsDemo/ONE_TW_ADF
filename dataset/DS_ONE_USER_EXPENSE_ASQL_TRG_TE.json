@@ -1,0 +1,17 @@
+{
+	"name": "DS_ONE_USER_EXPENSE_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_USER_EXPENSE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

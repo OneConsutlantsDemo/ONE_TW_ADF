@@ -1,0 +1,17 @@
+{
+	"name": "DS_ACQ_HANA_SRC_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapHanaOne",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SYS",
+			"table": "select \"SCHEMA_NAME\",\"TABLE_NAME\" from public.tables where \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN'"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

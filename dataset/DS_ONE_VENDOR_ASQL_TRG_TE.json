@@ -1,0 +1,71 @@
+{
+	"name": "DS_ONE_VENDOR_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_vendor",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "name_vendor",
+				"type": "nvarchar"
+			},
+			{
+				"name": "type_vendor",
+				"type": "nvarchar"
+			},
+			{
+				"name": "street",
+				"type": "nvarchar"
+			},
+			{
+				"name": "street_number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "postalcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "city",
+				"type": "nvarchar"
+			},
+			{
+				"name": "country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "telephone",
+				"type": "nvarchar"
+			},
+			{
+				"name": "latitude",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 5
+			},
+			{
+				"name": "longitude",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 5
+			},
+			{
+				"name": "location",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_VENDOR_LIST"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

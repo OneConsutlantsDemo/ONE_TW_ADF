@@ -1,0 +1,62 @@
+{
+	"name": "PL_ONE_TW_EXTRACT_ETL",
+	"properties": {
+		"activities": [
+			{
+				"name": "DataSet1_Extract",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_DATASET1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DataSet2_Extract",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DataSet1_Extract",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DataSet3_Extract",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DataSet2_Extract",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET3",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

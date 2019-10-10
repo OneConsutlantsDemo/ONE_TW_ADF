@@ -1,0 +1,45 @@
+{
+	"name": "DS_ACQ_USER_ATTR_ASQL_SCR_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_attribute",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_user",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_attr_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "string_value",
+				"type": "nvarchar"
+			},
+			{
+				"name": "numeric_value",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ACQ",
+			"table": "TE_USERS_ATTRIBS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

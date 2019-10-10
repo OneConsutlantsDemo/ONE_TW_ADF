@@ -1,0 +1,42 @@
+{
+	"name": "PL_ONE_TW_TRANSFORMATION_ETL",
+	"properties": {
+		"activities": [
+			{
+				"name": "DataSet1_Transform",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_DATASET1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DataSet2_Transform",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DataSet1_Transform",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_DATASET2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,45 @@
+{
+	"name": "DS_ONE_PAY_TYPES_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pay_type_description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "is_hidden",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "loggable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pay_type_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_PAY_TYPES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

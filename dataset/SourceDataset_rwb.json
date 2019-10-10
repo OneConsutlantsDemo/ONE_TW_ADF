@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_rwb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapHanaOne",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "one.hr.dd::CT_EMPLOYEE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

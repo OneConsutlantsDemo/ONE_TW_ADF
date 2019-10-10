@@ -1,0 +1,103 @@
+{
+	"name": "DS_ONE_USERS_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_user",
+				"type": "nvarchar"
+			},
+			{
+				"name": "user_start_date",
+				"type": "date"
+			},
+			{
+				"name": "user_end_date",
+				"type": "date"
+			},
+			{
+				"name": "users_emp_num",
+				"type": "nvarchar"
+			},
+			{
+				"name": "users_rate_period_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "user_emp_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "user_email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "users_pay_rate_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "user_phone",
+				"type": "nvarchar"
+			},
+			{
+				"name": "user_dept",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fullname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "expense_gui",
+				"type": "nvarchar"
+			},
+			{
+				"name": "time_gui",
+				"type": "nvarchar"
+			},
+			{
+				"name": "travel_gui",
+				"type": "nvarchar"
+			},
+			{
+				"name": "user_login",
+				"type": "nvarchar"
+			},
+			{
+				"name": "is_hidden",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "latitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "logitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "STATE",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_USERS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

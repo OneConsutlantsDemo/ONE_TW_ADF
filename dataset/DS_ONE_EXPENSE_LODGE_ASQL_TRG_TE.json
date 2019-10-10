@@ -1,0 +1,17 @@
+{
+	"name": "DS_ONE_EXPENSE_LODGE_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_EXPENSE_LODGE_REC"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

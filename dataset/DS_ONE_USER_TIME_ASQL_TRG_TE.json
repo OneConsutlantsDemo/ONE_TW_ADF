@@ -1,0 +1,17 @@
+{
+	"name": "DS_ONE_USER_TIME_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_USER_TIME"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

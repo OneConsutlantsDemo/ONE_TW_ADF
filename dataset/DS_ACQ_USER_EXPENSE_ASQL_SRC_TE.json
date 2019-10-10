@@ -1,0 +1,70 @@
+{
+	"name": "DS_ACQ_USER_EXPENSE_ASQL_SRC_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_sheet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_timesheet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_user",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "state",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "start_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "end_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_domain",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_approver",
+				"type": "nvarchar"
+			},
+			{
+				"name": "level",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "reserved1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ACQ",
+			"table": "TE_USER_EXPENSE_SHEETS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,124 @@
+{
+	"name": "DS_ONE_EMP_DETAIL_ASQL_SRC_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "User_Logon_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "First_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Last_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "City",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Company",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Department",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Job_Title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Display_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Mobile",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Employee_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Office",
+				"type": "nvarchar"
+			},
+			{
+				"name": "State",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Street",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Street_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Postal_Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Personal_Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Personal_City",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Personal_Street",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Personal_Street_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Personal_Latitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Personal_Longitude",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_EMPLOYEE_DETAIL"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

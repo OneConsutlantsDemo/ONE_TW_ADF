@@ -1,0 +1,25 @@
+{
+	"name": "DS_ACQ_PHANA_SRC_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapHanaOne",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_table": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ACQ_TE",
+			"table": {
+				"value": "@dataset().cw_table",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

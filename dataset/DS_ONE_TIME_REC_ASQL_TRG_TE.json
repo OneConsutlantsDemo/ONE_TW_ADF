@@ -1,0 +1,96 @@
+{
+	"name": "DS_ONE_TIME_REC_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_time_rec",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_user",
+				"type": "nvarchar"
+			},
+			{
+				"name": "record_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_code_task",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_code_pay_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_project",
+				"type": "nvarchar"
+			},
+			{
+				"name": "time_amount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "comment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "commit_state",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_domain",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_code_bill_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "creator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "create_timestamp",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "modifier",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modify_timestamp",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_assignment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_TIME_RECS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

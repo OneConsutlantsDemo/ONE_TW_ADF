@@ -1,0 +1,58 @@
+{
+	"name": "DS_ACQ_CURRENCY_ASQL_SCR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "is_hidden",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "autoadd",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "reserved1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "loggable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_domain",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ACQ",
+			"table": "TE_CODES_CURRENCIES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,2013 @@
+{
+	"name": "PL_ONE_TW_HANA_EXTRACT_DATASET3",
+	"properties": {
+		"activities": [
+			{
+				"name": "LoopEachSRCTable",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_HANA_ASQL",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "ACQ_TE.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "ACQ.@{item().destination.table}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "SapHanaSource"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": {
+										"value": "truncate table ACQ.[@{item().destination.table}]",
+										"type": "Expression"
+									},
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_ACQ_PHANA_SRC_TE",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ACQ_ASQL_TRG_TE",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().destination.table"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_CODES_CURRENCIES"
+						},
+						"destination": {
+							"table": "TE_CODES_CURRENCIES"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "description"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "is_hidden"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "is_hidden"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "autoadd"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "autoadd"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "loggable"
+										},
+										"sink": {
+											"type": "String",
+											"name": "loggable"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_CODES_EXPENSE_SOURCES"
+						},
+						"destination": {
+							"table": "TE_CODES_EXPENSE_SOURCES"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "description"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "is_hidden"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "is_hidden"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "autoadd"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "autoadd"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "loggable"
+										},
+										"sink": {
+											"type": "String",
+											"name": "loggable"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_CODES_EXPENSES"
+						},
+						"destination": {
+							"table": "TE_CODES_EXPENSES"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "description"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "is_hidden"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "is_hidden"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "autoadd"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "autoadd"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "loggable"
+										},
+										"sink": {
+											"type": "String",
+											"name": "loggable"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_CODES_PAY_TYPES"
+						},
+						"destination": {
+							"table": "TE_CODES_PAY_TYPES"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "description"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "is_hidden"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "is_hidden"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "autoadd"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "autoadd"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "loggable"
+										},
+										"sink": {
+											"type": "String",
+											"name": "loggable"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_EXPENSE_RECS"
+						},
+						"destination": {
+							"table": "TE_EXPENSE_RECS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_expense_rec"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_expense_rec"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_user"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_user"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "record_date"
+										},
+										"sink": {
+											"type": "String",
+											"name": "record_date"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_project"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_project"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code_expense"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code_expense"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "amount"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "amount"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "comment"
+										},
+										"sink": {
+											"type": "String",
+											"name": "comment"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "commit_state"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "commit_state"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code_currency"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code_currency"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code_expense_source"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code_expense_source"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "read_only_comment"
+										},
+										"sink": {
+											"type": "String",
+											"name": "read_only_comment"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "flags"
+										},
+										"sink": {
+											"type": "String",
+											"name": "flags"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_picture"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_picture"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved2"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved2"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "creator"
+										},
+										"sink": {
+											"type": "String",
+											"name": "creator"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "create_timestamp"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "create_timestamp"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "modifier"
+										},
+										"sink": {
+											"type": "String",
+											"name": "modifier"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "modify_timestamp"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "modify_timestamp"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "mileage"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "mileage"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_assignment"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_assignment"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_PROJECTS"
+						},
+						"destination": {
+							"table": "TE_PROJECTS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_project"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_project"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "description"
+										},
+										"sink": {
+											"type": "String",
+											"name": "description"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_parent"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_parent"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "hours_estimate"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "hours_estimate"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "percent_complete"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "percent_complete"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "creator"
+										},
+										"sink": {
+											"type": "String",
+											"name": "creator"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "loggable"
+										},
+										"sink": {
+											"type": "String",
+											"name": "loggable"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "project_type"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "project_type"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "wbs"
+										},
+										"sink": {
+											"type": "String",
+											"name": "wbs"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_owner"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_owner"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_backup"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_backup"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "rm_type"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "rm_type"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "state"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "state"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "work_variance"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "work_variance"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "start_variance"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "start_variance"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "end_variance"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "end_variance"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "duration_variance"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "duration_variance"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "scheduled_work"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "scheduled_work"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "scheduled_start"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "scheduled_start"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "scheduled_end"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "scheduled_end"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "scheduled_duration"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "scheduled_duration"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "projected_cost"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "projected_cost"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "projected_return"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "projected_return"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "projected_profit"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "projected_profit"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "projected_roi"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "projected_roi"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "awaiting_export"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "awaiting_export"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "is_hidden"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "is_hidden"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "allow_time"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "allow_time"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "allow_expense"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "allow_expense"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "allow_custom"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "allow_custom"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "allow_leave"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "allow_leave"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_PROJECTS_ATTRIBS"
+						},
+						"destination": {
+							"table": "TE_PROJECTS_ATTRIBS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_attribute"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_attribute"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_project"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_project"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_attr_type"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_attr_type"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "string_value"
+										},
+										"sink": {
+											"type": "String",
+											"name": "string_value"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "numeric_value"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "numeric_value"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_TIME_RECS"
+						},
+						"destination": {
+							"table": "TE_TIME_RECS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_time_rec"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_time_rec"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_user"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_user"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "record_date"
+										},
+										"sink": {
+											"type": "String",
+											"name": "record_date"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code_task"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code_task"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code_pay_type"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code_pay_type"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_project"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_project"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "time_amount"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "time_amount"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "comment"
+										},
+										"sink": {
+											"type": "String",
+											"name": "comment"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "commit_state"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "commit_state"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_code_bill_type"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_code_bill_type"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_group"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_group"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "creator"
+										},
+										"sink": {
+											"type": "String",
+											"name": "creator"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "create_timestamp"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "create_timestamp"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "modifier"
+										},
+										"sink": {
+											"type": "String",
+											"name": "modifier"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "modify_timestamp"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "modify_timestamp"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_assignment"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_assignment"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_USER_EXPENSE_SHEETS"
+						},
+						"destination": {
+							"table": "TE_USER_EXPENSE_SHEETS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_sheet"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_sheet"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_timesheet"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_timesheet"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_user"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_user"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "state"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "state"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "start_date"
+										},
+										"sink": {
+											"type": "String",
+											"name": "start_date"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "end_date"
+										},
+										"sink": {
+											"type": "String",
+											"name": "end_date"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_approver"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_approver"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "level"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "level"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_USER_SHEET_NOTES"
+						},
+						"destination": {
+							"table": "TE_USER_SHEET_NOTES"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_usersheetnote"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_usersheetnote"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_usersheet"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_usersheet"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "note_text"
+										},
+										"sink": {
+											"type": "String",
+											"name": "note_text"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "note_creator"
+										},
+										"sink": {
+											"type": "String",
+											"name": "note_creator"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "create_timestamp"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "create_timestamp"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "extra_string_1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "extra_string_1"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "extra_string_2"
+										},
+										"sink": {
+											"type": "String",
+											"name": "extra_string_2"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "extra_string_3"
+										},
+										"sink": {
+											"type": "String",
+											"name": "extra_string_3"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_USER_TIME_SHEETS"
+						},
+						"destination": {
+							"table": "TE_USER_TIME_SHEETS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_sheet"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_sheet"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_timesheet"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_timesheet"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_user"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_user"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "pname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "pname"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "state"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "state"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "start_date"
+										},
+										"sink": {
+											"type": "String",
+											"name": "start_date"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "end_date"
+										},
+										"sink": {
+											"type": "String",
+											"name": "end_date"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_approver"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_approver"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "level"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "level"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_USERS"
+						},
+						"destination": {
+							"table": "TE_USERS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_user"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_user"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "reserved1"
+										},
+										"sink": {
+											"type": "String",
+											"name": "reserved1"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "reserved2"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "reserved2"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "timerecs_in"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "timerecs_in"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "timerecs_out"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "timerecs_out"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "daysinlist"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "daysinlist"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "fullname"
+										},
+										"sink": {
+											"type": "String",
+											"name": "fullname"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "u_comment"
+										},
+										"sink": {
+											"type": "String",
+											"name": "u_comment"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "reserved3"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "reserved3"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "expense_gui"
+										},
+										"sink": {
+											"type": "String",
+											"name": "expense_gui"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "time_gui"
+										},
+										"sink": {
+											"type": "String",
+											"name": "time_gui"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_domain"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_domain"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "travel_gui"
+										},
+										"sink": {
+											"type": "String",
+											"name": "travel_gui"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "user_login"
+										},
+										"sink": {
+											"type": "String",
+											"name": "user_login"
+										}
+									},
+									{
+										"source": {
+											"type": "Int32",
+											"name": "is_hidden"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "is_hidden"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"table": "one.te.dd::CT_TE_USERS_ATTRIBS"
+						},
+						"destination": {
+							"table": "TE_USERS_ATTRIBS"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"type": "String",
+											"name": "id_attribute"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_attribute"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_user"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_user"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "id_attr_type"
+										},
+										"sink": {
+											"type": "String",
+											"name": "id_attr_type"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"name": "string_value"
+										},
+										"sink": {
+											"type": "String",
+											"name": "string_value"
+										}
+									},
+									{
+										"source": {
+											"type": "Double",
+											"name": "numeric_value"
+										},
+										"sink": {
+											"type": "Int32",
+											"name": "numeric_value"
+										}
+									},
+									{
+										"source": {
+											"type": "DateTime",
+											"name": "load_time"
+										},
+										"sink": {
+											"type": "DateTime",
+											"name": "load_time"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

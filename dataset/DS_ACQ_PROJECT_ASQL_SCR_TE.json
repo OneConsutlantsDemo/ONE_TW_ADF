@@ -1,0 +1,179 @@
+{
+	"name": "DS_ACQ_PROJECT_ASQL_SCR_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_project",
+				"type": "nvarchar"
+			},
+			{
+				"name": "description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_parent",
+				"type": "nvarchar"
+			},
+			{
+				"name": "hours_estimate",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "percent_complete",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "creator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "loggable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_domain",
+				"type": "nvarchar"
+			},
+			{
+				"name": "project_type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "wbs",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_owner",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_backup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rm_type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "state",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "work_variance",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "start_variance",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "end_variance",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "duration_variance",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "scheduled_work",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "scheduled_start",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "scheduled_end",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "scheduled_duration",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "projected_cost",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "projected_return",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "projected_profit",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "projected_roi",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "awaiting_export",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "is_hidden",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "allow_time",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "allow_expense",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "allow_custom",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "allow_leave",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ACQ",
+			"table": "TE_PROJECTS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

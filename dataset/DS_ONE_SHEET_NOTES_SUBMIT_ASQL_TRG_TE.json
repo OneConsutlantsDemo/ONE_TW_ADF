@@ -1,0 +1,56 @@
+{
+	"name": "DS_ONE_SHEET_NOTES_SUBMIT_ASQL_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_usersheetnote",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_usersheet",
+				"type": "nvarchar"
+			},
+			{
+				"name": "note_text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "note_creator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "create_date",
+				"type": "date"
+			},
+			{
+				"name": "extra_string_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "extra_string_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "extra_string_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ONE",
+			"table": "TE_USER_SHEET_NOTES_SUBMITTED"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

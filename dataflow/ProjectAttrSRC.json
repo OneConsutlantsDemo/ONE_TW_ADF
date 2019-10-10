@@ -1,0 +1,119 @@
+{
+	"name": "ProjectAttrSRC",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ACQ_PROJECT_ATTR_ASQL_SCR_TE",
+						"type": "DatasetReference"
+					},
+					"name": "ProjectAttr"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_ACQ_PROJECT_ASQL_SCR_TE",
+						"type": "DatasetReference"
+					},
+					"name": "Project"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_ACQ_USER_ATTR_ASQL_SCR_TE",
+						"type": "DatasetReference"
+					},
+					"name": "UserAttr"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_ACQ_USER_ASQL_SCR_TE",
+						"type": "DatasetReference"
+					},
+					"name": "User"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_ACQ_PROJECT_ASQL_SCR_TE",
+						"type": "DatasetReference"
+					},
+					"name": "ProjectSelf"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_ONE_EMP_DETAIL_ASQL_SRC_TE",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeDetail"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_ONE_PROJECT_ASQL_TRG_TE",
+						"type": "DatasetReference"
+					},
+					"name": "ProjectTRM"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_ONE_USERS_ASQL_TRG_TE",
+						"type": "DatasetReference"
+					},
+					"name": "UserTRM"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ProjectAttrMap"
+				},
+				{
+					"name": "ProjectAttrSelect"
+				},
+				{
+					"name": "ProjectSelect"
+				},
+				{
+					"name": "UserAttrMap"
+				},
+				{
+					"name": "UserAttrSelect"
+				},
+				{
+					"name": "JoinUserANDattr"
+				},
+				{
+					"name": "UserSelect"
+				},
+				{
+					"name": "SelectColumns"
+				},
+				{
+					"name": "JoinProject"
+				},
+				{
+					"name": "ParentProject"
+				},
+				{
+					"name": "JoinParentProject"
+				},
+				{
+					"name": "SelectProject"
+				},
+				{
+					"name": "LoadDateP"
+				},
+				{
+					"name": "LoadDateU"
+				},
+				{
+					"name": "GetLocationDetails"
+				},
+				{
+					"name": "SelectUserColumns"
+				}
+			],
+			"script": "\n\nsource(output(\n\t\tid_attribute as string,\n\t\tid_project as string,\n\t\tid_attr_type as string,\n\t\tstring_value as string,\n\t\tnumeric_value as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProjectAttr\nsource(output(\n\t\tid_project as string,\n\t\tdescription as string,\n\t\tid_parent as string,\n\t\thours_estimate as integer,\n\t\tpercent_complete as integer,\n\t\tcreator as string,\n\t\tloggable as string,\n\t\tpname as string,\n\t\tid_domain as string,\n\t\tproject_type as integer,\n\t\twbs as string,\n\t\tid_owner as string,\n\t\tid_backup as string,\n\t\trm_type as integer,\n\t\tstate as integer,\n\t\twork_variance as integer,\n\t\tstart_variance as integer,\n\t\tend_variance as integer,\n\t\tduration_variance as integer,\n\t\tscheduled_work as integer,\n\t\tscheduled_start as integer,\n\t\tscheduled_end as integer,\n\t\tscheduled_duration as integer,\n\t\tprojected_cost as integer,\n\t\tprojected_return as integer,\n\t\tprojected_profit as integer,\n\t\tprojected_roi as integer,\n\t\tawaiting_export as integer,\n\t\tis_hidden as integer,\n\t\tallow_time as integer,\n\t\tallow_expense as integer,\n\t\tallow_custom as integer,\n\t\tallow_leave as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Project\nsource(output(\n\t\tid_attribute as string,\n\t\tid_user as string,\n\t\tid_attr_type as string,\n\t\tstring_value as string,\n\t\tnumeric_value as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserAttr\nsource(output(\n\t\tid_user as string,\n\t\treserved1 as string,\n\t\treserved2 as integer,\n\t\ttimerecs_in as integer,\n\t\ttimerecs_out as integer,\n\t\tdaysinlist as integer,\n\t\tfullname as string,\n\t\tu_comment as string,\n\t\treserved3 as integer,\n\t\texpense_gui as string,\n\t\ttime_gui as string,\n\t\tid_domain as string,\n\t\ttravel_gui as string,\n\t\tuser_login as string,\n\t\tis_hidden as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> User\nsource(output(\n\t\tid_project as string,\n\t\tdescription as string,\n\t\tid_parent as string,\n\t\thours_estimate as integer,\n\t\tpercent_complete as integer,\n\t\tcreator as string,\n\t\tloggable as string,\n\t\tpname as string,\n\t\tid_domain as string,\n\t\tproject_type as integer,\n\t\twbs as string,\n\t\tid_owner as string,\n\t\tid_backup as string,\n\t\trm_type as integer,\n\t\tstate as integer,\n\t\twork_variance as integer,\n\t\tstart_variance as integer,\n\t\tend_variance as integer,\n\t\tduration_variance as integer,\n\t\tscheduled_work as integer,\n\t\tscheduled_start as integer,\n\t\tscheduled_end as integer,\n\t\tscheduled_duration as integer,\n\t\tprojected_cost as integer,\n\t\tprojected_return as integer,\n\t\tprojected_profit as integer,\n\t\tprojected_roi as integer,\n\t\tawaiting_export as integer,\n\t\tis_hidden as integer,\n\t\tallow_time as integer,\n\t\tallow_expense as integer,\n\t\tallow_custom as integer,\n\t\tallow_leave as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProjectSelf\nsource(output(\n\t\tUser_Logon_Name as string,\n\t\tName as string,\n\t\tFirst_Name as string,\n\t\tLast_Name as string,\n\t\tType as string,\n\t\tStatus as string,\n\t\tCity as string,\n\t\tCompany as string,\n\t\tCountry as string,\n\t\tDepartment as string,\n\t\tJob_Title as string,\n\t\tDisplay_Name as string,\n\t\tEmail as string,\n\t\tMobile as string,\n\t\tEmployee_Number as string,\n\t\tOffice as string,\n\t\tState as string,\n\t\tStreet as string,\n\t\tStreet_Number as string,\n\t\tPostal_Code as string,\n\t\tPersonal_Country as string,\n\t\tPersonal_City as string,\n\t\tPersonal_Street as string,\n\t\tPersonal_Street_Number as string,\n\t\tPersonal_Latitude as double,\n\t\tPersonal_Longitude as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> EmployeDetail\nProjectAttr pivot(groupBy(id_project),\n\tpivotBy(id_attr_type, ['projects_state', 'projects_pay_period_type', 'FE1C4D54B6FD46F59B934B000018DD8A', 'A0EA5FCC6CE6403E8E40E75344BE8154', '2A0F782F45E74D7888211D451E6C3B9A', '38DBB13CA9194E52886C820C9557D9B6', 'projects_bill_rate', 'AB822D8DA3DC4BAC9A7EE3529F0C27BD', 'projects_priority', 'projects_enddate', 'projects_bill_period_type', '8AD8DA50E8094784A30D58A539F4E2B0', 'F47778670C1040848C1076880C45895D', 'DD77F3D93AB74971846BD7C99631E98F']),\n\tP1 = sum(numeric_value),\n\t\tP2 = max(string_value),\n\tcolumnNaming: '$V$N',\n\tlateral: false) ~> ProjectAttrMap\nProjectAttrMap select(mapColumn(\n\t\tid_project,\n\t\tprojects_state = projects_stateP2,\n\t\tprojects_pay_period_type = projects_pay_period_typeP2,\n\t\tprojects_country = FE1C4D54B6FD46F59B934B000018DD8AP2,\n\t\tlatitude = F47778670C1040848C1076880C45895DP2,\n\t\tpurchase_order = {2A0F782F45E74D7888211D451E6C3B9AP2},\n\t\tprojects_invoice_party = {38DBB13CA9194E52886C820C9557D9B6P2},\n\t\tprojects_bill_rate = projects_bill_rateP1,\n\t\tpurchase_order_item = AB822D8DA3DC4BAC9A7EE3529F0C27BDP2,\n\t\tprojects_priority = projects_priorityP2,\n\t\tlongitude = DD77F3D93AB74971846BD7C99631E98FP2\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ProjectAttrSelect\nJoinProject select(mapColumn(\n\t\tid_project = ProjectAttrSelect@id_project,\n\t\tprojects_state,\n\t\tprojects_pay_period_type,\n\t\tprojects_country,\n\t\tlatitude,\n\t\tpurchase_order,\n\t\tprojects_invoice_party,\n\t\tprojects_bill_rate,\n\t\tpurchase_order_item,\n\t\tprojects_priority,\n\t\tlongitude,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ProjectSelect\nUserAttr pivot(groupBy(id_user),\n\tpivotBy(id_attr_type, ['users_enddate', 'users_title', 'users_emp_num', 'users_rate_period_type', 'users_emp_type', 'users_manager', 'users_email', 'users_pay_rate_type', 'users_phone', 'org_supervisor', 'users_dept', 'RMOVERHEADRATE', 'RMWEEKLYHOURSDEFAULT', 'users_startdate']),\n\tP1 = max(string_value),\n\t\tP2 = sum(numeric_value),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> UserAttrMap\nUserAttrMap select(mapColumn(\n\t\tid_user,\n\t\tP1Users_startdate = P1users_startdate,\n\t\tP1users_enddate,\n\t\tP1users_title,\n\t\tP1users_emp_num,\n\t\tP1users_rate_period_type,\n\t\tP1users_emp_type,\n\t\tP1users_manager,\n\t\tP1users_email,\n\t\tP1users_pay_rate_type,\n\t\tP1users_phone,\n\t\tP1org_supervisor,\n\t\tP1users_dept,\n\t\tP2RMOVERHEADRATE,\n\t\tP2RMWEEKLYHOURSDEFAULT\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserAttrSelect\nUserAttrSelect, User join(UserAttrSelect@id_user == User@id_user,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> JoinUserANDattr\nJoinUserANDattr select(mapColumn(\n\t\tid_user = UserAttrSelect@id_user,\n\t\tuser_start_date = P1Users_startdate,\n\t\tuser_end_date = P1users_enddate,\n\t\tusers_emp_num = P1users_emp_num,\n\t\tusers_rate_period_type = P1users_rate_period_type,\n\t\tuser_emp_type = P1users_emp_type,\n\t\tuser_email = P1users_email,\n\t\tusers_pay_rate_type = P1users_pay_rate_type,\n\t\tuser_phone = P1users_phone,\n\t\tuser_dept = P1users_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserSelect\nProject select(mapColumn(\n\t\tid_project,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name = pname,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectColumns\nProjectAttrSelect, SelectColumns join(ProjectAttrSelect@id_project == SelectColumns@id_project,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> JoinProject\nProjectSelf select(mapColumn(\n\t\tid_project,\n\t\tdescription_parent = description,\n\t\tproject_parent_name = pname\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ParentProject\nProjectSelect, ParentProject join(id_parent == ParentProject@id_project,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JoinParentProject\nJoinParentProject select(mapColumn(\n\t\tid_project = ProjectSelect@id_project,\n\t\tprojects_state,\n\t\tprojects_pay_period_type,\n\t\tprojects_country,\n\t\tlatitude,\n\t\tpurchase_order,\n\t\tprojects_invoice_party,\n\t\tprojects_bill_rate,\n\t\tpurchase_order_item,\n\t\tprojects_priority,\n\t\tlongitude,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time,\n\t\tdescription_parent,\n\t\tproject_parent_name\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectProject\nSelectProject derive(Project_Currency_key = case(projects_country=='SG','SGD','EUR'),\n\t\tload_time = currentTimestamp()) ~> LoadDateP\nSelectUserColumns derive(load_time = currentTimestamp(),\n\t\tuser_start_date = toDate((concat(substring(user_start_date,0,4),'-',substring(user_start_date,5,2),'-',substring(user_start_date,7,2)))),\n\t\tuser_end_date = toDate((concat(substring(user_end_date,0,4),'-',substring(user_end_date,5,2),'-',substring(user_end_date,7,2)))),\n\t\tstate = iif( isNull(user_end_date), 'ACTIVE','INACTIVE')) ~> LoadDateU\nUserSelect, EmployeDetail join(user_email == Email,\n\tjoinType:'left',\n\tbroadcast: 'none')~> GetLocationDetails\nGetLocationDetails select(mapColumn(\n\t\tid_user,\n\t\tuser_start_date,\n\t\tuser_end_date,\n\t\tusers_emp_num,\n\t\tusers_rate_period_type,\n\t\tuser_emp_type,\n\t\tuser_email,\n\t\tusers_pay_rate_type,\n\t\tuser_phone,\n\t\tuser_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time,\n\t\tPersonal_Latitude,\n\t\tPersonal_Longitude\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectUserColumns\nLoadDateP sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ProjectTRM\nLoadDateU sink(input(\n\t\tid_user as string,\n\t\tuser_start_date as date,\n\t\tuser_end_date as date,\n\t\tusers_emp_num as string,\n\t\tusers_rate_period_type as string,\n\t\tuser_emp_type as string,\n\t\tuser_email as string,\n\t\tusers_pay_rate_type as string,\n\t\tuser_phone as string,\n\t\tuser_dept as string,\n\t\tfullname as string,\n\t\texpense_gui as string,\n\t\ttime_gui as string,\n\t\ttravel_gui as string,\n\t\tuser_login as string,\n\t\tis_hidden as integer,\n\t\tload_time as timestamp,\n\t\tlatitude as double,\n\t\tlogitude as double,\n\t\tSTATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_user,\n\t\tuser_start_date,\n\t\tuser_end_date,\n\t\tusers_emp_num,\n\t\tusers_rate_period_type,\n\t\tuser_emp_type,\n\t\tuser_email,\n\t\tusers_pay_rate_type,\n\t\tuser_phone,\n\t\tuser_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time,\n\t\tlatitude = Personal_Latitude,\n\t\tlogitude = Personal_Longitude,\n\t\tSTATE = state\n\t),\n\tdateFormat:'yyyy-MM-dd') ~> UserTRM"
+		}
+	}
+}
