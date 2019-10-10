@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_DATASET1",
+						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -29,7 +29,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_DATASET2",
+						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
