@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_DATASET1",
+						"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
