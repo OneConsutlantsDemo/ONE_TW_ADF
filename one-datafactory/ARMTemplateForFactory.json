@@ -1072,6 +1072,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -1142,6 +1145,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -1498,6 +1504,9 @@
 						]
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": [
 					"Time DIM HANA"
 				]
@@ -2097,6 +2106,9 @@
 							}
 						]
 					}
+				},
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
 				},
 				"annotations": [
 					"Vendor, Commit State, Sheet State , ONE Employee"
@@ -4118,6 +4130,9 @@
 						]
 					}
 				},
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -4207,6 +4222,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -4252,6 +4270,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -4300,6 +4321,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
 			"dependsOn": [

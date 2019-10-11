@@ -13,859 +13,30 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/ProjectAttrSRC')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_PROJECT_ATTR_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "ProjectAttr",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_PROJECT_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "Project",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_USER_ATTR_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "UserAttr",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_USER_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "User",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_PROJECT_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "ProjectSelf",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ONE_EMP_DETAIL_ASQL_SRC_TE",
-								"type": "DatasetReference"
-							},
-							"name": "EmployeDetail",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_ONE_PROJECT_ASQL_TRG_TE",
-								"type": "DatasetReference"
-							},
-							"name": "ProjectTRM"
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ONE_USERS_ASQL_TRG_TE",
-								"type": "DatasetReference"
-							},
-							"name": "UserTRM"
-						}
-					],
-					"transformations": [
-						{
-							"name": "ProjectAttrMap"
-						},
-						{
-							"name": "ProjectAttrSelect"
-						},
-						{
-							"name": "ProjectSelect"
-						},
-						{
-							"name": "UserAttrMap"
-						},
-						{
-							"name": "UserAttrSelect"
-						},
-						{
-							"name": "JoinUserANDattr"
-						},
-						{
-							"name": "UserSelect"
-						},
-						{
-							"name": "SelectColumns"
-						},
-						{
-							"name": "JoinProject"
-						},
-						{
-							"name": "ParentProject"
-						},
-						{
-							"name": "JoinParentProject"
-						},
-						{
-							"name": "SelectProject"
-						},
-						{
-							"name": "LoadDateP"
-						},
-						{
-							"name": "LoadDateU"
-						},
-						{
-							"name": "GetLocationDetails"
-						},
-						{
-							"name": "SelectUserColumns"
-						}
-					],
-					"script": "\n\nsource(output(\n\t\tid_attribute as string,\n\t\tid_project as string,\n\t\tid_attr_type as string,\n\t\tstring_value as string,\n\t\tnumeric_value as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProjectAttr\nsource(output(\n\t\tid_project as string,\n\t\tdescription as string,\n\t\tid_parent as string,\n\t\thours_estimate as integer,\n\t\tpercent_complete as integer,\n\t\tcreator as string,\n\t\tloggable as string,\n\t\tpname as string,\n\t\tid_domain as string,\n\t\tproject_type as integer,\n\t\twbs as string,\n\t\tid_owner as string,\n\t\tid_backup as string,\n\t\trm_type as integer,\n\t\tstate as integer,\n\t\twork_variance as integer,\n\t\tstart_variance as integer,\n\t\tend_variance as integer,\n\t\tduration_variance as integer,\n\t\tscheduled_work as integer,\n\t\tscheduled_start as integer,\n\t\tscheduled_end as integer,\n\t\tscheduled_duration as integer,\n\t\tprojected_cost as integer,\n\t\tprojected_return as integer,\n\t\tprojected_profit as integer,\n\t\tprojected_roi as integer,\n\t\tawaiting_export as integer,\n\t\tis_hidden as integer,\n\t\tallow_time as integer,\n\t\tallow_expense as integer,\n\t\tallow_custom as integer,\n\t\tallow_leave as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Project\nsource(output(\n\t\tid_attribute as string,\n\t\tid_user as string,\n\t\tid_attr_type as string,\n\t\tstring_value as string,\n\t\tnumeric_value as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserAttr\nsource(output(\n\t\tid_user as string,\n\t\treserved1 as string,\n\t\treserved2 as integer,\n\t\ttimerecs_in as integer,\n\t\ttimerecs_out as integer,\n\t\tdaysinlist as integer,\n\t\tfullname as string,\n\t\tu_comment as string,\n\t\treserved3 as integer,\n\t\texpense_gui as string,\n\t\ttime_gui as string,\n\t\tid_domain as string,\n\t\ttravel_gui as string,\n\t\tuser_login as string,\n\t\tis_hidden as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> User\nsource(output(\n\t\tid_project as string,\n\t\tdescription as string,\n\t\tid_parent as string,\n\t\thours_estimate as integer,\n\t\tpercent_complete as integer,\n\t\tcreator as string,\n\t\tloggable as string,\n\t\tpname as string,\n\t\tid_domain as string,\n\t\tproject_type as integer,\n\t\twbs as string,\n\t\tid_owner as string,\n\t\tid_backup as string,\n\t\trm_type as integer,\n\t\tstate as integer,\n\t\twork_variance as integer,\n\t\tstart_variance as integer,\n\t\tend_variance as integer,\n\t\tduration_variance as integer,\n\t\tscheduled_work as integer,\n\t\tscheduled_start as integer,\n\t\tscheduled_end as integer,\n\t\tscheduled_duration as integer,\n\t\tprojected_cost as integer,\n\t\tprojected_return as integer,\n\t\tprojected_profit as integer,\n\t\tprojected_roi as integer,\n\t\tawaiting_export as integer,\n\t\tis_hidden as integer,\n\t\tallow_time as integer,\n\t\tallow_expense as integer,\n\t\tallow_custom as integer,\n\t\tallow_leave as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProjectSelf\nsource(output(\n\t\tUser_Logon_Name as string,\n\t\tName as string,\n\t\tFirst_Name as string,\n\t\tLast_Name as string,\n\t\tType as string,\n\t\tStatus as string,\n\t\tCity as string,\n\t\tCompany as string,\n\t\tCountry as string,\n\t\tDepartment as string,\n\t\tJob_Title as string,\n\t\tDisplay_Name as string,\n\t\tEmail as string,\n\t\tMobile as string,\n\t\tEmployee_Number as string,\n\t\tOffice as string,\n\t\tState as string,\n\t\tStreet as string,\n\t\tStreet_Number as string,\n\t\tPostal_Code as string,\n\t\tPersonal_Country as string,\n\t\tPersonal_City as string,\n\t\tPersonal_Street as string,\n\t\tPersonal_Street_Number as string,\n\t\tPersonal_Latitude as double,\n\t\tPersonal_Longitude as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> EmployeDetail\nProjectAttr pivot(groupBy(id_project),\n\tpivotBy(id_attr_type, ['projects_state', 'projects_pay_period_type', 'FE1C4D54B6FD46F59B934B000018DD8A', 'A0EA5FCC6CE6403E8E40E75344BE8154', '2A0F782F45E74D7888211D451E6C3B9A', '38DBB13CA9194E52886C820C9557D9B6', 'projects_bill_rate', 'AB822D8DA3DC4BAC9A7EE3529F0C27BD', 'projects_priority', 'projects_enddate', 'projects_bill_period_type', '8AD8DA50E8094784A30D58A539F4E2B0', 'F47778670C1040848C1076880C45895D', 'DD77F3D93AB74971846BD7C99631E98F']),\n\tP1 = sum(numeric_value),\n\t\tP2 = max(string_value),\n\tcolumnNaming: '$V$N',\n\tlateral: false) ~> ProjectAttrMap\nProjectAttrMap select(mapColumn(\n\t\tid_project,\n\t\tprojects_state = projects_stateP2,\n\t\tprojects_pay_period_type = projects_pay_period_typeP2,\n\t\tprojects_country = FE1C4D54B6FD46F59B934B000018DD8AP2,\n\t\tlatitude = F47778670C1040848C1076880C45895DP2,\n\t\tpurchase_order = {2A0F782F45E74D7888211D451E6C3B9AP2},\n\t\tprojects_invoice_party = {38DBB13CA9194E52886C820C9557D9B6P2},\n\t\tprojects_bill_rate = projects_bill_rateP1,\n\t\tpurchase_order_item = AB822D8DA3DC4BAC9A7EE3529F0C27BDP2,\n\t\tprojects_priority = projects_priorityP2,\n\t\tlongitude = DD77F3D93AB74971846BD7C99631E98FP2\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ProjectAttrSelect\nJoinProject select(mapColumn(\n\t\tid_project = ProjectAttrSelect@id_project,\n\t\tprojects_state,\n\t\tprojects_pay_period_type,\n\t\tprojects_country,\n\t\tlatitude,\n\t\tpurchase_order,\n\t\tprojects_invoice_party,\n\t\tprojects_bill_rate,\n\t\tpurchase_order_item,\n\t\tprojects_priority,\n\t\tlongitude,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ProjectSelect\nUserAttr pivot(groupBy(id_user),\n\tpivotBy(id_attr_type, ['users_enddate', 'users_title', 'users_emp_num', 'users_rate_period_type', 'users_emp_type', 'users_manager', 'users_email', 'users_pay_rate_type', 'users_phone', 'org_supervisor', 'users_dept', 'RMOVERHEADRATE', 'RMWEEKLYHOURSDEFAULT', 'users_startdate']),\n\tP1 = max(string_value),\n\t\tP2 = sum(numeric_value),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> UserAttrMap\nUserAttrMap select(mapColumn(\n\t\tid_user,\n\t\tP1Users_startdate = P1users_startdate,\n\t\tP1users_enddate,\n\t\tP1users_title,\n\t\tP1users_emp_num,\n\t\tP1users_rate_period_type,\n\t\tP1users_emp_type,\n\t\tP1users_manager,\n\t\tP1users_email,\n\t\tP1users_pay_rate_type,\n\t\tP1users_phone,\n\t\tP1org_supervisor,\n\t\tP1users_dept,\n\t\tP2RMOVERHEADRATE,\n\t\tP2RMWEEKLYHOURSDEFAULT\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserAttrSelect\nUserAttrSelect, User join(UserAttrSelect@id_user == User@id_user,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> JoinUserANDattr\nJoinUserANDattr select(mapColumn(\n\t\tid_user = UserAttrSelect@id_user,\n\t\tuser_start_date = P1Users_startdate,\n\t\tuser_end_date = P1users_enddate,\n\t\tusers_emp_num = P1users_emp_num,\n\t\tusers_rate_period_type = P1users_rate_period_type,\n\t\tuser_emp_type = P1users_emp_type,\n\t\tuser_email = P1users_email,\n\t\tusers_pay_rate_type = P1users_pay_rate_type,\n\t\tuser_phone = P1users_phone,\n\t\tuser_dept = P1users_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserSelect\nProject select(mapColumn(\n\t\tid_project,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name = pname,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectColumns\nProjectAttrSelect, SelectColumns join(ProjectAttrSelect@id_project == SelectColumns@id_project,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> JoinProject\nProjectSelf select(mapColumn(\n\t\tid_project,\n\t\tdescription_parent = description,\n\t\tproject_parent_name = pname\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ParentProject\nProjectSelect, ParentProject join(id_parent == ParentProject@id_project,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JoinParentProject\nJoinParentProject select(mapColumn(\n\t\tid_project = ProjectSelect@id_project,\n\t\tprojects_state,\n\t\tprojects_pay_period_type,\n\t\tprojects_country,\n\t\tlatitude,\n\t\tpurchase_order,\n\t\tprojects_invoice_party,\n\t\tprojects_bill_rate,\n\t\tpurchase_order_item,\n\t\tprojects_priority,\n\t\tlongitude,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time,\n\t\tdescription_parent,\n\t\tproject_parent_name\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectProject\nSelectProject derive(Project_Currency_key = case(projects_country=='SG','SGD','EUR'),\n\t\tload_time = currentTimestamp()) ~> LoadDateP\nSelectUserColumns derive(load_time = currentTimestamp(),\n\t\tuser_start_date = toDate((concat(substring(user_start_date,0,4),'-',substring(user_start_date,5,2),'-',substring(user_start_date,7,2)))),\n\t\tuser_end_date = toDate((concat(substring(user_end_date,0,4),'-',substring(user_end_date,5,2),'-',substring(user_end_date,7,2)))),\n\t\tstate = iif( isNull(user_end_date), 'ACTIVE','INACTIVE')) ~> LoadDateU\nUserSelect, EmployeDetail join(user_email == Email,\n\tjoinType:'left',\n\tbroadcast: 'none')~> GetLocationDetails\nGetLocationDetails select(mapColumn(\n\t\tid_user,\n\t\tuser_start_date,\n\t\tuser_end_date,\n\t\tusers_emp_num,\n\t\tusers_rate_period_type,\n\t\tuser_emp_type,\n\t\tuser_email,\n\t\tusers_pay_rate_type,\n\t\tuser_phone,\n\t\tuser_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time,\n\t\tPersonal_Latitude,\n\t\tPersonal_Longitude\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectUserColumns\nLoadDateP sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ProjectTRM\nLoadDateU sink(input(\n\t\tid_user as string,\n\t\tuser_start_date as date,\n\t\tuser_end_date as date,\n\t\tusers_emp_num as string,\n\t\tusers_rate_period_type as string,\n\t\tuser_emp_type as string,\n\t\tuser_email as string,\n\t\tusers_pay_rate_type as string,\n\t\tuser_phone as string,\n\t\tuser_dept as string,\n\t\tfullname as string,\n\t\texpense_gui as string,\n\t\ttime_gui as string,\n\t\ttravel_gui as string,\n\t\tuser_login as string,\n\t\tis_hidden as integer,\n\t\tload_time as timestamp,\n\t\tlatitude as double,\n\t\tlogitude as double,\n\t\tSTATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_user,\n\t\tuser_start_date,\n\t\tuser_end_date,\n\t\tusers_emp_num,\n\t\tusers_rate_period_type,\n\t\tuser_emp_type,\n\t\tuser_email,\n\t\tusers_pay_rate_type,\n\t\tuser_phone,\n\t\tuser_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time,\n\t\tlatitude = Personal_Latitude,\n\t\tlogitude = Personal_Longitude,\n\t\tSTATE = state\n\t),\n\tdateFormat:'yyyy-MM-dd') ~> UserTRM"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_2911')]",
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_DATA_REFRESH')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_291",
-						"type": "Copy",
+						"name": "Extract",
+						"type": "ExecutePipeline",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "_SYS_BI.M_TIME_DIMENSION"
-							},
-							{
-								"name": "Destination",
-								"value": "ONE.TE_TIME_DIM"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource",
-								"query": {
-									"value": "select \n\"DATETIMESTAMP\",\n\"DATE_SQL\",\n\"DATETIME_SAP\",\n\"DATE_SAP\",\n\"YEAR\",\n\"QUARTER\",\n\"MONTH\",\n\"WEEK\",\n\"WEEK_YEAR\",\n\"DAY_OF_WEEK\",\n\"DAY\",\n\"HOUR\",\n\"MINUTE\",\n\"SECOND\",\n\"CALQUARTER\",\n\"CALMONTH\",\n\"CALWEEK\",\n\"YEAR_INT\",\n\"QUARTER_INT\",\n\"MONTH_INT\",\n\"WEEK_INT\",\n\"WEEK_YEAR_INT\",\n\"DAY_OF_WEEK_INT\",\n\"DAY_INT\",\n\"HOUR_INT\",\n\"MINUTE_INT\",\n\"SECOND_INT\",\n\"MONTH_LAST_DAY\",\n\"TZNTSTMPS\",\n\"TZNTSTMPL\"\n from \"_SYS_BI\".\"M_TIME_DIMENSION\"\n where \"YEAR\" > '2008'",
-									"type": "Expression"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "DATETIMESTAMP",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "DATETIMESTAMP",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"name": "DATE_SQL",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "DATE_SQL",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"name": "DATETIME_SAP",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DATETIME_SAP",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DATE_SAP",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DATE_SAP",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "YEAR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "YEAR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "QUARTER",
-											"type": "String"
-										},
-										"sink": {
-											"name": "QUARTER",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MONTH",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WEEK",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_YEAR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WEEK_YEAR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_OF_WEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DAY_OF_WEEK",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DAY",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "HOUR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "HOUR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MINUTE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MINUTE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SECOND",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SECOND",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CALQUARTER",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CALQUARTER",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CALMONTH",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CALMONTH",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CALWEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CALWEEK",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "YEAR_INT",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "YEAR_INT",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "QUARTER_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "QUARTER_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "MONTH_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "WEEK_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_YEAR_INT",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "WEEK_YEAR_INT",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_OF_WEEK_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "DAY_OF_WEEK_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "DAY_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "HOUR_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "HOUR_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "MINUTE_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "MINUTE_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "SECOND_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "SECOND_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH_LAST_DAY",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "MONTH_LAST_DAY",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "TZNTSTMPS",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TZNTSTMPS",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TZNTSTMPL",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TZNTSTMPL",
-											"type": "Decimal"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_291",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_291",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_rwb')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_rwb",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "ONE.one.hr.dd::CT_EMPLOYEE"
-							},
-							{
-								"name": "Destination",
-								"value": "ONE.TE_EMPLOYEE_DETAIL"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource"
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "User_Logon_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "User_Logon_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "First_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "First_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Last_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Last_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Type",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Type",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Status",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Status",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String"
-										},
-										"sink": {
-											"name": "City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Company",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Company",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Department",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Department",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Job_Title",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Job_Title",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Display_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Display_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Email",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Email",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Mobile",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Mobile",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Employee_Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Employee_Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Office",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Office",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "State",
-											"type": "String"
-										},
-										"sink": {
-											"name": "State",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Street",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Street",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Street_Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Street_Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Postal_Code",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Postal_Code",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_City",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Street",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_Street",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Street_Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_Street_Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Latitude",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "Personal_Latitude",
-											"type": "Double"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Longitude",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "Personal_Longitude",
-											"type": "Double"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_rwb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_rwb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ACQ_HANA_ADLS_TE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get-Tables",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource",
-								"query": {
-									"value": "select '\"'||SCHEMA_NAME||'\"'||'.'||'\"'||TABLE_NAME||'\"' AS Table_Name, SUBSTR_AFTER(TABLE_NAME,'::') as FILE_NAME from public.tables\nwhere \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN' \n",
-									"type": "Expression"
-								}
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
+								"type": "PipelineReference"
 							},
-							"dataset": {
-								"referenceName": "DS_ACQ_HANA_SRC_TE",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
+							"waitOnCompletion": true
 						}
 					},
 					{
-						"name": "Copy-Each-Table",
-						"type": "ForEach",
+						"name": "Transform",
+						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "Get-Tables",
+								"activity": "Extract",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -873,76 +44,94 @@
 						],
 						"userProperties": [],
 						"typeProperties": {
-							"items": {
-								"value": "@activity('Get-Tables').output.value",
-								"type": "Expression"
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
+								"type": "PipelineReference"
 							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Copy Data",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "SYS.select \"SCHEMA_NAME\",\"TABLE_NAME\" from public.tables where \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN'"
-										},
-										{
-											"name": "Destination",
-											"value": "ADLS_ACQ_HANA_TE/@{item().TABLE_NAME}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "SapHanaSource",
-											"query": {
-												"value": "SELECT  *  FROM @{item().Table_Name}",
-												"type": "Expression"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureDataLakeStoreWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_ACQ_HANA_SRC_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_ACQ_ADLS_TRG_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							]
+							"waitOnCompletion": true
 						}
 					}
 				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_EXTRACT_ETL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataSet1_Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DataSet2_Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DataSet1_Extract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DataSet3_Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DataSet2_Extract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET3",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					}
+				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_HANA_EXTRACT_DATASET1')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_HANA_EXTRACT_DATASET2')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_HANA_EXTRACT_DATASET3')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_HANA_EXTRACT_DATASET1')]",
@@ -1279,15 +468,13 @@
 						"inputs": [
 							{
 								"referenceName": "DS_ACQ_TIMEDIM_PHANA_SRC_TE",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "DS_ONE_TIMEDIM_ASQL_TRG_TE",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -3941,36 +3128,15 @@
 							"dataflow": {
 								"referenceName": "DF_TRM_ASQL_TE",
 								"type": "DataFlowReference",
-								"parameters": {},
 								"datasetParameters": {
 									"CodeExpense": {
 										"cw_table": "NULL"
 									},
-									"CodeExpenseSources": {},
-									"PayTypes": {},
-									"ExpenseRecords": {},
-									"UserTimeSheet": {},
-									"UserExpenseSheet": {},
-									"SheetNotes": {},
-									"TimeRec": {},
-									"CurrencyCode": {},
-									"CodeExpenseTRM": {},
 									"CodeExpenseSourceTRM": {
 										"cw_table": "NULL"
-									},
-									"PayTypeTRM": {},
-									"ExpenseRecTRM": {},
-									"UserTimeSheetTRM": {},
-									"UserExpenseSheetTRM": {},
-									"SheetNotesTRM": {},
-									"TimeRecTRM": {},
-									"ExpenseRecordLodge": {},
-									"ApprovedSheetTRM": {},
-									"RejectedSheetTRM": {},
-									"SubmitSheetTRM": {}
+									}
 								}
-							},
-							"staging": {}
+							}
 						}
 					},
 					{
@@ -4029,20 +3195,8 @@
 						"typeProperties": {
 							"dataflow": {
 								"referenceName": "ProjectAttrSRC",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"ProjectAttr": {},
-									"Project": {},
-									"UserAttr": {},
-									"User": {},
-									"ProjectSelf": {},
-									"EmployeDetail": {},
-									"ProjectTRM": {},
-									"UserTRM": {}
-								}
-							},
-							"staging": {}
+								"type": "DataFlowReference"
+							}
 						}
 					}
 				],
@@ -4051,83 +3205,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/ProjectAttrSRC')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_EXTRACT_ETL')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "DataSet1_Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET1",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DataSet2_Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DataSet1_Extract",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET2",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DataSet3_Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DataSet2_Extract",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET3",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"folder": {
-					"name": "ONE_TIMESHEET_PROJECT"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_HANA_EXTRACT_DATASET1')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_HANA_EXTRACT_DATASET2')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_HANA_EXTRACT_DATASET3')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_TRANSFORMATION_ETL')]",
@@ -4145,8 +3223,7 @@
 								"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					},
 					{
@@ -4166,8 +3243,7 @@
 								"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2",
 								"type": "PipelineReference"
 							},
-							"waitOnCompletion": true,
-							"parameters": {}
+							"waitOnCompletion": true
 						}
 					}
 				],
@@ -4179,88 +3255,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_DATA_REFRESH')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "Transform",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Extract",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"folder": {
-					"name": "ONE_TIMESHEET_PROJECT"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ONE_TW_DATA_REFRESH_DAILY')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PL_ONE_TW_DATA_REFRESH",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 24,
-						"startTime": "2019-10-10T06:00:00Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_DATA_REFRESH')]"
 			]
 		}
 	]
