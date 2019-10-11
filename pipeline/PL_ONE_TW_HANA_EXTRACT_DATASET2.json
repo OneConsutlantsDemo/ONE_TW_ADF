@@ -587,6 +587,9 @@
 				]
 			}
 		},
+		"folder": {
+			"name": "ONE_TIMESHEET_PROJECT"
+		},
 		"annotations": [
 			"Vendor, Commit State, Sheet State , ONE Employee"
 		]
