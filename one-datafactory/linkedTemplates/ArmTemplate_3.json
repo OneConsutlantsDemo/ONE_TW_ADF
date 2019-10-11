@@ -968,7 +968,9 @@
 								"query": "select *  from _SYS_BI.M_TIME_DIMENSION where YEAR > '2008' and YEAR NOT IN ('1900','9999')"
 							},
 							"sink": {
-								"type": "AzureSqlSink"
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table ONE.TE_TIME_DIM",
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {

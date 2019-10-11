@@ -1,0 +1,374 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "one-datafactory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_HANA_EXTRACT_DATASET1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_TimeDim",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SapHanaSource",
+								"query": "select *  from _SYS_BI.M_TIME_DIMENSION where YEAR > '2008' and YEAR NOT IN ('1900','9999')"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table ONE.TE_TIME_DIM",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "DATETIMESTAMP",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATETIMESTAMP",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "DATE_SQL",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DATE_SQL",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "DATETIME_SAP",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DATETIME_SAP",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DATE_SAP",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DATE_SAP",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "YEAR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "YEAR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QUARTER",
+											"type": "String"
+										},
+										"sink": {
+											"name": "QUARTER",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MONTH",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MONTH",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WEEK",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WEEK",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "WEEK_YEAR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WEEK_YEAR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY_OF_WEEK",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DAY_OF_WEEK",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DAY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "HOUR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "HOUR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MINUTE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MINUTE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SECOND",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SECOND",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CALQUARTER",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CALQUARTER",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CALMONTH",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CALMONTH",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CALWEEK",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CALWEEK",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "YEAR_INT",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "YEAR_INT",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "QUARTER_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "QUARTER_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "MONTH_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "MONTH_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "WEEK_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "WEEK_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "WEEK_YEAR_INT",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "WEEK_YEAR_INT",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY_OF_WEEK_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "DAY_OF_WEEK_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "DAY_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "HOUR_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "HOUR_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "MINUTE_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "MINUTE_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "SECOND_INT",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "SECOND_INT",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "MONTH_LAST_DAY",
+											"type": "Byte"
+										},
+										"sink": {
+											"name": "MONTH_LAST_DAY",
+											"type": "Byte"
+										}
+									},
+									{
+										"source": {
+											"name": "TZNTSTMPS",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TZNTSTMPS",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TZNTSTMPL",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TZNTSTMPL",
+											"type": "Decimal"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_ACQ_TIMEDIM_PHANA_SRC_TE",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_ONE_TIMEDIM_ASQL_TRG_TE",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
+				"annotations": [
+					"Time DIM HANA"
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}
