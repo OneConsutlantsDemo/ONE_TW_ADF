@@ -72,6 +72,62 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "WebHook_Compliance_Tabular_Model",
+						"type": "WebHook",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"method": "POST",
+							"headers": {
+								"Content-type": "application/json"
+							},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							},
+							"timeout": "00:10:00"
+						}
+					},
+					{
+						"name": "WebHook_Expense_Tabular_Model",
+						"type": "WebHook",
+						"dependsOn": [
+							{
+								"activity": "WebHook_Compliance_Tabular_Model",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							},
+							"timeout": "00:10:00"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_ADLS_SRC_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1162,80 +1218,6 @@
 				"typeProperties": {
 					"schema": "ACQ",
 					"table": "TE_USER_EXPENSE_SHEETS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_TIME_ASQL_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_sheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_timesheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "start_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "end_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_approver",
-						"type": "nvarchar"
-					},
-					{
-						"name": "level",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "reserved1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USER_TIME_SHEETS"
 				}
 			},
 			"dependsOn": [
