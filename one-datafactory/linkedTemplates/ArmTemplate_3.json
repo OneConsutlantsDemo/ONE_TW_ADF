@@ -4492,7 +4492,7 @@
 						}
 					},
 					{
-						"name": "Web1",
+						"name": "Web_Tabular_Model_Refresh_Compliance",
 						"type": "WebActivity",
 						"dependsOn": [
 							{
@@ -4518,6 +4518,39 @@
 							},
 							"body": {
 								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							}
+						}
+					},
+					{
+						"name": "Web_Tabular_Model_Refresh_Expense",
+						"description": "",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Web_Tabular_Model_Refresh_Compliance",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
 								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
 								"DatabaseRefreshType": "Full"
 							}
