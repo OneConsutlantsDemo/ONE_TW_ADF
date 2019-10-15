@@ -1,51 +1,11 @@
 {
-	"name": "PL_ONE_TW_DATA_REFRESH",
+	"name": "pipeline1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Extract",
-				"type": "ExecutePipeline",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_ONE_TW_EXTRACT_ETL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "Transform",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Extract",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
 				"name": "WebHook_Compliance_Tabular_Model",
 				"type": "WebHook",
-				"dependsOn": [
-					{
-						"activity": "Transform",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
@@ -77,7 +37,7 @@
 					"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
 					"method": "POST",
 					"headers": {
-						"Content-type": "application/json"
+						"Content-Type": "application/json"
 					},
 					"body": {
 						"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
@@ -88,10 +48,6 @@
 				}
 			}
 		],
-		"folder": {
-			"name": "ONE_TIMESHEET_PROJECT"
-		},
 		"annotations": []
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+	}
 }
