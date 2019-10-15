@@ -4506,9 +4506,7 @@
 						"typeProperties": {
 							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
 							"method": "POST",
-							"headers": {
-								"Content-type": "application/json"
-							},
+							"headers": {},
 							"body": {
 								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
 								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
@@ -4532,9 +4530,7 @@
 						"typeProperties": {
 							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
 							"method": "POST",
-							"headers": {
-								"Content-type": "application/json"
-							},
+							"headers": {},
 							"body": {
 								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
 								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",

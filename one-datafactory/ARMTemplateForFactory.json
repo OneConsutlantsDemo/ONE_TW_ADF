@@ -1086,9 +1086,7 @@
 						"typeProperties": {
 							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
 							"method": "POST",
-							"headers": {
-								"Content-type": "application/json"
-							},
+							"headers": {},
 							"body": {
 								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
 								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
@@ -1112,9 +1110,7 @@
 						"typeProperties": {
 							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
 							"method": "POST",
-							"headers": {
-								"Content-type": "application/json"
-							},
+							"headers": {},
 							"body": {
 								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
 								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
@@ -4434,6 +4430,58 @@
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "WebHook_Compliance_Tabular_Model",
+						"type": "WebHook",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							},
+							"timeout": "00:10:00"
+						}
+					},
+					{
+						"name": "WebHook_Expense_Tabular_Model",
+						"type": "WebHook",
+						"dependsOn": [
+							{
+								"activity": "WebHook_Compliance_Tabular_Model",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							},
+							"timeout": "00:10:00"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_ADLS_SRC_TE')]",
@@ -8295,62 +8343,6 @@
 				"[concat(variables('factoryId'), '/datasets/DS_ONE_PROJECT_ASQL_TRG_TE')]",
 				"[concat(variables('factoryId'), '/datasets/DS_ONE_USERS_ASQL_TRG_TE')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "WebHook_Compliance_Tabular_Model",
-						"type": "WebHook",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
-							"method": "POST",
-							"headers": {
-								"Content-type": "application/json"
-							},
-							"body": {
-								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
-								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
-								"DatabaseRefreshType": "Full"
-							},
-							"timeout": "00:10:00"
-						}
-					},
-					{
-						"name": "WebHook_Expense_Tabular_Model",
-						"type": "WebHook",
-						"dependsOn": [
-							{
-								"activity": "WebHook_Compliance_Tabular_Model",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"body": {
-								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
-								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
-								"DatabaseRefreshType": "Full"
-							},
-							"timeout": "00:10:00"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": []
 		}
 	]
 }
