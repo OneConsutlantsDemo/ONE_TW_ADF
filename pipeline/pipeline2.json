@@ -47,7 +47,19 @@
 					"items": {
 						"value": "@activity('Get Metadata1').output",
 						"type": "Expression"
-					}
+					},
+					"activities": [
+						{
+							"name": "Append variable1",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Variable_Array",
+								"value": "item.name()"
+							}
+						}
+					]
 				}
 			}
 		],
