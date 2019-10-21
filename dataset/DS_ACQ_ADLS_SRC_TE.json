@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureDataLakeStoreLocation",
-				"fileName": "*.csv",
 				"folderPath": "ADLS_ACQ_HANA_TE"
 			},
 			"columnDelimiter": ",",
