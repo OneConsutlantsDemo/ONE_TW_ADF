@@ -20,6 +20,7 @@
 						"storeSettings": {
 							"type": "AzureDataLakeStoreReadSettings",
 							"recursive": false,
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
