@@ -19,7 +19,9 @@
 						"referenceName": "DS_ACQ_ADLS_SRC_TE",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureDataLakeStoreReadSettings",
 						"recursive": true
