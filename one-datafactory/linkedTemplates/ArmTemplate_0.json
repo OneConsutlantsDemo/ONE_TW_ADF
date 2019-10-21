@@ -139,7 +139,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
-						"fileName": "CT_TE_CODES_CURRENCIES",
 						"folderPath": "ADLS_ACQ_HANA_TE"
 					},
 					"columnDelimiter": ",",
