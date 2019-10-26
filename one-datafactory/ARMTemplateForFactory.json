@@ -1092,7 +1092,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"url": "https://s2events.azure-automation.net/webhooks?token=wJjk0qpVBna4SupqoHRyZGUEU2CL6o8uvwdmiK3FSxA%3d",
 							"method": "POST",
 							"headers": {
 								"Content-Type": "application/json"
@@ -1125,7 +1125,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": "https://s2events.azure-automation.net/webhooks?token=1RQYI4hsyYOS2wWgyjGfkCpJRNK1btdof0NIhFVrPsw%3d",
+							"url": "https://s2events.azure-automation.net/webhooks?token=wJjk0qpVBna4SupqoHRyZGUEU2CL6o8uvwdmiK3FSxA%3d",
 							"method": "POST",
 							"headers": {
 								"Content-Type": "application/json"
