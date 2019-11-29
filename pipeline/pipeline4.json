@@ -32,9 +32,6 @@
 								"type": "LinkedServiceReference"
 							}
 						}
-					},
-					"globalParameters": {
-						"": ""
 					}
 				},
 				"linkedServiceName": {
