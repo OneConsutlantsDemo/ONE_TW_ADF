@@ -26,7 +26,7 @@
 					},
 					"webServiceOutputs": {
 						"": {
-							"filePath": "Demo.csv",
+							"filePath": "onefilesystemgen2/Demo.csv",
 							"linkedServiceName": {
 								"referenceName": "AzureBlobStorageML",
 								"type": "LinkedServiceReference"
