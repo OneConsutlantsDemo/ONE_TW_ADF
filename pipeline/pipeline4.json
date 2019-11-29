@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"webServiceInputs": {
-						"": {
+						"input1": {
 							"filePath": "onefilesystemgen2/1000_Companies.csv",
 							"linkedServiceName": {
 								"referenceName": "AzureBlobStorageML",
@@ -25,7 +25,7 @@
 						}
 					},
 					"webServiceOutputs": {
-						"": {
+						"output1": {
 							"filePath": "onefilesystemgen2/Demo.csv",
 							"linkedServiceName": {
 								"referenceName": "AzureBlobStorageML",
