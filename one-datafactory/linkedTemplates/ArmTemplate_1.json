@@ -13,6 +13,217 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ASQL_SCR_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "timerecs_in",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "timerecs_out",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "daysinlist",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "fullname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "u_comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "expense_gui",
+						"type": "nvarchar"
+					},
+					{
+						"name": "time_gui",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_domain",
+						"type": "nvarchar"
+					},
+					{
+						"name": "travel_gui",
+						"type": "nvarchar"
+					},
+					{
+						"name": "user_login",
+						"type": "nvarchar"
+					},
+					{
+						"name": "is_hidden",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ACQ",
+					"table": "TE_USERS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ATTR_ASQL_SCR_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_attribute",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_attr_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "string_value",
+						"type": "nvarchar"
+					},
+					{
+						"name": "numeric_value",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ACQ",
+					"table": "TE_USERS_ATTRIBS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_EXPENSE_ASQL_SRC_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_sheet",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_timesheet",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "state",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "start_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "end_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_domain",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_approver",
+						"type": "nvarchar"
+					},
+					{
+						"name": "level",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "reserved1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ACQ",
+					"table": "TE_USER_EXPENSE_SHEETS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_TIME_ASQL_SRC_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -854,296 +1065,6 @@
 				"typeProperties": {
 					"schema": "ONE",
 					"table": "TE_USER_SHEET_NOTES_SUBMITTED"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_STATE_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "sheet_state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "sheet_description",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_SHEET_STATE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_TIMEDIM_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "DATETIMESTAMP",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DATE_SQL",
-						"type": "date"
-					},
-					{
-						"name": "DATETIME_SAP",
-						"type": "varchar"
-					},
-					{
-						"name": "DATE_SAP",
-						"type": "varchar"
-					},
-					{
-						"name": "YEAR",
-						"type": "varchar"
-					},
-					{
-						"name": "QUARTER",
-						"type": "varchar"
-					},
-					{
-						"name": "MONTH",
-						"type": "varchar"
-					},
-					{
-						"name": "WEEK",
-						"type": "varchar"
-					},
-					{
-						"name": "WEEK_YEAR",
-						"type": "varchar"
-					},
-					{
-						"name": "DAY_OF_WEEK",
-						"type": "varchar"
-					},
-					{
-						"name": "DAY",
-						"type": "varchar"
-					},
-					{
-						"name": "HOUR",
-						"type": "varchar"
-					},
-					{
-						"name": "MINUTE",
-						"type": "varchar"
-					},
-					{
-						"name": "SECOND",
-						"type": "varchar"
-					},
-					{
-						"name": "CALQUARTER",
-						"type": "varchar"
-					},
-					{
-						"name": "CALMONTH",
-						"type": "varchar"
-					},
-					{
-						"name": "CALWEEK",
-						"type": "varchar"
-					},
-					{
-						"name": "YEAR_INT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QUARTER_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "MONTH_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "WEEK_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "WEEK_YEAR_INT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DAY_OF_WEEK_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "DAY_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "HOUR_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "MINUTE_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "SECOND_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "MONTH_LAST_DAY",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "TZNTSTMPS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 0
-					},
-					{
-						"name": "TZNTSTMPL",
-						"type": "decimal",
-						"precision": 21,
-						"scale": 7
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_TIME_DIM"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_TIME_REC_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_time_rec",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "record_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_task",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_pay_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_project",
-						"type": "nvarchar"
-					},
-					{
-						"name": "time_amount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "comment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "commit_state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_bill_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_group",
-						"type": "nvarchar"
-					},
-					{
-						"name": "creator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "create_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "modifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "modify_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_assignment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_TIME_RECS"
 				}
 			},
 			"dependsOn": []

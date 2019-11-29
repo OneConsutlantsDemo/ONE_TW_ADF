@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "one-datafactory"
 		},
+		"AzureBlobStorageML_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageML'"
+		},
+		"AzureML1_apiKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'apiKey' of 'AzureML1'"
+		},
 		"SQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
@@ -103,6 +111,36 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorageML')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorageML_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureML1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureML",
+				"typeProperties": {
+					"mlEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/3570563b92f2409081ddab9fc33e3dbc/services/9c75d35f03294ddaa7373e0d60ec30f8/jobs?api-version=2.0",
+					"apiKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureML1_apiKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SQLDB')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -124,6 +162,57 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ML Batch Execution1",
+						"type": "AzureMLBatchExecution",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"webServiceInputs": {
+								"State": {
+									"filePath": "onefilesystemgen2/1000_Companies.csv",
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorageML",
+										"type": "LinkedServiceReference"
+									}
+								}
+							},
+							"webServiceOutputs": {
+								"State": {
+									"filePath": "onefilesystemgen2/Demo.csv",
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorageML",
+										"type": "LinkedServiceReference"
+									}
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureML1",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureML1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageML')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_ADLS_SRC_TE')]",
@@ -998,223 +1087,6 @@
 				"typeProperties": {
 					"schema": "ACQ",
 					"table": "TE_TIME_RECS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ASQL_SCR_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reserved1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reserved2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "timerecs_in",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "timerecs_out",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "daysinlist",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "fullname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "u_comment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reserved3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "expense_gui",
-						"type": "nvarchar"
-					},
-					{
-						"name": "time_gui",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "travel_gui",
-						"type": "nvarchar"
-					},
-					{
-						"name": "user_login",
-						"type": "nvarchar"
-					},
-					{
-						"name": "is_hidden",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USERS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ATTR_ASQL_SCR_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_attribute",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_attr_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "string_value",
-						"type": "nvarchar"
-					},
-					{
-						"name": "numeric_value",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USERS_ATTRIBS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_EXPENSE_ASQL_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_sheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_timesheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "start_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "end_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_approver",
-						"type": "nvarchar"
-					},
-					{
-						"name": "level",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "reserved1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USER_EXPENSE_SHEETS"
 				}
 			},
 			"dependsOn": [

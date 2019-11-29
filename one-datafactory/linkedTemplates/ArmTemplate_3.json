@@ -13,6 +13,123 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ACQ_PHANA_SRC_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "ACQ_TE",
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ACQ_TIMEDIM_PHANA_SRC_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "_SYS_BI",
+					"table": "M_TIME_DIMENSION"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_LKP_PHANA_SRC_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"cw_schema": {
+						"type": "String"
+					},
+					"cw_table": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().cw_schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().cw_table",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_291')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "_SYS_BI",
+					"table": "M_TIME_DIMENSION"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_rwb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "ONE",
+					"table": "one.hr.dd::CT_EMPLOYEE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_v6d')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -786,7 +903,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_291')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyPipeline_rwb')]",
@@ -1107,7 +1226,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_rwb')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ACQ_HANA_ADLS_TE')]",
@@ -1585,7 +1706,9 @@
 					"Time DIM HANA"
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_ACQ_TIMEDIM_PHANA_SRC_TE')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_HANA_EXTRACT_DATASET2')]",
@@ -2185,7 +2308,9 @@
 					"Vendor, Commit State, Sheet State , ONE Employee"
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_LKP_PHANA_SRC_TE')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_HANA_EXTRACT_DATASET3')]",
@@ -4203,7 +4328,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_ACQ_PHANA_SRC_TE')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1')]",
@@ -4633,36 +4760,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ONE_TW_DATA_REFRESH_DAILY')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PL_ONE_TW_DATA_REFRESH",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 24,
-						"startTime": "2019-10-27T08:00:00.000Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_DATA_REFRESH')]"
 			]
 		}
 	]

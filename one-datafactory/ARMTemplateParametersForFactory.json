@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "one-datafactory"
 		},
+		"AzureBlobStorageML_connectionString": {
+			"value": ""
+		},
+		"AzureML1_apiKey": {
+			"value": ""
+		},
 		"SQLDB_connectionString": {
 			"value": ""
 		},

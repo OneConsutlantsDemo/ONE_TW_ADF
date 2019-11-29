@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "one-datafactory"
 		},
+		"AzureBlobStorageML_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageML'"
+		},
+		"AzureML1_apiKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'apiKey' of 'AzureML1'"
+		},
 		"SQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
@@ -57,6 +65,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorageML_connectionString": {
+						"value": "[parameters('AzureBlobStorageML_connectionString')]"
+					},
+					"AzureML1_apiKey": {
+						"value": "[parameters('AzureML1_apiKey')]"
 					},
 					"SQLDB_connectionString": {
 						"value": "[parameters('SQLDB_connectionString')]"
@@ -138,6 +152,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_3')]"
 			]
 		}
 	]

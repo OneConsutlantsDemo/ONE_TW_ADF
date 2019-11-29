@@ -17,6 +17,296 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_STATE_ASQL_TRG_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "sheet_state",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "sheet_description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ONE",
+					"table": "TE_SHEET_STATE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ONE_TIMEDIM_ASQL_TRG_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DATETIMESTAMP",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DATE_SQL",
+						"type": "date"
+					},
+					{
+						"name": "DATETIME_SAP",
+						"type": "varchar"
+					},
+					{
+						"name": "DATE_SAP",
+						"type": "varchar"
+					},
+					{
+						"name": "YEAR",
+						"type": "varchar"
+					},
+					{
+						"name": "QUARTER",
+						"type": "varchar"
+					},
+					{
+						"name": "MONTH",
+						"type": "varchar"
+					},
+					{
+						"name": "WEEK",
+						"type": "varchar"
+					},
+					{
+						"name": "WEEK_YEAR",
+						"type": "varchar"
+					},
+					{
+						"name": "DAY_OF_WEEK",
+						"type": "varchar"
+					},
+					{
+						"name": "DAY",
+						"type": "varchar"
+					},
+					{
+						"name": "HOUR",
+						"type": "varchar"
+					},
+					{
+						"name": "MINUTE",
+						"type": "varchar"
+					},
+					{
+						"name": "SECOND",
+						"type": "varchar"
+					},
+					{
+						"name": "CALQUARTER",
+						"type": "varchar"
+					},
+					{
+						"name": "CALMONTH",
+						"type": "varchar"
+					},
+					{
+						"name": "CALWEEK",
+						"type": "varchar"
+					},
+					{
+						"name": "YEAR_INT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "QUARTER_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "MONTH_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "WEEK_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "WEEK_YEAR_INT",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DAY_OF_WEEK_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "DAY_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "HOUR_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "MINUTE_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "SECOND_INT",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "MONTH_LAST_DAY",
+						"type": "tinyint",
+						"precision": 3
+					},
+					{
+						"name": "TZNTSTMPS",
+						"type": "decimal",
+						"precision": 15,
+						"scale": 0
+					},
+					{
+						"name": "TZNTSTMPL",
+						"type": "decimal",
+						"precision": 21,
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "ONE",
+					"table": "TE_TIME_DIM"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ONE_TIME_REC_ASQL_TRG_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_time_rec",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "record_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_task",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_pay_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_project",
+						"type": "nvarchar"
+					},
+					{
+						"name": "time_amount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "commit_state",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_domain",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_bill_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "creator",
+						"type": "nvarchar"
+					},
+					{
+						"name": "create_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "modifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modify_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_assignment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ONE",
+					"table": "TE_TIME_RECS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ONE_USERS_ASQL_TRG_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -229,6 +519,100 @@
 					"schema": "ONE",
 					"table": "TE_VENDOR_LIST"
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "1000_Companies.csv",
+						"folderPath": "MachineLearning"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "R&D Spend",
+						"type": "String"
+					},
+					{
+						"name": "Administration",
+						"type": "String"
+					},
+					{
+						"name": "Marketing Spend",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "Profit",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "1000_Companies_output.csv",
+						"folderPath": "MachineLearning"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "R&D Spend",
+						"type": "String"
+					},
+					{
+						"name": "Administration",
+						"type": "String"
+					},
+					{
+						"name": "Marketing Spend",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "Profit",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
@@ -1193,133 +1577,6 @@
 				"typeProperties": {
 					"schema": "SYS",
 					"table": "select \"SCHEMA_NAME\",\"TABLE_NAME\" from public.tables where \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN'"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_PHANA_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "ACQ_TE",
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_TIMEDIM_PHANA_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "_SYS_BI",
-					"table": "M_TIME_DIMENSION"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_LKP_PHANA_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_schema": {
-						"type": "String"
-					},
-					"cw_table": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().cw_schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().cw_table",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_291')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "_SYS_BI",
-					"table": "M_TIME_DIMENSION"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_rwb')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "one.hr.dd::CT_EMPLOYEE"
 				}
 			},
 			"dependsOn": [
