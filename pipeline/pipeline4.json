@@ -1,0 +1,48 @@
+{
+	"name": "pipeline4",
+	"properties": {
+		"activities": [
+			{
+				"name": "ML Batch Execution1",
+				"type": "AzureMLBatchExecution",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"webServiceInputs": {
+						"": {
+							"filePath": "onefilesystemgen2/1000_Companies.csv",
+							"linkedServiceName": {
+								"referenceName": "AzureBlobStorageML",
+								"type": "LinkedServiceReference"
+							}
+						}
+					},
+					"webServiceOutputs": {
+						"": {
+							"filePath": "Demo.csv",
+							"linkedServiceName": {
+								"referenceName": "AzureBlobStorageML",
+								"type": "LinkedServiceReference"
+							}
+						}
+					},
+					"globalParameters": {
+						"": ""
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureML1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
