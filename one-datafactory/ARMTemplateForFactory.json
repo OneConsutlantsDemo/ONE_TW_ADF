@@ -4610,35 +4610,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"webServiceInputs": {
-								"R&D Spend": {
-									"filePath": "onefilesystemgen2/1000_Companies.csv",
-									"linkedServiceName": {
-										"referenceName": "AzureBlobStorageML",
-										"type": "LinkedServiceReference"
-									}
-								},
-								"Administration": {
-									"filePath": "onefilesystemgen2/1000_Companies.csv",
-									"linkedServiceName": {
-										"referenceName": "AzureBlobStorageML",
-										"type": "LinkedServiceReference"
-									}
-								},
-								"Marketing Spend": {
-									"filePath": "onefilesystemgen2/1000_Companies.csv",
-									"linkedServiceName": {
-										"referenceName": "AzureBlobStorageML",
-										"type": "LinkedServiceReference"
-									}
-								},
-								"State": {
-									"filePath": "onefilesystemgen2/1000_Companies.csv",
-									"linkedServiceName": {
-										"referenceName": "AzureBlobStorageML",
-										"type": "LinkedServiceReference"
-									}
-								},
-								"Profit": {
+								"input1": {
 									"filePath": "onefilesystemgen2/1000_Companies.csv",
 									"linkedServiceName": {
 										"referenceName": "AzureBlobStorageML",
@@ -4647,7 +4619,7 @@
 								}
 							},
 							"webServiceOutputs": {
-								"State": {
+								"output1": {
 									"filePath": "onefilesystemgen2/Demo.csv",
 									"linkedServiceName": {
 										"referenceName": "AzureBlobStorageML",
