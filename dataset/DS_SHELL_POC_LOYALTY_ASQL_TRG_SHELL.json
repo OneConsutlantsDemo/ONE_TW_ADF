@@ -1,5 +1,5 @@
 {
-	"name": "DS_SHELL_POC_LOYALTY_TRG_SHELL",
+	"name": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SQLDB",

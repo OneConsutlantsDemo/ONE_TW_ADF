@@ -38,7 +38,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SHELL_POC_LOYALTY_TRG_SHELL",
+						"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
 						"type": "DatasetReference"
 					}
 				]
