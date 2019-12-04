@@ -1,6 +1,145 @@
 {
 	"name": "PL_ONE_SHELL_POC_LOYALTY_UPDATE",
 	"properties": {
+		"activities": [
+			{
+				"name": "UPDATE_HANA_LOYALTY_CARD",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "OdbcSink",
+						"writeBatchSize": 0
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Matching value LMDB",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RETAIL_TRANSACTION_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Matching value LMDB II",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LOYALTY_REWARD_ID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Site Ship To (char)",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LOYALTY_TRANSACTION_TYPE_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LOYALTY_POINTS_AMOUNT",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "Transaction Time",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LOYALTY_TOKEN_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Transaction ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LOYALTY_SCHEME_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Card Number",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DATALOAD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Transaction Value",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STG_CONTROL_ID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "Transaction Quantity",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SYSTEM_ID",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"folder": {
 			"name": "ONE_SHELL_POC"
 		},
