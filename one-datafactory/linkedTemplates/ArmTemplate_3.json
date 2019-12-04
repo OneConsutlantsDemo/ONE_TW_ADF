@@ -1791,92 +1791,11 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "Matching value LMDB",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RETAIL_TRANSACTION_ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Matching value LMDB II",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LOYALTY_REWARD_ID",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
 											"name": "Site Ship To (char)",
 											"type": "String"
 										},
 										"sink": {
-											"name": "LOYALTY_TRANSACTION_TYPE_CODE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LOYALTY_POINTS_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "Transaction Time",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LOYALTY_TOKEN_ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Transaction ID",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LOYALTY_SCHEME_ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Card Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DATALOAD_ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Transaction Value",
-											"type": "String"
-										},
-										"sink": {
-											"name": "STG_CONTROL_ID",
-											"type": "Int64"
-										}
-									},
-									{
-										"source": {
-											"name": "Transaction Quantity",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SYSTEM_ID",
-											"type": "String"
+											"name": "LOYALTY_TOKEN_ID"
 										}
 									}
 								]
