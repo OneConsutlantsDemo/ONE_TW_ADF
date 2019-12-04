@@ -1,6 +1,9 @@
 {
 	"name": "PL_ONE_SHELL_POC_DATA_REFRESH",
 	"properties": {
+		"folder": {
+			"name": "ONE_SHELL_POC"
+		},
 		"annotations": []
 	}
 }

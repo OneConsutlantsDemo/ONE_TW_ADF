@@ -1,0 +1,60 @@
+{
+	"name": "DS_SHELL_LOYALTY_TRG_TE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Matching value LMDB",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Matching value LMDB II",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Site Ship To (char)",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Transaction Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Transaction ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Card Number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Transaction Value",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 3
+			},
+			{
+				"name": "Transaction Quantity",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "SHELL_POC",
+			"table": "LOYALTY_NL_CR"
+		}
+	}
+}
