@@ -16,7 +16,7 @@
 			"location": {
 				"type": "AzureDataLakeStoreLocation",
 				"fileName": {
-					"value": "@dataset().$FILE_NAME",
+					"value": "test.csv",
 					"type": "Expression"
 				},
 				"folderPath": "SHELL_POC_DATASET"
