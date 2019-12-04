@@ -7,6 +7,18 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "one-datafactory"
 		},
+		"SAPHANAViaODBCLinkedService_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SAPHANAViaODBCLinkedService_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SAPHANAViaODBCLinkedService_credential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'credential' of 'SAPHANAViaODBCLinkedService'"
+		},
 		"SapHanaOne_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SapHanaOne'"
@@ -14,12 +26,46 @@
 		"SapHanaShell_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SapHanaShell'"
+		},
+		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SYSTEM"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SAPHANAViaODBCLinkedService')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Odbc",
+				"typeProperties": {
+					"connectionString": {
+						"type": "SecureString",
+						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
+					},
+					"authenticationType": "Basic",
+					"userName": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
+					},
+					"credential": {
+						"type": "SecureString",
+						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "IR-5",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SapHanaOne')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -236,7 +282,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "COPY_LOYALTY_DATA_ASQL",
+						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -485,7 +531,30 @@
 					"tableName": "\"SHELL_POC\".\"CT_EDAM_LOYALTY_REWARD_FACT_FF\""
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SAPHANAViaODBCLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_POS_HANA_SRC_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaShell",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "SHELL_POC",
+					"table": "CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SapHanaShell')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_291')]",
@@ -1630,200 +1699,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_rwb')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ACQ_HANA_ADLS_TE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get-Tables",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource",
-								"query": {
-									"value": "select '\"'||SCHEMA_NAME||'\"'||'.'||'\"'||TABLE_NAME||'\"' AS Table_Name, SUBSTR_AFTER(TABLE_NAME,'::') as FILE_NAME from public.tables\nwhere \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN' \n",
-									"type": "Expression"
-								}
-							},
-							"dataset": {
-								"referenceName": "DS_ACQ_HANA_SRC_TE",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "Copy-Each-Table",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get-Tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get-Tables').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Copy Data",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "SYS.select \"SCHEMA_NAME\",\"TABLE_NAME\" from public.tables where \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN'"
-										},
-										{
-											"name": "Destination",
-											"value": "ADLS_ACQ_HANA_TE/@{item().TABLE_NAME}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "SapHanaSource",
-											"query": {
-												"value": "SELECT  *  FROM @{item().Table_Name}",
-												"type": "Expression"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureDataLakeStoreWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_ACQ_HANA_SRC_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_ACQ_ADLS_TRG_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_ACQ_HANA_SRC_TE')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ONE_SHELL_POC_LOYALTY_UPDATE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "UPDATE_HANA_LOYALTY_CARD",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "OdbcSink",
-								"writeBatchSize": 0
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Site Ship To (char)",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LOYALTY_TOKEN_ID"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "ONE_SHELL_POC"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL')]"
 			]
 		}
 	]

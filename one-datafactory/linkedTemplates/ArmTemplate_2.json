@@ -6,22 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "one-datafactory"
-		},
-		"SAPHANAViaODBCLinkedService_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SAPHANAViaODBCLinkedService'"
-		},
-		"SAPHANAViaODBCLinkedService_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SAPHANAViaODBCLinkedService'"
-		},
-		"SAPHANAViaODBCLinkedService_credential": {
-			"type": "secureString",
-			"metadata": "Secure string for 'credential' of 'SAPHANAViaODBCLinkedService'"
-		},
-		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "SYSTEM"
 		}
 	},
 	"variables": {
@@ -607,6 +591,77 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": "GL_CRBDS_matching_Loyalty_for_NL_CR 3006-2108 -PoC.csv",
+						"folderPath": "SHELL_POC_DATASET"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Matching value LMDB",
+						"type": "String"
+					},
+					{
+						"name": "Matching value LMDB II",
+						"type": "String"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "String"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "String"
+					},
+					{
+						"name": "Card Number",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Value",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"$FILE_NAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@dataset().$FILE_NAME",
+							"type": "Expression"
+						},
 						"folderPath": "SHELL_POC_DATASET"
 					},
 					"columnDelimiter": ",",
@@ -1511,36 +1566,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SAPHANAViaODBCLinkedService')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Odbc",
-				"typeProperties": {
-					"connectionString": {
-						"type": "SecureString",
-						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
-					},
-					"authenticationType": "Basic",
-					"userName": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
-					},
-					"credential": {
-						"type": "SecureString",
-						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "IR-5",
-					"type": "IntegrationRuntimeReference"
-				}
 			},
 			"dependsOn": []
 		}

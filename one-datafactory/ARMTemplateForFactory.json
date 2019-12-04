@@ -1066,7 +1066,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "COPY_LOYALTY_DATA_ASQL",
+						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -7515,6 +7515,79 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"$FILE_NAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@dataset().$FILE_NAME",
+							"type": "Expression"
+						},
+						"folderPath": "SHELL_POC_DATASET"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Matching value LMDB",
+						"type": "String"
+					},
+					{
+						"name": "Matching value LMDB II",
+						"type": "String"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "String"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "String"
+					},
+					{
+						"name": "Card Number",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Value",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_Gen1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -7597,6 +7670,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SAPHANAViaODBCLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_POS_HANA_SRC_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaShell",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "SHELL_POC",
+					"table": "CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SapHanaShell')]"
 			]
 		},
 		{

@@ -144,18 +144,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"SAPHANAViaODBCLinkedService_connectionString": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
-					},
-					"SAPHANAViaODBCLinkedService_password": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
-					},
-					"SAPHANAViaODBCLinkedService_credential": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
-					},
-					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -177,11 +165,23 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"SAPHANAViaODBCLinkedService_connectionString": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_password": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
+					},
+					"SAPHANAViaODBCLinkedService_credential": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
+					},
 					"SapHanaOne_connectionString": {
 						"value": "[parameters('SapHanaOne_connectionString')]"
 					},
 					"SapHanaShell_connectionString": {
 						"value": "[parameters('SapHanaShell_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},
