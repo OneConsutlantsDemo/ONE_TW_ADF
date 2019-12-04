@@ -131,11 +131,12 @@
 				"annotations": [],
 				"type": "AzureML",
 				"typeProperties": {
-					"mlEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/3570563b92f2409081ddab9fc33e3dbc/services/9c75d35f03294ddaa7373e0d60ec30f8/jobs?api-version=2.0",
+					"mlEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/27574f5828504ba2bdcb402b89c21dd8/services/9c3d200088104009a2afbe034b5d6a67/execute?api-version=2.0&details=true",
 					"apiKey": {
 						"type": "SecureString",
 						"value": "[parameters('AzureML1_apiKey')]"
-					}
+					},
+					"updateResourceEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/27574f5828504ba2bdcb402b89c21dd8/services/9c3d200088104009a2afbe034b5d6a67/execute?api-version=2.0&details=true"
 				}
 			},
 			"dependsOn": []
@@ -162,6 +163,57 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TwitterSentiment_ML')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ML Batch Execution1",
+						"type": "AzureMLBatchExecution",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"webServiceInputs": {
+								"input1": {
+									"filePath": "onefilesystemgen2/twitter_data.csv",
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorageML",
+										"type": "LinkedServiceReference"
+									}
+								}
+							},
+							"webServiceOutputs": {
+								"output1": {
+									"filePath": "onefilesystemgen2/Demo.csv",
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorageML",
+										"type": "LinkedServiceReference"
+									}
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureML1",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureML1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageML')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
@@ -987,106 +1039,6 @@
 				"typeProperties": {
 					"schema": "SalesLT",
 					"table": "Address"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_TIME_REC_ASQL_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_time_rec",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "record_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_task",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_pay_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_project",
-						"type": "nvarchar"
-					},
-					{
-						"name": "time_amount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "comment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "commit_state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_bill_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_group",
-						"type": "nvarchar"
-					},
-					{
-						"name": "creator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "create_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "modifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "modify_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_assignment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_TIME_RECS"
 				}
 			},
 			"dependsOn": [

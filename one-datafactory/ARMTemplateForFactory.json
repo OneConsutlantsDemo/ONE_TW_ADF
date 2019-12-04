@@ -4409,6 +4409,57 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/TwitterSentiment_ML')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ML Batch Execution1",
+						"type": "AzureMLBatchExecution",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"webServiceInputs": {
+								"input1": {
+									"filePath": "onefilesystemgen2/twitter_data.csv",
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorageML",
+										"type": "LinkedServiceReference"
+									}
+								}
+							},
+							"webServiceOutputs": {
+								"output1": {
+									"filePath": "onefilesystemgen2/Demo.csv",
+									"linkedServiceName": {
+										"referenceName": "AzureBlobStorageML",
+										"type": "LinkedServiceReference"
+									}
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureML1",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureML1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageML')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/backup')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -8157,11 +8208,12 @@
 				"annotations": [],
 				"type": "AzureML",
 				"typeProperties": {
-					"mlEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/3570563b92f2409081ddab9fc33e3dbc/services/9c75d35f03294ddaa7373e0d60ec30f8/jobs?api-version=2.0",
+					"mlEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/27574f5828504ba2bdcb402b89c21dd8/services/9c3d200088104009a2afbe034b5d6a67/execute?api-version=2.0&details=true",
 					"apiKey": {
 						"type": "SecureString",
 						"value": "[parameters('AzureML1_apiKey')]"
-					}
+					},
+					"updateResourceEndpoint": "https://ussouthcentral.services.azureml.net/workspaces/27574f5828504ba2bdcb402b89c21dd8/services/9c3d200088104009a2afbe034b5d6a67/execute?api-version=2.0&details=true"
 				}
 			},
 			"dependsOn": []
@@ -8658,6 +8710,291 @@
 				"[concat(variables('factoryId'), '/datasets/DS_ONE_EMP_DETAIL_ASQL_SRC_TE')]",
 				"[concat(variables('factoryId'), '/datasets/DS_ONE_PROJECT_ASQL_TRG_TE')]",
 				"[concat(variables('factoryId'), '/datasets/DS_ONE_USERS_ASQL_TRG_TE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_SHELL_POC_DATA_REFRESH')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "COPY_LOYALTY_DATA_ASQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Matching value LMDB",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Matching value LMDB",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Matching value LMDB II",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Matching value LMDB II",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Ship To (char)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site Ship To (char)",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction Time",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transaction Time",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transaction ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Card Number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Card Number",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction Value",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transaction Value",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction Quantity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Transaction Quantity",
+											"type": "Decimal"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_TRG_SHELL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "ONE_SHELL_POC"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_TRG_SHELL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_TRG_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Matching value LMDB",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Matching value LMDB II",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Card Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Transaction Value",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SHELL_POC",
+					"table": "LOYALTY_NL_CR"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "GL_CRBDS_matching_Loyalty_for_NL_CR 3006-2108 -PoC.csv",
+						"folderPath": "SHELL_POC_DATASET"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Matching value LMDB",
+						"type": "String"
+					},
+					{
+						"name": "Matching value LMDB II",
+						"type": "String"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "String"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "String"
+					},
+					{
+						"name": "Card Number",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Value",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_Gen1')]"
 			]
 		}
 	]

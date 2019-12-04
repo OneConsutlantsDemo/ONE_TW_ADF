@@ -13,6 +13,289 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DF_TRM_ASQL2_TE",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "ProjectAttrSRC",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProjectAttr": {},
+									"Project": {},
+									"UserAttr": {},
+									"User": {},
+									"ProjectSelf": {},
+									"EmployeDetail": {},
+									"ProjectTRM": {},
+									"UserTRM": {}
+								}
+							},
+							"staging": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_EXTRACT_ETL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataSet1_Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DataSet2_Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DataSet1_Extract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DataSet3_Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DataSet2_Extract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_HANA_EXTRACT_DATASET3",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_TRANSFORMATION_ETL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataSet1_Transform",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DataSet2_Transform",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DataSet1_Transform",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_DATA_REFRESH')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Transform",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Extract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Web_Tabular_Model_Refresh_Compliance",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Transform",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=wJjk0qpVBna4SupqoHRyZGUEU2CL6o8uvwdmiK3FSxA%3d",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							}
+						}
+					},
+					{
+						"name": "Web_Tabular_Model_Refresh_Expense",
+						"description": "",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Web_Tabular_Model_Refresh_Compliance",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://s2events.azure-automation.net/webhooks?token=wJjk0qpVBna4SupqoHRyZGUEU2CL6o8uvwdmiK3FSxA%3d",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
+								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
+								"DatabaseRefreshType": "Full"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "ONE_TIMESHEET_PROJECT"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/backup')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -56,7 +339,10 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ONE_TW_DATA_REFRESH_DAILY')]",
@@ -84,7 +370,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_DATA_REFRESH')]"
+			]
 		}
 	]
 }

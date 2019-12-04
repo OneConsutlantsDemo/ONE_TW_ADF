@@ -13,6 +13,104 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ACQ_TIME_REC_ASQL_SRC_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_time_rec",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "record_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_task",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_pay_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_project",
+						"type": "nvarchar"
+					},
+					{
+						"name": "time_amount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "commit_state",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_domain",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_bill_type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "creator",
+						"type": "nvarchar"
+					},
+					{
+						"name": "create_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "modifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modify_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_assignment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ACQ",
+					"table": "TE_TIME_RECS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ASQL_SCR_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1007,64 +1105,6 @@
 				"typeProperties": {
 					"schema": "ONE",
 					"table": "TE_USER_SHEET_NOTES_REJECTED"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_NOTES_SUBMIT_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_usersheetnote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_usersheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "note_text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "note_creator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "create_date",
-						"type": "date"
-					},
-					{
-						"name": "extra_string_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "extra_string_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "extra_string_3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_USER_SHEET_NOTES_SUBMITTED"
 				}
 			},
 			"dependsOn": []

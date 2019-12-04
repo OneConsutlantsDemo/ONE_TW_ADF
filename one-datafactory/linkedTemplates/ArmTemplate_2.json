@@ -17,6 +17,64 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_NOTES_SUBMIT_ASQL_TRG_TE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_usersheetnote",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_usersheet",
+						"type": "nvarchar"
+					},
+					{
+						"name": "note_text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "note_creator",
+						"type": "nvarchar"
+					},
+					{
+						"name": "create_date",
+						"type": "date"
+					},
+					{
+						"name": "extra_string_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "extra_string_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "extra_string_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ONE",
+					"table": "TE_USER_SHEET_NOTES_SUBMITTED"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_STATE_ASQL_TRG_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1336,258 +1394,128 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_ACQ_ADLS_ASQL_ONE_TIMESHEET')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_TRG_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
 					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreReadSettings",
-									"recursive": false,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"dataset": {
-								"referenceName": "FileNameList",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
+						"name": "Matching value LMDB",
+						"type": "nvarchar"
 					},
 					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Copy data1",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureDataLakeStoreReadSettings",
-												"recursive": true
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
-										},
-										"sink": {
-											"type": "AzureSqlSink"
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "SRCDemo",
-											"type": "DatasetReference",
-											"parameters": {
-												"FileName": {
-													"value": "@{item().FileName}",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "TRGDemo",
-											"type": "DatasetReference",
-											"parameters": {
-												"TableName": {
-													"value": "@{item().TableName}",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FileNameList')]",
-				"[concat(variables('factoryId'), '/datasets/SRCDemo')]",
-				"[concat(variables('factoryId'), '/datasets/TRGDemo')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ACQ_ADLS_SQL_TE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
+						"name": "Matching value LMDB II",
+						"type": "nvarchar"
+					},
 					{
-						"name": "Copy Data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreReadSettings",
-									"recursive": false,
-									"wildcardFileName": "*.csv",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"tableOption": "autoCreate"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "DS_ACQ_ADLS_SRC_TE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DS_ACQ_SQL_TRG_TE",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "Site Ship To (char)",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Card Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Transaction Value",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
 					}
 				],
-				"annotations": []
+				"typeProperties": {
+					"schema": "SHELL_POC",
+					"table": "LOYALTY_NL_CR"
+				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "GL_CRBDS_matching_Loyalty_for_NL_CR 3006-2108 -PoC.csv",
+						"folderPath": "SHELL_POC_DATASET"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
 					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "DS_ACQ_ADLS_SRC_TE",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureDataLakeStoreReadSettings",
-								"recursive": true
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
+						"name": "Matching value LMDB",
+						"type": "String"
 					},
 					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get Metadata1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get Metadata1').output",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Append variable1",
-									"type": "AppendVariable",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "Variable_Array",
-										"value": "item.name()"
-									}
-								}
-							]
-						}
+						"name": "Matching value LMDB II",
+						"type": "String"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "String"
+					},
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "String"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "String"
+					},
+					{
+						"name": "Card Number",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Value",
+						"type": "String"
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "String"
 					}
-				],
-				"variables": {
-					"Variable_Array": {
-						"type": "Array"
-					}
-				},
-				"annotations": []
+				]
 			},
 			"dependsOn": []
 		}
