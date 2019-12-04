@@ -13,14 +13,14 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_ACQ_HANA_ADLS_TE')]",
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_SHELL_POC_DATA_REFRESH')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Get-Tables",
-						"type": "Lookup",
+						"name": "HANA_TO_ADLS_STAGE",
+						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -34,98 +34,42 @@
 							"source": {
 								"type": "SapHanaSource",
 								"query": {
-									"value": "select '\"'||SCHEMA_NAME||'\"'||'.'||'\"'||TABLE_NAME||'\"' AS Table_Name, SUBSTR_AFTER(TABLE_NAME,'::') as FILE_NAME from public.tables\nwhere \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN' \n",
+									"value": "SELECT \"RETAIL_TRANSACTION_ID\", \"RETAIL_SITE_ID\", \"EVENT_START_DATE\", \nSUM(\"SALES_QUANTITY_SUM\") AS \"SALES_QUANTITY\", SUM(\"SALES_AMOUNT_SUM\") AS \"SALES_AMOUNT\", \"LOYALTY_IND\", \"SALE_OR_RETURN_INDICATOR\" , \n\"SYSTEM_ID\", \"SALES_TRANSACTION_NUMBER\", \"CALENDAR_YEAR_C\", \"COUNTRY_CODE\", \"START_DATE\"\nFROM \"SHELL_POC\".\"CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF\"\nWHERE \"LOYALTY_IND\" = 'Y'\nAND \"SALE_OR_RETURN_INDICATOR\" = 'S'\nAND \"START_DATE\" < '2019-08-31'\nGROUP BY \n\"RETAIL_TRANSACTION_ID\", \"RETAIL_SITE_ID\", \"EVENT_START_DATE\",  \"LOYALTY_IND\", \"SALE_OR_RETURN_INDICATOR\" , \n\"SYSTEM_ID\", \"SALES_TRANSACTION_NUMBER\", \"CALENDAR_YEAR_C\", \"COUNTRY_CODE\", \"START_DATE\"\n",
 									"type": "Expression"
 								}
 							},
-							"dataset": {
-								"referenceName": "DS_ACQ_HANA_SRC_TE",
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_SHELL_POC_POS_HANA_SRC_SHELL",
 								"type": "DatasetReference",
 								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "Copy-Each-Table",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get-Tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
 							}
 						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get-Tables').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Copy Data",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "SYS.select \"SCHEMA_NAME\",\"TABLE_NAME\" from public.tables where \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN'"
-										},
-										{
-											"name": "Destination",
-											"value": "ADLS_ACQ_HANA_TE/@{item().TABLE_NAME}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "SapHanaSource",
-											"query": {
-												"value": "SELECT  *  FROM @{item().Table_Name}",
-												"type": "Expression"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureDataLakeStoreWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_ACQ_HANA_SRC_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_ACQ_ADLS_TRG_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							]
-						}
+						"outputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
+				"folder": {
+					"name": "ONE_SHELL_POC"
+				},
 				"annotations": []
 			},
 			"dependsOn": []

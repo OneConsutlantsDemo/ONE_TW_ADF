@@ -1066,7 +1066,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "COPY_LOYALTY_CARD_LOAD",
+						"name": "HANA_TO_ADLS_STAGE",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1079,30 +1079,35 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
+								"type": "SapHanaSource",
+								"query": {
+									"value": "SELECT \"RETAIL_TRANSACTION_ID\", \"RETAIL_SITE_ID\", \"EVENT_START_DATE\", \nSUM(\"SALES_QUANTITY_SUM\") AS \"SALES_QUANTITY\", SUM(\"SALES_AMOUNT_SUM\") AS \"SALES_AMOUNT\", \"LOYALTY_IND\", \"SALE_OR_RETURN_INDICATOR\" , \n\"SYSTEM_ID\", \"SALES_TRANSACTION_NUMBER\", \"CALENDAR_YEAR_C\", \"COUNTRY_CODE\", \"START_DATE\"\nFROM \"SHELL_POC\".\"CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF\"\nWHERE \"LOYALTY_IND\" = 'Y'\nAND \"SALE_OR_RETURN_INDICATOR\" = 'S'\nAND \"START_DATE\" < '2019-08-31'\nGROUP BY \n\"RETAIL_TRANSACTION_ID\", \"RETAIL_SITE_ID\", \"EVENT_START_DATE\",  \"LOYALTY_IND\", \"SALE_OR_RETURN_INDICATOR\" , \n\"SYSTEM_ID\", \"SALES_TRANSACTION_NUMBER\", \"CALENDAR_YEAR_C\", \"COUNTRY_CODE\", \"START_DATE\"\n",
+									"type": "Expression"
 								}
 							},
 							"sink": {
-								"type": "AzureSqlSink"
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
 							},
 							"enableStaging": false
 						},
 						"inputs": [
 							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
+								"referenceName": "DS_SHELL_POC_POS_HANA_SRC_SHELL",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
+								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1115,8 +1120,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL')]"
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_POS_HANA_SRC_SHELL')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL')]"
 			]
 		},
 		{
@@ -7523,18 +7528,13 @@
 					"referenceName": "ADLS_Gen1",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"$FILE_NAME": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@dataset().$FILE_NAME",
+							"value": "test.csv",
 							"type": "Expression"
 						},
 						"folderPath": "SHELL_POC_DATASET"
