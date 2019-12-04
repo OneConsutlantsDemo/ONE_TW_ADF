@@ -1,6 +1,9 @@
 {
 	"name": "PL_ONE_SHELL_POC_LOYALTY_UPDATE",
 	"properties": {
+		"folder": {
+			"name": "ONE_SHELL_POC"
+		},
 		"annotations": []
 	}
 }
