@@ -1,0 +1,307 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "one-datafactory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_SHELL_POC_DATA_REFRESH')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "COPY_LOYALTY_DATA_ASQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "ONE_SHELL_POC"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_ONE_SHELL_POC_LOYALTY_UPDATE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "UPDATE_HANA_LOYALTY_CARD",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "OdbcSink",
+								"writeBatchSize": 0
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Matching value LMDB",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RETAIL_TRANSACTION_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Matching value LMDB II",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LOYALTY_REWARD_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Site Ship To (char)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LOYALTY_TRANSACTION_TYPE_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LOYALTY_POINTS_AMOUNT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction Time",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LOYALTY_TOKEN_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LOYALTY_SCHEME_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Card Number",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DATALOAD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction Value",
+											"type": "String"
+										},
+										"sink": {
+											"name": "STG_CONTROL_ID",
+											"type": "Int64"
+										}
+									},
+									{
+										"source": {
+											"name": "Transaction Quantity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SYSTEM_ID",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "ONE_SHELL_POC"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Matching value LMDB",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Matching value LMDB II",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Card Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Transaction Value",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SHELL_POC",
+					"table": "LOYALTY_NL_CR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SAPHANAViaODBCLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OdbcTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "\"SHELL_POC\".\"CT_EDAM_LOYALTY_REWARD_FACT_FF\""
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

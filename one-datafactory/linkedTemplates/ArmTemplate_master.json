@@ -15,6 +15,18 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'apiKey' of 'AzureML1'"
 		},
+		"SAPHANAViaODBCLinkedService_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SAPHANAViaODBCLinkedService_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SAPHANAViaODBCLinkedService_credential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'credential' of 'SAPHANAViaODBCLinkedService'"
+		},
 		"SQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
@@ -22,6 +34,10 @@
 		"SapHanaOne_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SapHanaOne'"
+		},
+		"SapHanaShell_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SapHanaShell'"
 		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
@@ -38,6 +54,10 @@
 		"ADLS_Gen1_properties_typeProperties_resourceGroupName": {
 			"type": "string",
 			"defaultValue": "ONE-Azure"
+		},
+		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SYSTEM"
 		},
 		"containerUri": {
 			"type": "string",
@@ -125,8 +145,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"SapHanaOne_connectionString": {
-						"value": "[parameters('SapHanaOne_connectionString')]"
+					"SAPHANAViaODBCLinkedService_connectionString": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_password": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
+					},
+					"SAPHANAViaODBCLinkedService_credential": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
+					},
+					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -147,6 +176,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SapHanaOne_connectionString": {
+						"value": "[parameters('SapHanaOne_connectionString')]"
+					},
+					"SapHanaShell_connectionString": {
+						"value": "[parameters('SapHanaShell_connectionString')]"
 					}
 				}
 			},

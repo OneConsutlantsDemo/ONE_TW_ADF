@@ -11,10 +11,22 @@
 		"AzureML1_apiKey": {
 			"value": ""
 		},
+		"SAPHANAViaODBCLinkedService_connectionString": {
+			"value": ""
+		},
+		"SAPHANAViaODBCLinkedService_password": {
+			"value": ""
+		},
+		"SAPHANAViaODBCLinkedService_credential": {
+			"value": ""
+		},
 		"SQLDB_connectionString": {
 			"value": ""
 		},
 		"SapHanaOne_connectionString": {
+			"value": ""
+		},
+		"SapHanaShell_connectionString": {
 			"value": ""
 		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
@@ -28,6 +40,9 @@
 		},
 		"ADLS_Gen1_properties_typeProperties_resourceGroupName": {
 			"value": "ONE-Azure"
+		},
+		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+			"value": "SYSTEM"
 		},
 		"containerUri": {
 			"value": ""
