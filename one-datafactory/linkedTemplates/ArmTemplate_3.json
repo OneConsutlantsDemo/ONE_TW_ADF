@@ -282,7 +282,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "COPY_LOYALTY_CARD_LOAD",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
