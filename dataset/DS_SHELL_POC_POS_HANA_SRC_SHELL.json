@@ -1,0 +1,16 @@
+{
+	"name": "DS_SHELL_POC_POS_HANA_SRC_SHELL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SapHanaShell",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SHELL_POC",
+			"table": "CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF"
+		}
+	}
+}
