@@ -7557,10 +7557,6 @@
 					}
 				],
 				"typeProperties": {
-					"schema": {
-						"value": "/****** Script for SelectTopNRows command from SSMS  ******/\nSELECT [Matching value LMDB]\n      ,[Matching value LMDB II]\n      ,[Site Ship To (char)]\n      ,[Date]\n      ,[Transaction Time]\n      ,[Transaction ID]\n      ,[Card Number]\n      ,[Transaction Value]\n      ,[Transaction Quantity]\n\t  ,CONCAT([Date],' ',[Transaction Time]) AS COMPARE\n\t  ,DATEADD(ss,240,CONVERT(datetime,CONCAT([Date],' ',[Transaction Time]))) as DATEAHEAD\n\t  ,DATEADD(ss,-240,CONVERT(datetime,CONCAT([Date],' ',[Transaction Time]))) as DATELAG\n  FROM [SHELL_POC].[LOYALTY_NL_CR]",
-						"type": "Expression"
-					},
 					"table": ""
 				}
 			},
