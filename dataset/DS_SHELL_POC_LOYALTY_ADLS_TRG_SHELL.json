@@ -23,39 +23,51 @@
 		},
 		"schema": [
 			{
-				"name": "Matching value LMDB",
+				"name": "RETAIL_TRANSACTION_ID",
 				"type": "String"
 			},
 			{
-				"name": "Matching value LMDB II",
+				"name": "RETAIL_SITE_ID",
 				"type": "String"
 			},
 			{
-				"name": "Site Ship To (char)",
+				"name": "EVENT_START_DATE",
 				"type": "String"
 			},
 			{
-				"name": "Date",
+				"name": "SALES_QUANTITY",
 				"type": "String"
 			},
 			{
-				"name": "Transaction Time",
+				"name": "SALES_AMOUNT",
 				"type": "String"
 			},
 			{
-				"name": "Transaction ID",
+				"name": "LOYALTY_IND",
 				"type": "String"
 			},
 			{
-				"name": "Card Number",
+				"name": "SALE_OR_RETURN_INDICATOR",
 				"type": "String"
 			},
 			{
-				"name": "Transaction Value",
+				"name": "SYSTEM_ID",
 				"type": "String"
 			},
 			{
-				"name": "Transaction Quantity",
+				"name": "SALES_TRANSACTION_NUMBER",
+				"type": "String"
+			},
+			{
+				"name": "CALENDAR_YEAR_C",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "START_DATE",
 				"type": "String"
 			}
 		]
