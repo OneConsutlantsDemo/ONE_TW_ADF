@@ -3,62 +3,9 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "HANA_TO_ADLS_STAGE",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SapHanaSource",
-						"query": {
-							"value": "SELECT \"RETAIL_TRANSACTION_ID\", \"RETAIL_SITE_ID\", \"EVENT_START_DATE\", \nSUM(\"SALES_QUANTITY_SUM\") AS \"SALES_QUANTITY\", SUM(\"SALES_AMOUNT_SUM\") AS \"SALES_AMOUNT\", \"LOYALTY_IND\", \"SALE_OR_RETURN_INDICATOR\" , \n\"SYSTEM_ID\", \"SALES_TRANSACTION_NUMBER\", \"CALENDAR_YEAR_C\", \"COUNTRY_CODE\", \"START_DATE\"\nFROM \"SHELL_POC\".\"CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF\"\nWHERE \"LOYALTY_IND\" = 'Y'\nAND \"SALE_OR_RETURN_INDICATOR\" = 'S'\nAND \"START_DATE\" < '2019-08-31'\nGROUP BY \n\"RETAIL_TRANSACTION_ID\", \"RETAIL_SITE_ID\", \"EVENT_START_DATE\",  \"LOYALTY_IND\", \"SALE_OR_RETURN_INDICATOR\" , \n\"SYSTEM_ID\", \"SALES_TRANSACTION_NUMBER\", \"CALENDAR_YEAR_C\", \"COUNTRY_CODE\", \"START_DATE\"\n",
-							"type": "Expression"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureDataLakeStoreWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_SHELL_POC_POS_HANA_SRC_SHELL",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "dataflow1",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "HANA_TO_ADLS_STAGE",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
