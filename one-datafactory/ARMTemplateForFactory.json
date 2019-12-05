@@ -1131,7 +1131,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "UPDATE_HANA_LOYALTY_CARD",
+						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -1147,31 +1147,17 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "AzureDataLakeStoreReadSettings",
-									"recursive": true
+									"recursive": false,
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
 								}
 							},
 							"sink": {
-								"type": "OdbcSink",
-								"writeBatchSize": 0
+								"type": "AzureSqlSink"
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Site Ship To (char)",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LOYALTY_TOKEN_ID"
-										}
-									}
-								]
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -1182,7 +1168,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL",
+								"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1196,7 +1182,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL')]"
+				"[concat(variables('factoryId'), '/datasets/DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL')]"
 			]
 		},
 		{
