@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "UPDATE_HANA_LOYALTY_CARD",
+				"name": "Copy data1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -28,21 +28,7 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Site Ship To (char)",
-									"type": "String"
-								},
-								"sink": {
-									"name": "LOYALTY_TOKEN_ID"
-								}
-							}
-						]
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
