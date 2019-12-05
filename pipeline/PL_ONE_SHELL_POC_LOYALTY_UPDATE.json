@@ -26,8 +26,7 @@
 						}
 					},
 					"sink": {
-						"type": "OdbcSink",
-						"writeBatchSize": 0
+						"type": "AzureSqlSink"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -53,7 +52,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL",
+						"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
 						"type": "DatasetReference"
 					}
 				]
