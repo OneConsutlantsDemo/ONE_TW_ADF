@@ -10,13 +10,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "ASQLLOYALTY"
-				},
-				{
-					"dataset": {
-						"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL",
-						"type": "DatasetReference"
-					},
-					"name": "ADLSPOS"
 				}
 			],
 			"sinks": [
@@ -36,7 +29,7 @@
 					"name": "DerivedColumn3"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nsource(output(\n\t\tRETAIL_TRANSACTION_ID as string,\n\t\tRETAIL_SITE_ID as string,\n\t\tEVENT_START_DATE as string,\n\t\tSALES_QUANTITY as string,\n\t\tSALES_AMOUNT as string,\n\t\tLOYALTY_IND as string,\n\t\tSALE_OR_RETURN_INDICATOR as string,\n\t\tSYSTEM_ID as string,\n\t\tSALES_TRANSACTION_NUMBER as string,\n\t\tCALENDAR_YEAR_C as string,\n\t\tCOUNTRY_CODE as string,\n\t\tSTART_DATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> ADLSPOS\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
+			"script": "\n\nsource(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> sink1"
 		}
 	}
 }
