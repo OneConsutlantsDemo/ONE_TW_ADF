@@ -666,39 +666,51 @@
 				},
 				"schema": [
 					{
-						"name": "Matching value LMDB",
+						"name": "RETAIL_TRANSACTION_ID",
 						"type": "String"
 					},
 					{
-						"name": "Matching value LMDB II",
+						"name": "RETAIL_SITE_ID",
 						"type": "String"
 					},
 					{
-						"name": "Site Ship To (char)",
+						"name": "EVENT_START_DATE",
 						"type": "String"
 					},
 					{
-						"name": "Date",
+						"name": "SALES_QUANTITY",
 						"type": "String"
 					},
 					{
-						"name": "Transaction Time",
+						"name": "SALES_AMOUNT",
 						"type": "String"
 					},
 					{
-						"name": "Transaction ID",
+						"name": "LOYALTY_IND",
 						"type": "String"
 					},
 					{
-						"name": "Card Number",
+						"name": "SALE_OR_RETURN_INDICATOR",
 						"type": "String"
 					},
 					{
-						"name": "Transaction Value",
+						"name": "SYSTEM_ID",
 						"type": "String"
 					},
 					{
-						"name": "Transaction Quantity",
+						"name": "SALES_TRANSACTION_NUMBER",
+						"type": "String"
+					},
+					{
+						"name": "CALENDAR_YEAR_C",
+						"type": "String"
+					},
+					{
+						"name": "COUNTRY_CODE",
+						"type": "String"
+					},
+					{
+						"name": "START_DATE",
 						"type": "String"
 					}
 				]
@@ -762,8 +774,11 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "SHELL_POC",
-					"table": "LOYALTY_NL_CR"
+					"schema": {
+						"value": "/****** Script for SelectTopNRows command from SSMS  ******/\nSELECT [Matching value LMDB]\n      ,[Matching value LMDB II]\n      ,[Site Ship To (char)]\n      ,[Date]\n      ,[Transaction Time]\n      ,[Transaction ID]\n      ,[Card Number]\n      ,[Transaction Value]\n      ,[Transaction Quantity]\n\t  ,CONCAT([Date],' ',[Transaction Time]) AS COMPARE\n\t  ,DATEADD(ss,240,CONVERT(datetime,CONCAT([Date],' ',[Transaction Time]))) as DATEAHEAD\n\t  ,DATEADD(ss,-240,CONVERT(datetime,CONCAT([Date],' ',[Transaction Time]))) as DATELAG\n  FROM [SHELL_POC].[LOYALTY_NL_CR]",
+						"type": "Expression"
+					},
+					"table": ""
 				}
 			},
 			"dependsOn": []
@@ -1536,31 +1551,75 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/TwitterText')]",
+			"name": "[concat(parameters('factoryName'), '/TestTRG')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ADLS_Gen1",
+					"referenceName": "SQLDB",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": "twitter_data.csv",
-						"folderPath": "MachineLearning"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
+				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"type": "String"
+						"name": "Matching value LMDB",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Matching value LMDB II",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site Ship To (char)",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Transaction ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Card Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Transaction Value",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					},
+					{
+						"name": "Transaction Quantity",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 3
+					},
+					{
+						"name": "datefurture",
+						"type": "timestamp"
+					},
+					{
+						"name": "datepast",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
-				]
+				],
+				"typeProperties": {
+					"schema": "SHELL_POC",
+					"table": "LOYALTY_NL_CR_1"
+				}
 			},
 			"dependsOn": []
 		}

@@ -37,6 +37,72 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/TestTarget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"folderPath": "Samples"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TwitterText')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "twitter_data.csv",
+						"folderPath": "MachineLearning"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SAPHANAViaODBCLinkedService')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -271,64 +337,6 @@
 						]
 					}
 				],
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ONE_SHELL_POC_LOYALTY_UPDATE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreReadSettings",
-									"recursive": false,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "ONE_SHELL_POC"
-				},
 				"annotations": []
 			},
 			"dependsOn": []
@@ -1013,694 +1021,43 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_2911')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Copy_291",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
+								"type": "DatasetReference"
+							},
+							"name": "ASQLLOYALTY",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "TestTRG",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
 						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "_SYS_BI.M_TIME_DIMENSION"
-							},
-							{
-								"name": "Destination",
-								"value": "ONE.TE_TIME_DIM"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource",
-								"query": {
-									"value": "select \n\"DATETIMESTAMP\",\n\"DATE_SQL\",\n\"DATETIME_SAP\",\n\"DATE_SAP\",\n\"YEAR\",\n\"QUARTER\",\n\"MONTH\",\n\"WEEK\",\n\"WEEK_YEAR\",\n\"DAY_OF_WEEK\",\n\"DAY\",\n\"HOUR\",\n\"MINUTE\",\n\"SECOND\",\n\"CALQUARTER\",\n\"CALMONTH\",\n\"CALWEEK\",\n\"YEAR_INT\",\n\"QUARTER_INT\",\n\"MONTH_INT\",\n\"WEEK_INT\",\n\"WEEK_YEAR_INT\",\n\"DAY_OF_WEEK_INT\",\n\"DAY_INT\",\n\"HOUR_INT\",\n\"MINUTE_INT\",\n\"SECOND_INT\",\n\"MONTH_LAST_DAY\",\n\"TZNTSTMPS\",\n\"TZNTSTMPL\"\n from \"_SYS_BI\".\"M_TIME_DIMENSION\"\n where \"YEAR\" > '2008'",
-									"type": "Expression"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "DATETIMESTAMP",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "DATETIMESTAMP",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"name": "DATE_SQL",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "DATE_SQL",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"name": "DATETIME_SAP",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DATETIME_SAP",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DATE_SAP",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DATE_SAP",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "YEAR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "YEAR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "QUARTER",
-											"type": "String"
-										},
-										"sink": {
-											"name": "QUARTER",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MONTH",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WEEK",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_YEAR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WEEK_YEAR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_OF_WEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DAY_OF_WEEK",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DAY",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "HOUR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "HOUR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MINUTE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MINUTE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SECOND",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SECOND",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CALQUARTER",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CALQUARTER",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CALMONTH",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CALMONTH",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CALWEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CALWEEK",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "YEAR_INT",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "YEAR_INT",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "QUARTER_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "QUARTER_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "MONTH_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "WEEK_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_YEAR_INT",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "WEEK_YEAR_INT",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_OF_WEEK_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "DAY_OF_WEEK_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "DAY_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "HOUR_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "HOUR_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "MINUTE_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "MINUTE_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "SECOND_INT",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "SECOND_INT",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH_LAST_DAY",
-											"type": "Byte"
-										},
-										"sink": {
-											"name": "MONTH_LAST_DAY",
-											"type": "Byte"
-										}
-									},
-									{
-										"source": {
-											"name": "TZNTSTMPS",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TZNTSTMPS",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TZNTSTMPL",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TZNTSTMPL",
-											"type": "Decimal"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_291",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_291",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
+						{
+							"name": "DerivedColumn3"
+						}
+					],
+					"script": "\n\nsource(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3),\n\t\tdatefurture as binary,\n\t\tdatepast as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\t{Matching value LMDB},\n\t\t{Matching value LMDB II},\n\t\t{Site Ship To (char)},\n\t\tDate,\n\t\t{Transaction Time},\n\t\t{Transaction ID},\n\t\t{Card Number},\n\t\t{Transaction Value},\n\t\t{Transaction Quantity},\n\t\tdatefurture = {Merged Date Behind},\n\t\tdatepast = {Merged Date Ahead}\n\t)) ~> sink1"
+				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_291')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyPipeline_rwb')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy_rwb",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "ONE.one.hr.dd::CT_EMPLOYEE"
-							},
-							{
-								"name": "Destination",
-								"value": "ONE.TE_EMPLOYEE_DETAIL"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource"
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "User_Logon_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "User_Logon_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "First_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "First_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Last_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Last_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Type",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Type",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Status",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Status",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String"
-										},
-										"sink": {
-											"name": "City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Company",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Company",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Department",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Department",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Job_Title",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Job_Title",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Display_Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Display_Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Email",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Email",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Mobile",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Mobile",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Employee_Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Employee_Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Office",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Office",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "State",
-											"type": "String"
-										},
-										"sink": {
-											"name": "State",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Street",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Street",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Street_Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Street_Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Postal_Code",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Postal_Code",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_City",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_City",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Street",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_Street",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Street_Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Personal_Street_Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Latitude",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "Personal_Latitude",
-											"type": "Double"
-										}
-									},
-									{
-										"source": {
-											"name": "Personal_Longitude",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "Personal_Longitude",
-											"type": "Double"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_rwb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_rwb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_rwb')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
