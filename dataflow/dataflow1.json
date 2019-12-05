@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "TestTarget",
+						"referenceName": "TestTRG",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -29,7 +29,7 @@
 					"name": "DerivedColumn3"
 				}
 			],
-			"script": "\n\nsource(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> sink1"
+			"script": "\n\nsource(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3),\n\t\tdatefurture as binary,\n\t\tdatepast as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\t{Matching value LMDB},\n\t\t{Matching value LMDB II},\n\t\t{Site Ship To (char)},\n\t\tDate,\n\t\t{Transaction Time},\n\t\t{Transaction ID},\n\t\t{Card Number},\n\t\t{Transaction Value},\n\t\t{Transaction Quantity},\n\t\tdatefurture = {Merged Date Behind},\n\t\tdatepast = {Merged Date Ahead}\n\t)) ~> sink1"
 		}
 	}
 }
