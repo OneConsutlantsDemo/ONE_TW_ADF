@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
 		},
+		"Test_Input_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Test_Input'"
+		},
+		"Test_Output_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Test_Output'"
+		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
 			"defaultValue": "https://onedatalakeadls.azuredatalakestore.net/webhdfs/v1"
@@ -30,6 +38,14 @@
 		"ADLS_Gen1_properties_typeProperties_resourceGroupName": {
 			"type": "string",
 			"defaultValue": "ONE-Azure"
+		},
+		"Test_Input_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://onestorageaccountazure.dfs.core.windows.net"
+		},
+		"Test_Output_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://onestorageaccountazure.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -74,6 +90,40 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('SQLDB_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Test_Input')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('Test_Input_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('Test_Input_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Test_Output')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('Test_Output_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('Test_Output_accountKey')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -1055,129 +1105,6 @@
 				"typeProperties": {
 					"schema": "ACQ",
 					"table": "TE_USERS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ATTR_ASQL_SCR_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_attribute",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_attr_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "string_value",
-						"type": "nvarchar"
-					},
-					{
-						"name": "numeric_value",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USERS_ATTRIBS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_EXPENSE_ASQL_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_sheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_timesheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "start_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "end_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_approver",
-						"type": "nvarchar"
-					},
-					{
-						"name": "level",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "reserved1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USER_EXPENSE_SHEETS"
 				}
 			},
 			"dependsOn": [

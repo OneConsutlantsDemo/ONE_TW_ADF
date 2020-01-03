@@ -35,6 +35,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SapHanaShell'"
 		},
+		"Test_Input_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Test_Input'"
+		},
+		"Test_Output_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Test_Output'"
+		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
 			"defaultValue": "https://onedatalakeadls.azuredatalakestore.net/webhdfs/v1"
@@ -54,6 +62,14 @@
 		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "SYSTEM"
+		},
+		"Test_Input_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://onestorageaccountazure.dfs.core.windows.net"
+		},
+		"Test_Output_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://onestorageaccountazure.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"type": "string",
@@ -88,6 +104,12 @@
 					"SQLDB_connectionString": {
 						"value": "[parameters('SQLDB_connectionString')]"
 					},
+					"Test_Input_accountKey": {
+						"value": "[parameters('Test_Input_accountKey')]"
+					},
+					"Test_Output_accountKey": {
+						"value": "[parameters('Test_Output_accountKey')]"
+					},
 					"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 						"value": "[parameters('ADLS_Gen1_properties_typeProperties_dataLakeStoreUri')]"
 					},
@@ -99,6 +121,12 @@
 					},
 					"ADLS_Gen1_properties_typeProperties_resourceGroupName": {
 						"value": "[parameters('ADLS_Gen1_properties_typeProperties_resourceGroupName')]"
+					},
+					"Test_Input_properties_typeProperties_url": {
+						"value": "[parameters('Test_Input_properties_typeProperties_url')]"
+					},
+					"Test_Output_properties_typeProperties_url": {
+						"value": "[parameters('Test_Output_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -137,21 +165,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"SAPHANAViaODBCLinkedService_connectionString": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
-					},
-					"SAPHANAViaODBCLinkedService_password": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
-					},
-					"SAPHANAViaODBCLinkedService_credential": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
-					},
-					"SapHanaOne_connectionString": {
-						"value": "[parameters('SapHanaOne_connectionString')]"
-					},
-					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -173,8 +186,23 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"SAPHANAViaODBCLinkedService_connectionString": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_password": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
+					},
+					"SAPHANAViaODBCLinkedService_credential": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
+					},
+					"SapHanaOne_connectionString": {
+						"value": "[parameters('SapHanaOne_connectionString')]"
+					},
 					"SapHanaShell_connectionString": {
 						"value": "[parameters('SapHanaShell_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},

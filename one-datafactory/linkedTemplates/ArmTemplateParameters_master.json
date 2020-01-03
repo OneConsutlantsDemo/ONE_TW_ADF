@@ -26,6 +26,12 @@
 		"SapHanaShell_connectionString": {
 			"value": ""
 		},
+		"Test_Input_accountKey": {
+			"value": ""
+		},
+		"Test_Output_accountKey": {
+			"value": ""
+		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 			"value": "https://onedatalakeadls.azuredatalakestore.net/webhdfs/v1"
 		},
@@ -40,6 +46,12 @@
 		},
 		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
 			"value": "SYSTEM"
+		},
+		"Test_Input_properties_typeProperties_url": {
+			"value": "https://onestorageaccountazure.dfs.core.windows.net"
+		},
+		"Test_Output_properties_typeProperties_url": {
+			"value": "https://onestorageaccountazure.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"value": ""
