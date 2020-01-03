@@ -5,12 +5,20 @@
 			"referenceName": "Test_Input",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Fileinput": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "taxi+_zone_lookup.xlsx",
+				"fileName": {
+					"value": "@dataset().Fileinput",
+					"type": "Expression"
+				},
 				"folderPath": "Input",
 				"fileSystem": "onefilesystemgen2"
 			},

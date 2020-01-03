@@ -5,11 +5,20 @@
 			"referenceName": "Test_Output",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Fileoutput": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().Fileoutput",
+					"type": "Expression"
+				},
 				"folderPath": "Output",
 				"fileSystem": "onefilesystemgen2"
 			},
