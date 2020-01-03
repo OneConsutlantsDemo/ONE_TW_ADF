@@ -45,6 +45,19 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "PL_ONE_SHELL_POC_DATA_REFRESH",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ONE_SHELL_POC_DATA_REFRESH",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
