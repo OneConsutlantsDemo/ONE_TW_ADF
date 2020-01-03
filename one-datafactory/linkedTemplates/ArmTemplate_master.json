@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageML'"
 		},
-		"AzureML1_apiKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'apiKey' of 'AzureML1'"
-		},
 		"SAPHANAViaODBCLinkedService_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SAPHANAViaODBCLinkedService'"
@@ -89,9 +85,6 @@
 					"AzureBlobStorageML_connectionString": {
 						"value": "[parameters('AzureBlobStorageML_connectionString')]"
 					},
-					"AzureML1_apiKey": {
-						"value": "[parameters('AzureML1_apiKey')]"
-					},
 					"SQLDB_connectionString": {
 						"value": "[parameters('SQLDB_connectionString')]"
 					},
@@ -144,6 +137,21 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SAPHANAViaODBCLinkedService_connectionString": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_password": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
+					},
+					"SAPHANAViaODBCLinkedService_credential": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
+					},
+					"SapHanaOne_connectionString": {
+						"value": "[parameters('SapHanaOne_connectionString')]"
+					},
+					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -165,23 +173,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"SAPHANAViaODBCLinkedService_connectionString": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
-					},
-					"SAPHANAViaODBCLinkedService_password": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
-					},
-					"SAPHANAViaODBCLinkedService_credential": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
-					},
-					"SapHanaOne_connectionString": {
-						"value": "[parameters('SapHanaOne_connectionString')]"
-					},
 					"SapHanaShell_connectionString": {
 						"value": "[parameters('SapHanaShell_connectionString')]"
-					},
-					"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
-						"value": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]"
 					}
 				}
 			},

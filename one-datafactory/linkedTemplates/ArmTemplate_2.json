@@ -6,360 +6,32 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "one-datafactory"
+		},
+		"SAPHANAViaODBCLinkedService_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SAPHANAViaODBCLinkedService_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SAPHANAViaODBCLinkedService_credential": {
+			"type": "secureString",
+			"metadata": "Secure string for 'credential' of 'SAPHANAViaODBCLinkedService'"
+		},
+		"SapHanaOne_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SapHanaOne'"
+		},
+		"SAPHANAViaODBCLinkedService_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SYSTEM"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_NOTES_SUBMIT_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_usersheetnote",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_usersheet",
-						"type": "nvarchar"
-					},
-					{
-						"name": "note_text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "note_creator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "create_date",
-						"type": "date"
-					},
-					{
-						"name": "extra_string_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "extra_string_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "extra_string_3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_USER_SHEET_NOTES_SUBMITTED"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_SHEET_STATE_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "sheet_state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "sheet_description",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_SHEET_STATE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_TIMEDIM_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "DATETIMESTAMP",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DATE_SQL",
-						"type": "date"
-					},
-					{
-						"name": "DATETIME_SAP",
-						"type": "varchar"
-					},
-					{
-						"name": "DATE_SAP",
-						"type": "varchar"
-					},
-					{
-						"name": "YEAR",
-						"type": "varchar"
-					},
-					{
-						"name": "QUARTER",
-						"type": "varchar"
-					},
-					{
-						"name": "MONTH",
-						"type": "varchar"
-					},
-					{
-						"name": "WEEK",
-						"type": "varchar"
-					},
-					{
-						"name": "WEEK_YEAR",
-						"type": "varchar"
-					},
-					{
-						"name": "DAY_OF_WEEK",
-						"type": "varchar"
-					},
-					{
-						"name": "DAY",
-						"type": "varchar"
-					},
-					{
-						"name": "HOUR",
-						"type": "varchar"
-					},
-					{
-						"name": "MINUTE",
-						"type": "varchar"
-					},
-					{
-						"name": "SECOND",
-						"type": "varchar"
-					},
-					{
-						"name": "CALQUARTER",
-						"type": "varchar"
-					},
-					{
-						"name": "CALMONTH",
-						"type": "varchar"
-					},
-					{
-						"name": "CALWEEK",
-						"type": "varchar"
-					},
-					{
-						"name": "YEAR_INT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "QUARTER_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "MONTH_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "WEEK_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "WEEK_YEAR_INT",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "DAY_OF_WEEK_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "DAY_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "HOUR_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "MINUTE_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "SECOND_INT",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "MONTH_LAST_DAY",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "TZNTSTMPS",
-						"type": "decimal",
-						"precision": 15,
-						"scale": 0
-					},
-					{
-						"name": "TZNTSTMPL",
-						"type": "decimal",
-						"precision": 21,
-						"scale": 7
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_TIME_DIM"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ONE_TIME_REC_ASQL_TRG_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_time_rec",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "record_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_task",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_pay_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_project",
-						"type": "nvarchar"
-					},
-					{
-						"name": "time_amount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "comment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "commit_state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_bill_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_group",
-						"type": "nvarchar"
-					},
-					{
-						"name": "creator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "create_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "modifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "modify_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_assignment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "TE_TIME_RECS"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_ONE_USERS_ASQL_TRG_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1615,6 +1287,119 @@
 				"typeProperties": {
 					"schema": "SHELL_POC",
 					"table": "LOYALTY_NL_CR_1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TestTarget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"folderPath": "Samples"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TwitterText')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "twitter_data.csv",
+						"folderPath": "MachineLearning"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SAPHANAViaODBCLinkedService')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Odbc",
+				"typeProperties": {
+					"connectionString": {
+						"type": "SecureString",
+						"value": "[parameters('SAPHANAViaODBCLinkedService_connectionString')]"
+					},
+					"authenticationType": "Basic",
+					"userName": "[parameters('SAPHANAViaODBCLinkedService_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SAPHANAViaODBCLinkedService_password')]"
+					},
+					"credential": {
+						"type": "SecureString",
+						"value": "[parameters('SAPHANAViaODBCLinkedService_credential')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "IR-5",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SapHanaOne')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SapHana",
+				"typeProperties": {
+					"connectionString": "[parameters('SapHanaOne_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "IR-5",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": []
