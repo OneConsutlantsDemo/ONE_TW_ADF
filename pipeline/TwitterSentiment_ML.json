@@ -33,10 +33,6 @@
 							}
 						}
 					}
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureML1",
-					"type": "LinkedServiceReference"
 				}
 			}
 		],
