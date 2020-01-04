@@ -62,7 +62,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Fileinput": {
-											"value": "@item.filename()",
+											"value": "@item().filename",
 											"type": "Expression"
 										}
 									}
@@ -74,7 +74,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Fileoutput": {
-											"value": "@item.table()",
+											"value": "@item().table",
 											"type": "Expression"
 										}
 									}
