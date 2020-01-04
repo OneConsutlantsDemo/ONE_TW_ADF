@@ -51,11 +51,7 @@
 									},
 									"formatSettings": {
 										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": {
-											"value": ".csv",
-											"type": "Expression"
-										}
+										"quoteAllText": true
 									}
 								},
 								"enableStaging": false
@@ -66,7 +62,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Fileinput": {
-											"value": "twitter.csv",
+											"value": "@item().filename",
 											"type": "Expression"
 										}
 									}
@@ -78,7 +74,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Fileoutput": {
-											"value": "twitter.csv",
+											"value": "@item().table",
 											"type": "Expression"
 										}
 									}
