@@ -29,7 +29,7 @@
 		"Test_Input_accountKey": {
 			"value": ""
 		},
-		"Test_Output_accountKey": {
+		"Test_output_connectionString": {
 			"value": ""
 		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
@@ -48,9 +48,6 @@
 			"value": "SYSTEM"
 		},
 		"Test_Input_properties_typeProperties_url": {
-			"value": "https://onestorageaccountazure.dfs.core.windows.net"
-		},
-		"Test_Output_properties_typeProperties_url": {
 			"value": "https://onestorageaccountazure.dfs.core.windows.net"
 		},
 		"containerUri": {

@@ -39,9 +39,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'Test_Input'"
 		},
-		"Test_Output_accountKey": {
+		"Test_output_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'Test_Output'"
+			"metadata": "Secure string for 'connectionString' of 'Test_output'"
 		},
 		"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
@@ -64,10 +64,6 @@
 			"defaultValue": "SYSTEM"
 		},
 		"Test_Input_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://onestorageaccountazure.dfs.core.windows.net"
-		},
-		"Test_Output_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://onestorageaccountazure.dfs.core.windows.net"
 		},
@@ -107,8 +103,8 @@
 					"Test_Input_accountKey": {
 						"value": "[parameters('Test_Input_accountKey')]"
 					},
-					"Test_Output_accountKey": {
-						"value": "[parameters('Test_Output_accountKey')]"
+					"Test_output_connectionString": {
+						"value": "[parameters('Test_output_connectionString')]"
 					},
 					"ADLS_Gen1_properties_typeProperties_dataLakeStoreUri": {
 						"value": "[parameters('ADLS_Gen1_properties_typeProperties_dataLakeStoreUri')]"
@@ -124,9 +120,6 @@
 					},
 					"Test_Input_properties_typeProperties_url": {
 						"value": "[parameters('Test_Input_properties_typeProperties_url')]"
-					},
-					"Test_Output_properties_typeProperties_url": {
-						"value": "[parameters('Test_Output_properties_typeProperties_url')]"
 					}
 				}
 			},
