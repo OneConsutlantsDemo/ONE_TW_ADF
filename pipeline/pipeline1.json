@@ -3,6 +3,39 @@
 	"properties": {
 		"activities": [
 			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "Test_Input1",
+						"type": "DatasetReference",
+						"parameters": {
+							"Fileinput": "ForEach.csv"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
 				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
@@ -37,22 +70,14 @@
 									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "AzureBlobFSReadSettings",
-										"recursive": false,
-										"enablePartitionDiscovery": false
+										"recursive": true
 									},
 									"formatSettings": {
 										"type": "DelimitedTextReadSettings"
 									}
 								},
 								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true
-									}
+									"type": "AzureSqlSink"
 								},
 								"enableStaging": false
 							},
@@ -61,60 +86,21 @@
 									"referenceName": "Test_Input1",
 									"type": "DatasetReference",
 									"parameters": {
-										"Fileinput": {
-											"value": "@item().filename",
-											"type": "Expression"
-										}
+										"Fileinput": "@items().filename"
 									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Test_Output1",
+									"referenceName": "Test_output1",
 									"type": "DatasetReference",
 									"parameters": {
-										"Fileoutput": {
-											"value": "@item().table",
-											"type": "Expression"
-										}
+										"table": "@items().table"
 									}
 								}
 							]
 						}
 					]
-				}
-			},
-			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"dataset": {
-						"referenceName": "Test_Input1",
-						"type": "DatasetReference",
-						"parameters": {
-							"Fileinput": "ForEach.csv"
-						}
-					},
-					"firstRowOnly": false
 				}
 			}
 		],
