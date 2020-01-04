@@ -3813,55 +3813,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/backup')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "Transform",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Extract",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Test')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3953,7 +3904,7 @@
 											"referenceName": "Test_Input1",
 											"type": "DatasetReference",
 											"parameters": {
-												"Fileinput": "@items().filename"
+												"Fileinput": "@item().filename"
 											}
 										}
 									],
@@ -3962,7 +3913,7 @@
 											"referenceName": "Test_output2",
 											"type": "DatasetReference",
 											"parameters": {
-												"table": "@items().table"
+												"table": "@item().table"
 											}
 										}
 									]
@@ -3979,6 +3930,55 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Test_Input1')]",
 				"[concat(variables('factoryId'), '/datasets/Test_output2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/backup')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Extract",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Transform",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Extract",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
 			]
 		},
 		{
