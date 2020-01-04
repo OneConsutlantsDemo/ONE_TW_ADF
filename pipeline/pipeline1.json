@@ -66,7 +66,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Fileinput": {
-											"value": "@item().filename",
+											"value": "twitter.csv",
 											"type": "Expression"
 										}
 									}
@@ -78,7 +78,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Fileoutput": {
-											"value": "@item().table",
+											"value": "twitter.csv",
 											"type": "Expression"
 										}
 									}
