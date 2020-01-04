@@ -1,5 +1,5 @@
 {
-	"name": "Test_output1",
+	"name": "Test_output2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Test_output",
