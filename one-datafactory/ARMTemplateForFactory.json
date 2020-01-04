@@ -3921,7 +3921,10 @@
 											"formatSettings": {
 												"type": "DelimitedTextWriteSettings",
 												"quoteAllText": true,
-												"fileExtension": ""
+												"fileExtension": {
+													"value": ".csv",
+													"type": "Expression"
+												}
 											}
 										},
 										"enableStaging": false
