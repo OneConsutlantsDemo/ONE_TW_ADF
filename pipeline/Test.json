@@ -88,7 +88,7 @@
 									"referenceName": "Test_Input1",
 									"type": "DatasetReference",
 									"parameters": {
-										"Fileinput": "@items().filename"
+										"Fileinput": "@item().filename"
 									}
 								}
 							],
@@ -97,7 +97,7 @@
 									"referenceName": "Test_output2",
 									"type": "DatasetReference",
 									"parameters": {
-										"table": "@items().table"
+										"table": "@item().table"
 									}
 								}
 							]
