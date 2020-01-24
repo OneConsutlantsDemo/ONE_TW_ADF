@@ -3500,8 +3500,183 @@
 								}
 							},
 							"enableStaging": false,
-							"parallelCopies": 4,
-							"dataIntegrationUnits": 16
+							"parallelCopies": 1,
+							"dataIntegrationUnits": 2,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "VENDORID",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "VENDORID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TPEP_PICKUP_DATETIME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TPEP_PICKUP_DATETIME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TPEP_DROPOFF_DATETIME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TPEP_DROPOFF_DATETIME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PASSENGER_COUNT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PASSENGER_COUNT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TRIP_DISTANCE",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TRIP_DISTANCE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "RATECODEID",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "RATECODEID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "STORE_AND_FWD_FLAG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "STORE_AND_FWD_FLAG",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PULOCATIONID",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PULOCATIONID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "DOLOCATIONID",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "DOLOCATIONID",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "PAYMENT_TYPE",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PAYMENT_TYPE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "FARE_AMOUNT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "FARE_AMOUNT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "EXTRA",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "EXTRA",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "MTA_TAX",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "MTA_TAX",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TIP_AMOUNT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TIP_AMOUNT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TOLLS_AMOUNT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TOLLS_AMOUNT",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "IMPROVEMENT_SURCHARGE",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "IMPROVEMENT_SURCHARGE",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TOTAL_AMOUNT",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TOTAL_AMOUNT",
+											"type": "Decimal"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{

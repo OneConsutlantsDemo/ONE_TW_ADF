@@ -1467,10 +1467,11 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "Sid",
 						"folderPath": "Output",
 						"fileSystem": "onefilesystemgen2"
 					},
-					"compressionCodec": "snappy"
+					"compressionCodec": "gzip"
 				},
 				"schema": []
 			},
