@@ -1,0 +1,20 @@
+{
+	"name": "TargetGen2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_Input",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Output",
+				"fileSystem": "onefilesystemgen2"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
