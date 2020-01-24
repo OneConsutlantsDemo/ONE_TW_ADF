@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "one-datafactory"
 		},
+		"Oracle1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle1'"
+		},
 		"SAPHANAViaODBCLinkedService_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SAPHANAViaODBCLinkedService'"
@@ -36,6 +40,50 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Test_Input1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Fileinput": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().Fileinput",
+							"type": "Expression"
+						},
+						"folderPath": "Input",
+						"fileSystem": "onefilesystemgen2"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "PK\u0003\u0004\u0014\u0000\u0006\u0000\b\u0000\u0000\u0000!\u0000b�h^\u0001\u0000\u0000�\u0004\u0000\u0000\u0013\u0000\b\u0002[Content_Types].xml �\u0004\u0002(�\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000���N�0\u0010E�H�C�-Jܲ@\b5��\u0012*Q>�ēƪc[�ii����\u0010B�\u0015j7�\u0012��{2��h�nm���ƻR\f����U^\u001b7/���%�\u0017\u0019�rZY�\u0014\u001b@1\u0019__�f�\u0000�q��R4D�AJ�\u001ah\u0015\u0016>����V\u0011�ƹ\f�Z�9����NV�\u00118ʩ�\u0010��\u0013�ji){^��-I\u0004�\"{�\u0016v^�P!XS)bR�r��K�s(�3�`c\u0002�0���\u000e���\u0006��7\u001eM4\u001a����ZƐk+�|\\|z�(���P��6\u0015h_-[�@�!���\u0000Pk��\u0016�2n�}�?\u0015�L��� ��%�\u0013\u001c��\u001bd����dN\u0018\"m",
+						"type": "String"
+					},
+					{
+						"name": "�ǞDO97*�~��ɸ8�O�c\u001c|n��\u0007�\u0004E��\u0014�\u0011���B\u0010��!$}�����;{���[����2�\u0006\u0000\u0000��\u0003\u0000PK\u0003\u0004\u0014\u0000\u0006\u0000\b\u0000\u0000\u0000!\u0000�U0#�\u0000\u0000\u0000L\u0002\u0000\u0000\u000b\u0000\b\u0002_rels/.rels �\u0004\u0002(�\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000��MO�0\f��H�����ݐ\u0010BKwAH�!T~�I�\u000f���$\u001bݿ'\u001c\u0010T\u001a�\u0003G�~����<���!��4��\u0012\u0014;#�w����qu\u0007*&r�Fq���\u0011v�����GJy(v��*����K��#F��D�\u0010�.W\u001a\t\u0013�\u001c�\u0016=��Z�MY�b��\u0001�BS����7��ϛז��",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Test_output2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -89,6 +137,23 @@
 						"type": "String"
 					}
 				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('Oracle1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "IR-5",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": []
 		},
@@ -390,6 +455,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Test_Input1')]",
 				"[concat(variables('factoryId'), '/datasets/Test_output2')]"
 			]
 		},
@@ -538,6 +604,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SapHanaShell')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OracleDemo')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "SYSTEM",
+					"table": "TAXI_2018"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle1')]"
 			]
 		},
 		{
@@ -862,297 +949,10 @@
 							"name": "FilterRankApproved"
 						}
 					],
-					"script": "\n\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tbatchSize: 2,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> CodeExpense\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> CodeExpenseSources\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> PayTypes\nsource(output(\n\t\tid_expense_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_project as string,\n\t\tid_code_expense as string,\n\t\tamount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_code_currency as string,\n\t\tid_code_expense_source as string,\n\t\tid_domain as string,\n\t\tread_only_comment as string,\n\t\tflags as string,\n\t\tid_picture as string,\n\t\treserved1 as string,\n\t\treserved2 as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tmileage as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ExpenseRecords\nsource(output(\n\t\tid_sheet as string,\n\t\tid_timesheet as string,\n\t\tid_user as string,\n\t\tpname as string,\n\t\tstate as integer,\n\t\tstart_date as string,\n\t\tend_date as string,\n\t\tid_domain as string,\n\t\tid_approver as string,\n\t\tlevel as integer,\n\t\treserved1 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserTimeSheet\nsource(output(\n\t\tid_sheet as string,\n\t\tid_timesheet as string,\n\t\tid_user as string,\n\t\tpname as string,\n\t\tstate as integer,\n\t\tstart_date as string,\n\t\tend_date as string,\n\t\tid_domain as string,\n\t\tid_approver as string,\n\t\tlevel as integer,\n\t\treserved1 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserExpenseSheet\nsource(output(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_timestamp as integer,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tid_domain as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SheetNotes\nsource(output(\n\t\tid_time_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_code_task as string,\n\t\tid_code_pay_type as string,\n\t\tid_project as string,\n\t\ttime_amount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_domain as string,\n\t\tid_code_bill_type as string,\n\t\tid_group as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> TimeRec\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> CurrencyCode\nCodeExpense select(mapColumn(\n\t\tid_code,\n\t\texpenses_description = description,\n\t\tis_hidden,\n\t\tloggable,\n\t\texpenses_name = pname,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> CodeExpenseMap\nCodeExpenseSources select(mapColumn(\n\t\tid_code,\n\t\texpense_source_description = description,\n\t\tis_hidden,\n\t\tloggable,\n\t\texpense_source_name = pname,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> CodeExpenseSourceMap\nPayTypes select(mapColumn(\n\t\tid_code,\n\t\tpay_type_description = description,\n\t\tis_hidden,\n\t\tloggable,\n\t\tpay_type_name = pname,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> PayTypeMap\nExpenseRecords select(mapColumn(\n\t\tid_expense_rec,\n\t\tid_user,\n\t\trecord_date,\n\t\tid_project,\n\t\tid_code_expense,\n\t\tamount,\n\t\tcomment,\n\t\tcommit_state,\n\t\tid_code_currency,\n\t\tid_code_expense_source,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ExpenseRecordsMap\nUserTimeSheet select(mapColumn(\n\t\tid_sheet,\n\t\tid_timesheet,\n\t\tid_user,\n\t\tpname,\n\t\tstate,\n\t\tstart_date,\n\t\tend_date,\n\t\tid_approver,\n\t\tlevel,\n\t\tcomment = reserved1,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserTimeSheetMap\nUserExpenseSheet select(mapColumn(\n\t\tid_sheet,\n\t\tid_timesheet,\n\t\tid_user,\n\t\tpname,\n\t\tstate,\n\t\tstart_date,\n\t\tend_date,\n\t\tid_approver,\n\t\tlevel,\n\t\tcomment = reserved1,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserExpenseSheetMap\nSheetNotes select(mapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date = create_timestamp,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SheetNotesMap\nTimeRec select(mapColumn(\n\t\tid_time_rec,\n\t\tid_user,\n\t\trecord_date,\n\t\tid_code_task,\n\t\tid_code_pay_type,\n\t\tid_project,\n\t\ttime_amount,\n\t\tcomment,\n\t\tcommit_state,\n\t\tid_code_bill_type,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> TimeRecMap\nTimeRecMap derive(UOM_Code = 'h') ~> UOMCode\nExpenseRecordsMap, CurrencyCode join(id_code_currency == id_code,\n\tjoinType:'left',\n\tbroadcast: 'none')~> JoinCurrency\nJoinCurrency select(mapColumn(\n\t\tid_expense_rec,\n\t\tid_user,\n\t\trecord_date,\n\t\tid_project,\n\t\tid_code_expense,\n\t\tamount,\n\t\tcomment,\n\t\tcommit_state,\n\t\tid_code_currency,\n\t\tid_code_expense_source,\n\t\tcurrency_key = pname\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectExpenseREC\nSelectExpenseREC filter(id_code_expense == 'Lodging/Room') ~> FilterLodging\nFilterLodging derive(Vendor_ID = '',\n\t\tload_time = currentTimestamp(),\n\t\trecord_date = toDate((concat(substring(record_date,0,4),'-',substring(record_date,5,2),'-',substring(record_date,7,2))))) ~> LoadDateERL\nCodeExpenseSourceMap derive(load_time = currentTimestamp()) ~> LoadDateCES\nCodeExpenseMap derive(load_time = currentTimestamp()) ~> LoadDateCE\nPayTypeMap derive(load_time = currentTimestamp()) ~> LoadDatePT\nSelectExpenseREC derive(load_time = currentTimestamp(),\n\t\trecord_date = toDate((concat(substring(record_date,0,4),'-',substring(record_date,5,2),'-',substring(record_date,7,2))))) ~> LoadDateER\nUOMCode derive(load_time = currentTimestamp(),\n\t\trecord_date = toDate((concat(substring(record_date,0,4),'-',substring(record_date,5,2),'-',substring(record_date,7,2))))) ~> LoadDateTR\nUserExpenseSheetMap derive(load_time = currentTimestamp(),\n\t\tstart_date = toDate((concat(substring(start_date,0,4),'-',substring(start_date,5,2),'-',substring(start_date,7,2)))),\n\t\tend_date = toDate((concat(substring(end_date,0,4),'-',substring(end_date,5,2),'-',substring(end_date,7,2))))) ~> LoadDateUES\nSheetNotesMap derive(load_time = currentTimestamp(),\n\t\tcreate_date = add(toDate('1970-01-01'),toInteger(create_date/(60*60*24)))) ~> LoadDateSN\nUserTimeSheetMap derive(load_time = currentTimestamp(),\n\t\tstart_date = toDate((concat(substring(start_date,0,4),'-',substring(start_date,5,2),'-',substring(start_date,7,2)))),\n\t\tend_date = toDate((concat(substring(end_date,0,4),'-',substring(end_date,5,2),'-',substring(end_date,7,2))))) ~> LoadDateUT\nLoadDateSN filter(note_text == 'Approved for Level 1') ~> ApprovedFilter\nLoadDateSN filter(like(note_text , 'Rejected%')) ~> RejectedFilter\nLoadDateSN filter(note_text == 'Submitted for Approval') ~> SubmitFilter\nSubmitFilter window(over(id_usersheet),\n\tasc(create_date, true),\n\tRank = rowNumber()) ~> RankSubmit\nRankSubmit filter(Rank == 1) ~> FilterRankSubmit\nRejectedFilter window(over(id_usersheet),\n\tasc(create_date, true),\n\tRank = rowNumber()) ~> RankRejected\nRankRejected filter(Rank == 1) ~> FilterRankReject\nApprovedFilter window(over(id_usersheet),\n\tasc(create_date, true),\n\trank = rowNumber()) ~> RankApproved\nRankApproved filter(rank == 1) ~> FilterRankApproved\nLoadDateCE sink(input(\n\t\tid_code as string,\n\t\texpenses_description as string,\n\t\tis_hidden as integer,\n\t\tloggable as string,\n\t\texpenses_name as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tkeys:['id_code'],\n\ttruncate:true,\n\tformat: 'table',\n\tpartitionBy('hash', 1),\n\tdateFormat:'MM/dd/yyyy',\n\ttimestampFormat:'MM/dd/yyyy HH:mm:ss') ~> CodeExpenseTRM\nLoadDateCES sink(input(\n\t\tid_code as string,\n\t\texpense_source_description as string,\n\t\tis_hidden as integer,\n\t\tloggable as string,\n\t\texpense_source_name as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> CodeExpenseSourceTRM\nLoadDatePT sink(input(\n\t\tid_code as string,\n\t\tpay_type_description as string,\n\t\tis_hidden as integer,\n\t\tloggable as string,\n\t\tpay_type_name as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> PayTypeTRM\nLoadDateER sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ExpenseRecTRM\nLoadDateUT sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> UserTimeSheetTRM\nLoadDateUES sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> UserExpenseSheetTRM\nLoadDateSN sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as string,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t),\n\tdateFormat:'yyyy-MM-dd') ~> SheetNotesTRM\nLoadDateTR sink(input(\n\t\tid_time_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_code_task as string,\n\t\tid_code_pay_type as string,\n\t\tid_project as string,\n\t\ttime_amount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_domain as string,\n\t\tid_code_bill_type as string,\n\t\tid_group as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> TimeRecTRM\nLoadDateERL sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ExpenseRecordLodge\nFilterRankApproved sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as date,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ApprovedSheetTRM\nFilterRankReject sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as date,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t)) ~> RejectedSheetTRM\nFilterRankSubmit sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as date,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t)) ~> SubmitSheetTRM"
+					"script": "source(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tbatchSize: 2,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> CodeExpense\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> CodeExpenseSources\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> PayTypes\nsource(output(\n\t\tid_expense_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_project as string,\n\t\tid_code_expense as string,\n\t\tamount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_code_currency as string,\n\t\tid_code_expense_source as string,\n\t\tid_domain as string,\n\t\tread_only_comment as string,\n\t\tflags as string,\n\t\tid_picture as string,\n\t\treserved1 as string,\n\t\treserved2 as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tmileage as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ExpenseRecords\nsource(output(\n\t\tid_sheet as string,\n\t\tid_timesheet as string,\n\t\tid_user as string,\n\t\tpname as string,\n\t\tstate as integer,\n\t\tstart_date as string,\n\t\tend_date as string,\n\t\tid_domain as string,\n\t\tid_approver as string,\n\t\tlevel as integer,\n\t\treserved1 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserTimeSheet\nsource(output(\n\t\tid_sheet as string,\n\t\tid_timesheet as string,\n\t\tid_user as string,\n\t\tpname as string,\n\t\tstate as integer,\n\t\tstart_date as string,\n\t\tend_date as string,\n\t\tid_domain as string,\n\t\tid_approver as string,\n\t\tlevel as integer,\n\t\treserved1 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserExpenseSheet\nsource(output(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_timestamp as integer,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tid_domain as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SheetNotes\nsource(output(\n\t\tid_time_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_code_task as string,\n\t\tid_code_pay_type as string,\n\t\tid_project as string,\n\t\ttime_amount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_domain as string,\n\t\tid_code_bill_type as string,\n\t\tid_group as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> TimeRec\nsource(output(\n\t\tid_code as string,\n\t\tdescription as string,\n\t\tis_hidden as integer,\n\t\tautoadd as integer,\n\t\treserved1 as string,\n\t\tloggable as string,\n\t\tid_domain as string,\n\t\tpname as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> CurrencyCode\nCodeExpense select(mapColumn(\n\t\tid_code,\n\t\texpenses_description = description,\n\t\tis_hidden,\n\t\tloggable,\n\t\texpenses_name = pname,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> CodeExpenseMap\nCodeExpenseSources select(mapColumn(\n\t\tid_code,\n\t\texpense_source_description = description,\n\t\tis_hidden,\n\t\tloggable,\n\t\texpense_source_name = pname,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> CodeExpenseSourceMap\nPayTypes select(mapColumn(\n\t\tid_code,\n\t\tpay_type_description = description,\n\t\tis_hidden,\n\t\tloggable,\n\t\tpay_type_name = pname,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> PayTypeMap\nExpenseRecords select(mapColumn(\n\t\tid_expense_rec,\n\t\tid_user,\n\t\trecord_date,\n\t\tid_project,\n\t\tid_code_expense,\n\t\tamount,\n\t\tcomment,\n\t\tcommit_state,\n\t\tid_code_currency,\n\t\tid_code_expense_source,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ExpenseRecordsMap\nUserTimeSheet select(mapColumn(\n\t\tid_sheet,\n\t\tid_timesheet,\n\t\tid_user,\n\t\tpname,\n\t\tstate,\n\t\tstart_date,\n\t\tend_date,\n\t\tid_approver,\n\t\tlevel,\n\t\tcomment = reserved1,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserTimeSheetMap\nUserExpenseSheet select(mapColumn(\n\t\tid_sheet,\n\t\tid_timesheet,\n\t\tid_user,\n\t\tpname,\n\t\tstate,\n\t\tstart_date,\n\t\tend_date,\n\t\tid_approver,\n\t\tlevel,\n\t\tcomment = reserved1,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserExpenseSheetMap\nSheetNotes select(mapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date = create_timestamp,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SheetNotesMap\nTimeRec select(mapColumn(\n\t\tid_time_rec,\n\t\tid_user,\n\t\trecord_date,\n\t\tid_code_task,\n\t\tid_code_pay_type,\n\t\tid_project,\n\t\ttime_amount,\n\t\tcomment,\n\t\tcommit_state,\n\t\tid_code_bill_type,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> TimeRecMap\nTimeRecMap derive(UOM_Code = 'h') ~> UOMCode\nExpenseRecordsMap, CurrencyCode join(id_code_currency == id_code,\n\tjoinType:'left',\n\tbroadcast: 'none')~> JoinCurrency\nJoinCurrency select(mapColumn(\n\t\tid_expense_rec,\n\t\tid_user,\n\t\trecord_date,\n\t\tid_project,\n\t\tid_code_expense,\n\t\tamount,\n\t\tcomment,\n\t\tcommit_state,\n\t\tid_code_currency,\n\t\tid_code_expense_source,\n\t\tcurrency_key = pname\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectExpenseREC\nSelectExpenseREC filter(id_code_expense == 'Lodging/Room') ~> FilterLodging\nFilterLodging derive(Vendor_ID = '',\n\t\tload_time = currentTimestamp(),\n\t\trecord_date = toDate((concat(substring(record_date,0,4),'-',substring(record_date,5,2),'-',substring(record_date,7,2))))) ~> LoadDateERL\nCodeExpenseSourceMap derive(load_time = currentTimestamp()) ~> LoadDateCES\nCodeExpenseMap derive(load_time = currentTimestamp()) ~> LoadDateCE\nPayTypeMap derive(load_time = currentTimestamp()) ~> LoadDatePT\nSelectExpenseREC derive(load_time = currentTimestamp(),\n\t\trecord_date = toDate((concat(substring(record_date,0,4),'-',substring(record_date,5,2),'-',substring(record_date,7,2))))) ~> LoadDateER\nUOMCode derive(load_time = currentTimestamp(),\n\t\trecord_date = toDate((concat(substring(record_date,0,4),'-',substring(record_date,5,2),'-',substring(record_date,7,2))))) ~> LoadDateTR\nUserExpenseSheetMap derive(load_time = currentTimestamp(),\n\t\tstart_date = toDate((concat(substring(start_date,0,4),'-',substring(start_date,5,2),'-',substring(start_date,7,2)))),\n\t\tend_date = toDate((concat(substring(end_date,0,4),'-',substring(end_date,5,2),'-',substring(end_date,7,2))))) ~> LoadDateUES\nSheetNotesMap derive(load_time = currentTimestamp(),\n\t\tcreate_date = add(toDate('1970-01-01'),toInteger(create_date/(60*60*24)))) ~> LoadDateSN\nUserTimeSheetMap derive(load_time = currentTimestamp(),\n\t\tstart_date = toDate((concat(substring(start_date,0,4),'-',substring(start_date,5,2),'-',substring(start_date,7,2)))),\n\t\tend_date = toDate((concat(substring(end_date,0,4),'-',substring(end_date,5,2),'-',substring(end_date,7,2))))) ~> LoadDateUT\nLoadDateSN filter(note_text == 'Approved for Level 1') ~> ApprovedFilter\nLoadDateSN filter(like(note_text , 'Rejected%')) ~> RejectedFilter\nLoadDateSN filter(note_text == 'Submitted for Approval') ~> SubmitFilter\nSubmitFilter window(over(id_usersheet),\n\tasc(create_date, true),\n\tRank = rowNumber()) ~> RankSubmit\nRankSubmit filter(Rank == 1) ~> FilterRankSubmit\nRejectedFilter window(over(id_usersheet),\n\tasc(create_date, true),\n\tRank = rowNumber()) ~> RankRejected\nRankRejected filter(Rank == 1) ~> FilterRankReject\nApprovedFilter window(over(id_usersheet),\n\tasc(create_date, true),\n\trank = rowNumber()) ~> RankApproved\nRankApproved filter(rank == 1) ~> FilterRankApproved\nLoadDateCE sink(input(\n\t\tid_code as string,\n\t\texpenses_description as string,\n\t\tis_hidden as integer,\n\t\tloggable as string,\n\t\texpenses_name as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tkeys:['id_code'],\n\ttruncate:true,\n\tformat: 'table',\n\tpartitionBy('hash', 1),\n\tdateFormat:'MM/dd/yyyy',\n\ttimestampFormat:'MM/dd/yyyy HH:mm:ss') ~> CodeExpenseTRM\nLoadDateCES sink(input(\n\t\tid_code as string,\n\t\texpense_source_description as string,\n\t\tis_hidden as integer,\n\t\tloggable as string,\n\t\texpense_source_name as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> CodeExpenseSourceTRM\nLoadDatePT sink(input(\n\t\tid_code as string,\n\t\tpay_type_description as string,\n\t\tis_hidden as integer,\n\t\tloggable as string,\n\t\tpay_type_name as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> PayTypeTRM\nLoadDateER sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ExpenseRecTRM\nLoadDateUT sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> UserTimeSheetTRM\nLoadDateUES sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> UserExpenseSheetTRM\nLoadDateSN sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as string,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t),\n\tdateFormat:'yyyy-MM-dd') ~> SheetNotesTRM\nLoadDateTR sink(input(\n\t\tid_time_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_code_task as string,\n\t\tid_code_pay_type as string,\n\t\tid_project as string,\n\t\ttime_amount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_domain as string,\n\t\tid_code_bill_type as string,\n\t\tid_group as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> TimeRecTRM\nLoadDateERL sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ExpenseRecordLodge\nFilterRankApproved sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as date,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ApprovedSheetTRM\nFilterRankReject sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as date,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t)) ~> RejectedSheetTRM\nFilterRankSubmit sink(input(\n\t\tid_usersheetnote as string,\n\t\tid_usersheet as string,\n\t\tnote_text as string,\n\t\tnote_creator as string,\n\t\tcreate_date as date,\n\t\textra_string_1 as string,\n\t\textra_string_2 as string,\n\t\textra_string_3 as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_usersheetnote,\n\t\tid_usersheet,\n\t\tnote_text,\n\t\tnote_creator,\n\t\tcreate_date,\n\t\textra_string_1,\n\t\textra_string_2,\n\t\textra_string_3,\n\t\tload_time\n\t)) ~> SubmitSheetTRM"
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ProjectAttrSRC')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_PROJECT_ATTR_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "ProjectAttr",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_PROJECT_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "Project",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_USER_ATTR_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "UserAttr",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_USER_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "User",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ACQ_PROJECT_ASQL_SCR_TE",
-								"type": "DatasetReference"
-							},
-							"name": "ProjectSelf",
-							"typeProperties": {}
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ONE_EMP_DETAIL_ASQL_SRC_TE",
-								"type": "DatasetReference"
-							},
-							"name": "EmployeDetail",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_ONE_PROJECT_ASQL_TRG_TE",
-								"type": "DatasetReference"
-							},
-							"name": "ProjectTRM"
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_ONE_USERS_ASQL_TRG_TE",
-								"type": "DatasetReference"
-							},
-							"name": "UserTRM"
-						}
-					],
-					"transformations": [
-						{
-							"name": "ProjectAttrMap"
-						},
-						{
-							"name": "ProjectAttrSelect"
-						},
-						{
-							"name": "ProjectSelect"
-						},
-						{
-							"name": "UserAttrMap"
-						},
-						{
-							"name": "UserAttrSelect"
-						},
-						{
-							"name": "JoinUserANDattr"
-						},
-						{
-							"name": "UserSelect"
-						},
-						{
-							"name": "SelectColumns"
-						},
-						{
-							"name": "JoinProject"
-						},
-						{
-							"name": "ParentProject"
-						},
-						{
-							"name": "JoinParentProject"
-						},
-						{
-							"name": "SelectProject"
-						},
-						{
-							"name": "LoadDateP"
-						},
-						{
-							"name": "LoadDateU"
-						},
-						{
-							"name": "GetLocationDetails"
-						},
-						{
-							"name": "SelectUserColumns"
-						}
-					],
-					"script": "\n\nsource(output(\n\t\tid_attribute as string,\n\t\tid_project as string,\n\t\tid_attr_type as string,\n\t\tstring_value as string,\n\t\tnumeric_value as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProjectAttr\nsource(output(\n\t\tid_project as string,\n\t\tdescription as string,\n\t\tid_parent as string,\n\t\thours_estimate as integer,\n\t\tpercent_complete as integer,\n\t\tcreator as string,\n\t\tloggable as string,\n\t\tpname as string,\n\t\tid_domain as string,\n\t\tproject_type as integer,\n\t\twbs as string,\n\t\tid_owner as string,\n\t\tid_backup as string,\n\t\trm_type as integer,\n\t\tstate as integer,\n\t\twork_variance as integer,\n\t\tstart_variance as integer,\n\t\tend_variance as integer,\n\t\tduration_variance as integer,\n\t\tscheduled_work as integer,\n\t\tscheduled_start as integer,\n\t\tscheduled_end as integer,\n\t\tscheduled_duration as integer,\n\t\tprojected_cost as integer,\n\t\tprojected_return as integer,\n\t\tprojected_profit as integer,\n\t\tprojected_roi as integer,\n\t\tawaiting_export as integer,\n\t\tis_hidden as integer,\n\t\tallow_time as integer,\n\t\tallow_expense as integer,\n\t\tallow_custom as integer,\n\t\tallow_leave as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Project\nsource(output(\n\t\tid_attribute as string,\n\t\tid_user as string,\n\t\tid_attr_type as string,\n\t\tstring_value as string,\n\t\tnumeric_value as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> UserAttr\nsource(output(\n\t\tid_user as string,\n\t\treserved1 as string,\n\t\treserved2 as integer,\n\t\ttimerecs_in as integer,\n\t\ttimerecs_out as integer,\n\t\tdaysinlist as integer,\n\t\tfullname as string,\n\t\tu_comment as string,\n\t\treserved3 as integer,\n\t\texpense_gui as string,\n\t\ttime_gui as string,\n\t\tid_domain as string,\n\t\ttravel_gui as string,\n\t\tuser_login as string,\n\t\tis_hidden as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> User\nsource(output(\n\t\tid_project as string,\n\t\tdescription as string,\n\t\tid_parent as string,\n\t\thours_estimate as integer,\n\t\tpercent_complete as integer,\n\t\tcreator as string,\n\t\tloggable as string,\n\t\tpname as string,\n\t\tid_domain as string,\n\t\tproject_type as integer,\n\t\twbs as string,\n\t\tid_owner as string,\n\t\tid_backup as string,\n\t\trm_type as integer,\n\t\tstate as integer,\n\t\twork_variance as integer,\n\t\tstart_variance as integer,\n\t\tend_variance as integer,\n\t\tduration_variance as integer,\n\t\tscheduled_work as integer,\n\t\tscheduled_start as integer,\n\t\tscheduled_end as integer,\n\t\tscheduled_duration as integer,\n\t\tprojected_cost as integer,\n\t\tprojected_return as integer,\n\t\tprojected_profit as integer,\n\t\tprojected_roi as integer,\n\t\tawaiting_export as integer,\n\t\tis_hidden as integer,\n\t\tallow_time as integer,\n\t\tallow_expense as integer,\n\t\tallow_custom as integer,\n\t\tallow_leave as integer,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProjectSelf\nsource(output(\n\t\tUser_Logon_Name as string,\n\t\tName as string,\n\t\tFirst_Name as string,\n\t\tLast_Name as string,\n\t\tType as string,\n\t\tStatus as string,\n\t\tCity as string,\n\t\tCompany as string,\n\t\tCountry as string,\n\t\tDepartment as string,\n\t\tJob_Title as string,\n\t\tDisplay_Name as string,\n\t\tEmail as string,\n\t\tMobile as string,\n\t\tEmployee_Number as string,\n\t\tOffice as string,\n\t\tState as string,\n\t\tStreet as string,\n\t\tStreet_Number as string,\n\t\tPostal_Code as string,\n\t\tPersonal_Country as string,\n\t\tPersonal_City as string,\n\t\tPersonal_Street as string,\n\t\tPersonal_Street_Number as string,\n\t\tPersonal_Latitude as double,\n\t\tPersonal_Longitude as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> EmployeDetail\nProjectAttr pivot(groupBy(id_project),\n\tpivotBy(id_attr_type, ['projects_state', 'projects_pay_period_type', 'FE1C4D54B6FD46F59B934B000018DD8A', 'A0EA5FCC6CE6403E8E40E75344BE8154', '2A0F782F45E74D7888211D451E6C3B9A', '38DBB13CA9194E52886C820C9557D9B6', 'projects_bill_rate', 'AB822D8DA3DC4BAC9A7EE3529F0C27BD', 'projects_priority', 'projects_enddate', 'projects_bill_period_type', '8AD8DA50E8094784A30D58A539F4E2B0', 'F47778670C1040848C1076880C45895D', 'DD77F3D93AB74971846BD7C99631E98F']),\n\tP1 = sum(numeric_value),\n\t\tP2 = max(string_value),\n\tcolumnNaming: '$V$N',\n\tlateral: false) ~> ProjectAttrMap\nProjectAttrMap select(mapColumn(\n\t\tid_project,\n\t\tprojects_state = projects_stateP2,\n\t\tprojects_pay_period_type = projects_pay_period_typeP2,\n\t\tprojects_country = FE1C4D54B6FD46F59B934B000018DD8AP2,\n\t\tlatitude = F47778670C1040848C1076880C45895DP2,\n\t\tpurchase_order = {2A0F782F45E74D7888211D451E6C3B9AP2},\n\t\tprojects_invoice_party = {38DBB13CA9194E52886C820C9557D9B6P2},\n\t\tprojects_bill_rate = projects_bill_rateP1,\n\t\tpurchase_order_item = AB822D8DA3DC4BAC9A7EE3529F0C27BDP2,\n\t\tprojects_priority = projects_priorityP2,\n\t\tlongitude = DD77F3D93AB74971846BD7C99631E98FP2\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ProjectAttrSelect\nJoinProject select(mapColumn(\n\t\tid_project = ProjectAttrSelect@id_project,\n\t\tprojects_state,\n\t\tprojects_pay_period_type,\n\t\tprojects_country,\n\t\tlatitude,\n\t\tpurchase_order,\n\t\tprojects_invoice_party,\n\t\tprojects_bill_rate,\n\t\tpurchase_order_item,\n\t\tprojects_priority,\n\t\tlongitude,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ProjectSelect\nUserAttr pivot(groupBy(id_user),\n\tpivotBy(id_attr_type, ['users_enddate', 'users_title', 'users_emp_num', 'users_rate_period_type', 'users_emp_type', 'users_manager', 'users_email', 'users_pay_rate_type', 'users_phone', 'org_supervisor', 'users_dept', 'RMOVERHEADRATE', 'RMWEEKLYHOURSDEFAULT', 'users_startdate']),\n\tP1 = max(string_value),\n\t\tP2 = sum(numeric_value),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> UserAttrMap\nUserAttrMap select(mapColumn(\n\t\tid_user,\n\t\tP1Users_startdate = P1users_startdate,\n\t\tP1users_enddate,\n\t\tP1users_title,\n\t\tP1users_emp_num,\n\t\tP1users_rate_period_type,\n\t\tP1users_emp_type,\n\t\tP1users_manager,\n\t\tP1users_email,\n\t\tP1users_pay_rate_type,\n\t\tP1users_phone,\n\t\tP1org_supervisor,\n\t\tP1users_dept,\n\t\tP2RMOVERHEADRATE,\n\t\tP2RMWEEKLYHOURSDEFAULT\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserAttrSelect\nUserAttrSelect, User join(UserAttrSelect@id_user == User@id_user,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> JoinUserANDattr\nJoinUserANDattr select(mapColumn(\n\t\tid_user = UserAttrSelect@id_user,\n\t\tuser_start_date = P1Users_startdate,\n\t\tuser_end_date = P1users_enddate,\n\t\tusers_emp_num = P1users_emp_num,\n\t\tusers_rate_period_type = P1users_rate_period_type,\n\t\tuser_emp_type = P1users_emp_type,\n\t\tuser_email = P1users_email,\n\t\tusers_pay_rate_type = P1users_pay_rate_type,\n\t\tuser_phone = P1users_phone,\n\t\tuser_dept = P1users_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> UserSelect\nProject select(mapColumn(\n\t\tid_project,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name = pname,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectColumns\nProjectAttrSelect, SelectColumns join(ProjectAttrSelect@id_project == SelectColumns@id_project,\n\tjoinType:'inner',\n\tbroadcast: 'both')~> JoinProject\nProjectSelf select(mapColumn(\n\t\tid_project,\n\t\tdescription_parent = description,\n\t\tproject_parent_name = pname\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> ParentProject\nProjectSelect, ParentProject join(id_parent == ParentProject@id_project,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> JoinParentProject\nJoinParentProject select(mapColumn(\n\t\tid_project = ProjectSelect@id_project,\n\t\tprojects_state,\n\t\tprojects_pay_period_type,\n\t\tprojects_country,\n\t\tlatitude,\n\t\tpurchase_order,\n\t\tprojects_invoice_party,\n\t\tprojects_bill_rate,\n\t\tpurchase_order_item,\n\t\tprojects_priority,\n\t\tlongitude,\n\t\tdescription,\n\t\tid_parent,\n\t\thours_estimate,\n\t\tpercent_complete,\n\t\tloggable,\n\t\tproject_name,\n\t\tproject_type,\n\t\tstate,\n\t\tis_hidden,\n\t\tallow_time,\n\t\tallow_expense,\n\t\tallow_custom,\n\t\tallow_leave,\n\t\tload_time,\n\t\tdescription_parent,\n\t\tproject_parent_name\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectProject\nSelectProject derive(Project_Currency_key = case(projects_country=='SG','SGD','EUR'),\n\t\tload_time = currentTimestamp()) ~> LoadDateP\nSelectUserColumns derive(load_time = currentTimestamp(),\n\t\tuser_start_date = toDate((concat(substring(user_start_date,0,4),'-',substring(user_start_date,5,2),'-',substring(user_start_date,7,2)))),\n\t\tuser_end_date = toDate((concat(substring(user_end_date,0,4),'-',substring(user_end_date,5,2),'-',substring(user_end_date,7,2)))),\n\t\tstate = iif( isNull(user_end_date), 'ACTIVE','INACTIVE')) ~> LoadDateU\nUserSelect, EmployeDetail join(user_email == Email,\n\tjoinType:'left',\n\tbroadcast: 'none')~> GetLocationDetails\nGetLocationDetails select(mapColumn(\n\t\tid_user,\n\t\tuser_start_date,\n\t\tuser_end_date,\n\t\tusers_emp_num,\n\t\tusers_rate_period_type,\n\t\tuser_emp_type,\n\t\tuser_email,\n\t\tusers_pay_rate_type,\n\t\tuser_phone,\n\t\tuser_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time,\n\t\tPersonal_Latitude,\n\t\tPersonal_Longitude\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> SelectUserColumns\nLoadDateP sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table') ~> ProjectTRM\nLoadDateU sink(input(\n\t\tid_user as string,\n\t\tuser_start_date as date,\n\t\tuser_end_date as date,\n\t\tusers_emp_num as string,\n\t\tusers_rate_period_type as string,\n\t\tuser_emp_type as string,\n\t\tuser_email as string,\n\t\tusers_pay_rate_type as string,\n\t\tuser_phone as string,\n\t\tuser_dept as string,\n\t\tfullname as string,\n\t\texpense_gui as string,\n\t\ttime_gui as string,\n\t\ttravel_gui as string,\n\t\tuser_login as string,\n\t\tis_hidden as integer,\n\t\tload_time as timestamp,\n\t\tlatitude as double,\n\t\tlogitude as double,\n\t\tSTATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tid_user,\n\t\tuser_start_date,\n\t\tuser_end_date,\n\t\tusers_emp_num,\n\t\tusers_rate_period_type,\n\t\tuser_emp_type,\n\t\tuser_email,\n\t\tusers_pay_rate_type,\n\t\tuser_phone,\n\t\tuser_dept,\n\t\tfullname,\n\t\texpense_gui,\n\t\ttime_gui,\n\t\ttravel_gui,\n\t\tuser_login,\n\t\tis_hidden,\n\t\tload_time,\n\t\tlatitude = Personal_Latitude,\n\t\tlogitude = Personal_Longitude,\n\t\tSTATE = state\n\t),\n\tdateFormat:'yyyy-MM-dd') ~> UserTRM"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_SHELL_POC_LOYALTY_ASQL_TRG_SHELL",
-								"type": "DatasetReference"
-							},
-							"name": "ASQLLOYALTY",
-							"typeProperties": {}
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "TestTRG",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "DerivedColumn3"
-						}
-					],
-					"script": "\n\nsource(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3),\n\t\tdatefurture as binary,\n\t\tdatepast as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\t{Matching value LMDB},\n\t\t{Matching value LMDB II},\n\t\t{Site Ship To (char)},\n\t\tDate,\n\t\t{Transaction Time},\n\t\t{Transaction ID},\n\t\t{Card Number},\n\t\t{Transaction Value},\n\t\t{Transaction Quantity},\n\t\tdatefurture = {Merged Date Behind},\n\t\tdatepast = {Merged Date Ahead}\n\t)) ~> sink1"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ACQ_HANA_ADLS_TE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get-Tables",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SapHanaSource",
-								"query": {
-									"value": "select '\"'||SCHEMA_NAME||'\"'||'.'||'\"'||TABLE_NAME||'\"' AS Table_Name, SUBSTR_AFTER(TABLE_NAME,'::') as FILE_NAME from public.tables\nwhere \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN' \n",
-									"type": "Expression"
-								}
-							},
-							"dataset": {
-								"referenceName": "DS_ACQ_HANA_SRC_TE",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					},
-					{
-						"name": "Copy-Each-Table",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get-Tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get-Tables').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Copy Data",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [
-										{
-											"name": "Source",
-											"value": "SYS.select \"SCHEMA_NAME\",\"TABLE_NAME\" from public.tables where \"SCHEMA_NAME\" ='ACQ_TE' and \"TABLE_TYPE\" = 'COLUMN'"
-										},
-										{
-											"name": "Destination",
-											"value": "ADLS_ACQ_HANA_TE/@{item().TABLE_NAME}"
-										}
-									],
-									"typeProperties": {
-										"source": {
-											"type": "SapHanaSource",
-											"query": {
-												"value": "SELECT  *  FROM @{item().Table_Name}",
-												"type": "Expression"
-											}
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureDataLakeStoreWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_ACQ_HANA_SRC_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_ACQ_ADLS_TRG_TE",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_ACQ_HANA_SRC_TE')]"
-			]
 		}
 	]
 }
