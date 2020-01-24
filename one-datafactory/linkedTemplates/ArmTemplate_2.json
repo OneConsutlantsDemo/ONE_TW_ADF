@@ -1467,7 +1467,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Sid",
+						"fileName": "Sid.parquet",
 						"folderPath": "Output",
 						"fileSystem": "onefilesystemgen2"
 					},
