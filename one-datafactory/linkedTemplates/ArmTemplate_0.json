@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageML'"
 		},
+		"OneAzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'OneAzureDatabricks'"
+		},
 		"SQLDB_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
@@ -78,6 +82,24 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/OneAzureDatabricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://westeurope.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('OneAzureDatabricks_accessToken')]"
+					},
+					"existingClusterId": "0125-231315-shape995"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SQLDB')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -129,6 +151,42 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DatabricksDemo')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TaxiData",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/siddharth.krishna@one-consultants.com/PluralsightDemoProd/OrchestrateTaxiServicesWorkflow",
+							"baseParameters": {
+								"ProcessMonth": "201812"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "OneAzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OneAzureDatabricks')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_ADLS_SRC_TE')]",
@@ -903,200 +961,6 @@
 				"typeProperties": {
 					"schema": "SalesLT",
 					"table": "Address"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_TIME_REC_ASQL_SRC_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_time_rec",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "record_date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_task",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_pay_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_project",
-						"type": "nvarchar"
-					},
-					{
-						"name": "time_amount",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "comment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "commit_state",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_code_bill_type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_group",
-						"type": "nvarchar"
-					},
-					{
-						"name": "creator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "create_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "modifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "modify_timestamp",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "id_assignment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_TIME_RECS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ACQ_USER_ASQL_SCR_TE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id_user",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reserved1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reserved2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "timerecs_in",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "timerecs_out",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "daysinlist",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "fullname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "u_comment",
-						"type": "nvarchar"
-					},
-					{
-						"name": "reserved3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "expense_gui",
-						"type": "nvarchar"
-					},
-					{
-						"name": "time_gui",
-						"type": "nvarchar"
-					},
-					{
-						"name": "id_domain",
-						"type": "nvarchar"
-					},
-					{
-						"name": "travel_gui",
-						"type": "nvarchar"
-					},
-					{
-						"name": "user_login",
-						"type": "nvarchar"
-					},
-					{
-						"name": "is_hidden",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "load_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "ACQ",
-					"table": "TE_USERS"
 				}
 			},
 			"dependsOn": [

@@ -8,6 +8,9 @@
 		"AzureBlobStorageML_connectionString": {
 			"value": ""
 		},
+		"OneAzureDatabricks_accessToken": {
+			"value": ""
+		},
 		"Oracle1_connectionString": {
 			"value": ""
 		},

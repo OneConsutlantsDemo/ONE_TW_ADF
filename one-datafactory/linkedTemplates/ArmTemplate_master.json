@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageML'"
 		},
+		"OneAzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'OneAzureDatabricks'"
+		},
 		"Oracle1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle1'"
@@ -100,6 +104,9 @@
 					},
 					"AzureBlobStorageML_connectionString": {
 						"value": "[parameters('AzureBlobStorageML_connectionString')]"
+					},
+					"OneAzureDatabricks_accessToken": {
+						"value": "[parameters('OneAzureDatabricks_accessToken')]"
 					},
 					"SQLDB_connectionString": {
 						"value": "[parameters('SQLDB_connectionString')]"

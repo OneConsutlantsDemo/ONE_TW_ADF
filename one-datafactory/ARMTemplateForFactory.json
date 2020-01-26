@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageML'"
 		},
+		"OneAzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'OneAzureDatabricks'"
+		},
 		"Oracle1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle1'"
@@ -76,6 +80,42 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DatabricksDemo')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TaxiData",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/siddharth.krishna@one-consultants.com/PluralsightDemoProd/OrchestrateTaxiServicesWorkflow",
+							"baseParameters": {
+								"ProcessMonth": "201812"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "OneAzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OneAzureDatabricks')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ACQ_ADLS_ASQL_ONE_TIMESHEET')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -8212,6 +8252,24 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureBlobStorageML_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OneAzureDatabricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://westeurope.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('OneAzureDatabricks_accessToken')]"
+					},
+					"existingClusterId": "0125-231315-shape995"
 				}
 			},
 			"dependsOn": []
