@@ -1,5 +1,5 @@
 {
-	"name": "DS_ACQ_ADLS_SRC_TE",
+	"name": "TestTarget",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_Gen1",
@@ -10,14 +10,25 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureDataLakeStoreLocation",
-				"folderPath": "ADLS_ACQ_HANA_TE"
+				"folderPath": "Samples"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
 }

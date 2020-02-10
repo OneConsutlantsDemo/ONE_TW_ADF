@@ -1,26 +1,26 @@
 {
-	"name": "PL_ONE_TW_TRANSFORMATION_ETL",
+	"name": "backup",
 	"properties": {
 		"activities": [
 			{
-				"name": "DataSet1_Transform",
+				"name": "Extract",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1",
+						"referenceName": "PL_ONE_TW_EXTRACT_ETL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			},
 			{
-				"name": "DataSet2_Transform",
+				"name": "Transform",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "DataSet1_Transform",
+						"activity": "Extract",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -29,16 +29,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2",
+						"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			}
 		],
-		"folder": {
-			"name": "ONE_TIMESHEET_PROJECT"
-		},
 		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"

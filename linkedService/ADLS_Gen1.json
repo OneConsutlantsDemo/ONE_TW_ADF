@@ -1,6 +1,5 @@
 {
 	"name": "ADLS_Gen1",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureDataLakeStore",
@@ -10,5 +9,6 @@
 			"subscriptionId": "11ebd399-8f6c-46af-b26f-71fc4572151b",
 			"resourceGroupName": "ONE-Azure"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }

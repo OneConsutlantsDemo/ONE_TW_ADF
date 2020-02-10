@@ -1,0 +1,75 @@
+{
+	"name": "DS_SHELL_POC_LOYALTY_ADLS_TRG_SHELL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": {
+					"value": "test.csv",
+					"type": "Expression"
+				},
+				"folderPath": "SHELL_POC_DATASET"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "RETAIL_TRANSACTION_ID",
+				"type": "String"
+			},
+			{
+				"name": "RETAIL_SITE_ID",
+				"type": "String"
+			},
+			{
+				"name": "EVENT_START_DATE",
+				"type": "String"
+			},
+			{
+				"name": "SALES_QUANTITY",
+				"type": "String"
+			},
+			{
+				"name": "SALES_AMOUNT",
+				"type": "String"
+			},
+			{
+				"name": "LOYALTY_IND",
+				"type": "String"
+			},
+			{
+				"name": "SALE_OR_RETURN_INDICATOR",
+				"type": "String"
+			},
+			{
+				"name": "SYSTEM_ID",
+				"type": "String"
+			},
+			{
+				"name": "SALES_TRANSACTION_NUMBER",
+				"type": "String"
+			},
+			{
+				"name": "CALENDAR_YEAR_C",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "START_DATE",
+				"type": "String"
+			}
+		]
+	}
+}

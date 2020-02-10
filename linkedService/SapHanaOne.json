@@ -6,7 +6,7 @@
 		"type": "SapHana",
 		"typeProperties": {
 			"connectionString": "servernode=hana-02.one-consultants.net:30041;uid=SIDDHARTH",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3OGRmY2IwNy1jYzY0LTRkNTUtYmIwYi1hMjg3NDk0ODJkY2MiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxZWM4MmY2Mi1jYWM5LTQ3ZTUtYWYxMC05NDE0OTVkMmE0MGQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "IR-5",

@@ -1,5 +1,5 @@
 {
-	"name": "DS_ACQ_ADLS_SRC_TE",
+	"name": "TwitterText",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ADLS_Gen1",
@@ -10,14 +10,17 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureDataLakeStoreLocation",
-				"folderPath": "ADLS_ACQ_HANA_TE"
+				"fileName": "twitter_data.csv",
+				"folderPath": "MachineLearning"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
-			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
+	}
 }

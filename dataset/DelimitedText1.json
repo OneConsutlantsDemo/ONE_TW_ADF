@@ -1,0 +1,44 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": "1000_Companies.csv",
+				"folderPath": "MachineLearning"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "R&D Spend",
+				"type": "String"
+			},
+			{
+				"name": "Administration",
+				"type": "String"
+			},
+			{
+				"name": "Marketing Spend",
+				"type": "String"
+			},
+			{
+				"name": "State",
+				"type": "String"
+			},
+			{
+				"name": "Profit",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,60 @@
+{
+	"name": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_Gen1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": "GL_CRBDS_matching_Loyalty_for_NL_CR 3006-2108 -PoC.csv",
+				"folderPath": "SHELL_POC_DATASET"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Matching value LMDB",
+				"type": "String"
+			},
+			{
+				"name": "Matching value LMDB II",
+				"type": "String"
+			},
+			{
+				"name": "Site Ship To (char)",
+				"type": "String"
+			},
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "Transaction Time",
+				"type": "String"
+			},
+			{
+				"name": "Transaction ID",
+				"type": "String"
+			},
+			{
+				"name": "Card Number",
+				"type": "String"
+			},
+			{
+				"name": "Transaction Value",
+				"type": "String"
+			},
+			{
+				"name": "Transaction Quantity",
+				"type": "String"
+			}
+		]
+	}
+}

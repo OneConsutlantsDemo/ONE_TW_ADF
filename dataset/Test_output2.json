@@ -1,0 +1,24 @@
+{
+	"name": "Test_output2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_output",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
+		}
+	}
+}

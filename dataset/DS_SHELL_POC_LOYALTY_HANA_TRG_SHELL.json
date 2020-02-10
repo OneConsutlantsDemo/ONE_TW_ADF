@@ -1,0 +1,15 @@
+{
+	"name": "DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SAPHANAViaODBCLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OdbcTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "\"SHELL_POC\".\"CT_EDAM_LOYALTY_REWARD_FACT_FF\""
+		}
+	}
+}
