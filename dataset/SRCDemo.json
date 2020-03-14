@@ -2,7 +2,7 @@
 	"name": "SRCDemo",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ADLS_Gen1",
+			"referenceName": "Test_Input",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -14,12 +14,9 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureDataLakeStoreLocation",
-				"fileName": {
-					"value": "@dataset().FileName",
-					"type": "Expression"
-				},
-				"folderPath": "ADLS_ACQ_INPUT"
+				"type": "AzureBlobFSLocation",
+				"folderPath": "source",
+				"fileSystem": "onedemo"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
