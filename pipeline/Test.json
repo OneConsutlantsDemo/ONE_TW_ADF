@@ -67,10 +67,7 @@
 			}
 		],
 		"parameters": {
-			"Source": {
-				"type": "string"
-			},
-			"Target": {
+			"Filename": {
 				"type": "string"
 			}
 		},
