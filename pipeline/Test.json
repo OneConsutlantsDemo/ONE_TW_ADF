@@ -50,7 +50,13 @@
 				"inputs": [
 					{
 						"referenceName": "SRCDemo",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.Sourcepipeline().parameters.Source",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
