@@ -3,7 +3,18 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [],
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Test",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Source": "twitter_data.csv",
+					"Target": "twitter_data_trg.csv"
+				}
+			}
+		],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/onedemo/blobs/",
