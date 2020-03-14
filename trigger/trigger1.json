@@ -1,0 +1,28 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Test",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Source": "@triggerBody().fileName",
+					"Target": "@triggerBody().fileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/onedemo/blobs/source/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/11ebd399-8f6c-46af-b26f-71fc4572151b/resourceGroups/ONE-Azure/providers/Microsoft.Storage/storageAccounts/onestorageaccountazure",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
