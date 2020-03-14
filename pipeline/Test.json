@@ -46,7 +46,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
-								"value": "@pipeline().parameters.Sourcepipeline().parameters.Sourcepipeline().parameters.Source",
+								"value": "@pipeline().parameters.Source",
 								"type": "Expression"
 							}
 						}
@@ -55,7 +55,13 @@
 				"outputs": [
 					{
 						"referenceName": "TRGDemo",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.Target",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
