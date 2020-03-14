@@ -21,7 +21,8 @@
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/11ebd399-8f6c-46af-b26f-71fc4572151b/resourceGroups/ONE-Azure/providers/Microsoft.Storage/storageAccounts/onestorageaccountazure",
 			"events": [
-				"Microsoft.Storage.BlobCreated"
+				"Microsoft.Storage.BlobCreated",
+				"Microsoft.Storage.BlobDeleted"
 			]
 		}
 	}
