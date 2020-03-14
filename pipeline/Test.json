@@ -13,14 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source"
-					},
-					{
-						"name": "Target"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
@@ -53,7 +46,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
-								"value": "@pipeline().parameters.Sourcepipeline().parameters.Source",
+								"value": "@pipeline().parameters.Sourcepipeline().parameters.Sourcepipeline().parameters.Source",
 								"type": "Expression"
 							}
 						}
