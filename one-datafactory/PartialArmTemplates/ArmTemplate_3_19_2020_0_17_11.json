@@ -1,0 +1,188 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "one-datafactory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Business.json",
+						"folderPath": "source",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"results": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"func_area": {
+										"type": "string"
+									},
+									"avg_volume": {
+										"type": "string"
+									},
+									"aging_avg_volume": {
+										"type": "string"
+									},
+									"rep_volume": {
+										"type": "string"
+									},
+									"stg_volume": {
+										"type": "string"
+									},
+									"years": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"execution": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"current_min_2_vol_perc": {
+										"type": "number"
+									},
+									"current_min_1_vol_perc": {
+										"type": "number"
+									},
+									"current_year_vol_perc": {
+										"type": "number"
+									},
+									"old_year_vol_perc": {
+										"type": "number"
+									},
+									"data": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "integer"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"rep_perc": {
+										"type": "integer"
+									},
+									"stg_perc": {
+										"type": "integer"
+									},
+									"volume": {
+										"type": "number"
+									},
+									"func_size": {
+										"type": "number"
+									},
+									"volume_per_tb": {
+										"type": "number"
+									},
+									"func_size_per_tb": {
+										"type": "number"
+									},
+									"RSCS": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"warm_potential": {
+										"type": "number"
+									},
+									"total": {
+										"type": "number"
+									},
+									"WarmPotential": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
