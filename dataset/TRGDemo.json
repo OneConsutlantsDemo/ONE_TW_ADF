@@ -16,7 +16,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "target.csv",
-				"folderPath": "target",
+				"folderPath": "one",
 				"fileSystem": "onedemo"
 			},
 			"columnDelimiter": ",",
