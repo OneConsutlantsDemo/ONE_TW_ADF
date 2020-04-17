@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Business.json",
+				"fileName": "Demo.json",
 				"folderPath": "source",
 				"fileSystem": "onedemo"
 			}
@@ -18,142 +18,23 @@
 		"schema": {
 			"type": "object",
 			"properties": {
-				"id": {
-					"type": "integer"
-				},
-				"func_area": {
+				"time": {
 					"type": "string"
 				},
-				"avg_volume": {
+				"callingimsi": {
 					"type": "string"
 				},
-				"aging_avg_volume": {
+				"callingnum1": {
 					"type": "string"
 				},
-				"rep_volume": {
+				"callingnum2": {
 					"type": "string"
 				},
-				"stg_volume": {
+				"switch1": {
 					"type": "string"
 				},
-				"years": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"id": {
-								"type": "integer"
-							},
-							"title": {
-								"type": "string"
-							},
-							"value": {
-								"type": "number"
-							},
-							"execution": {
-								"type": "number"
-							},
-							"color": {
-								"type": "string"
-							}
-						}
-					}
-				},
-				"current_min_2_vol_perc": {
-					"type": "number"
-				},
-				"current_min_1_vol_perc": {
-					"type": "number"
-				},
-				"current_year_vol_perc": {
-					"type": "number"
-				},
-				"old_year_vol_perc": {
-					"type": "number"
-				},
-				"data": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"id": {
-								"type": "integer"
-							},
-							"title": {
-								"type": "string"
-							},
-							"value": {
-								"type": "integer"
-							},
-							"color": {
-								"type": "string"
-							}
-						}
-					}
-				},
-				"rep_perc": {
-					"type": "integer"
-				},
-				"stg_perc": {
-					"type": "integer"
-				},
-				"volume": {
-					"type": "number"
-				},
-				"func_size": {
-					"type": "number"
-				},
-				"volume_per_tb": {
-					"type": "number"
-				},
-				"func_size_per_tb": {
-					"type": "number"
-				},
-				"RSCS": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"id": {
-								"type": "integer"
-							},
-							"title": {
-								"type": "string"
-							},
-							"value": {
-								"type": "number"
-							},
-							"color": {
-								"type": "string"
-							}
-						}
-					}
-				},
-				"warm_potential": {
-					"type": "number"
-				},
-				"total": {
-					"type": "number"
-				},
-				"WarmPotential": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"id": {
-								"type": "integer"
-							},
-							"title": {
-								"type": "string"
-							},
-							"value": {
-								"type": "number"
-							},
-							"color": {
-								"type": "string"
-							}
-						}
-					}
+				"switch2": {
+					"type": "string"
 				}
 			}
 		}
