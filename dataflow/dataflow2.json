@@ -22,7 +22,7 @@
 				}
 			],
 			"transformations": [],
-			"script": "source(output(\n\t\ttime as string,\n\t\tcallingimsi as string,\n\t\tcallingnum1 as string,\n\t\tcallingnum2 as string,\n\t\tswitch1 as string,\n\t\tswitch2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource1 sink(input(\n\t\tid as string,\n\t\tfunc_area as string,\n\t\tavg_volume as string,\n\t\taging_avg_volume as string,\n\t\trep_volume as string,\n\t\tstg_volume as string,\n\t\tyears as (id as string, title as string, value as double, execution as double, color as string)[],\n\t\tcurrent_min_2_vol_perc as double,\n\t\tcurrent_min_1_vol_perc as double,\n\t\tcurrent_year_vol_perc as double,\n\t\told_year_vol_perc as double,\n\t\tdata as (id as string, title as string, value as string, color as string)[],\n\t\trep_perc as string,\n\t\tstg_perc as string,\n\t\tvolume as double,\n\t\tfunc_size as double,\n\t\tvolume_per_tb as double,\n\t\tfunc_size_per_tb as double,\n\t\tRSCS as (id as string, title as string, value as double, color as string)[],\n\t\twarm_potential as double,\n\t\ttotal as double,\n\t\tWarmPotential as (id as string, title as string, value as double, color as string)[]\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\ttime as string,\n\t\tcallingimsi as string,\n\t\tcallingnum1 as string,\n\t\tcallingnum2 as string,\n\t\tswitch1 as string,\n\t\tswitch2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
