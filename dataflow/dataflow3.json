@@ -21,12 +21,8 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [
-				{
-					"name": "DerivedColumn1"
-				}
-			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 derive(AGENT_CODE = toString(byName('AGENT_CODE'))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table') ~> sink1"
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table') ~> sink1"
 		}
 	}
 }
