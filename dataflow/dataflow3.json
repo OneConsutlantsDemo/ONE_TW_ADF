@@ -27,7 +27,7 @@
 					"description": "Creates an explicit mapping for each drifted column"
 				}
 			],
-			"script": "source(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 derive(AGENT_CODE = toString(byName('AGENT_CODE')),\n\t\tAGENT_NAME = toString(byName('AGENT_NAME')),\n\t\tWORKING_AREA = toString(byName('WORKING_AREA'))) ~> MapDrifted1\nMapDrifted1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tAGENT_CODE,\n\t\tAGENT_NAME,\n\t\tWORKING_AREA\n\t)) ~> sink1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 derive(AGENT_CODE = toString(byName('AGENT_CODE')),\n\t\tAGENT_NAME = toString(byName('AGENT_NAME')),\n\t\tWORKING_AREA = toString(byName('WORKING_AREA'))) ~> MapDrifted1\nMapDrifted1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table') ~> sink1"
 		}
 	}
 }
