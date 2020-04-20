@@ -3740,91 +3740,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Test')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": false,
-									"wildcardFileName": "*",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SRCDemo",
-								"type": "DatasetReference",
-								"parameters": {
-									"FileName": {
-										"value": "@pipeline().parameters.Filename",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "TRGDemo",
-								"type": "DatasetReference",
-								"parameters": {
-									"FileName": {
-										"value": "@pipeline().parameters.Filename",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					}
-				],
-				"parameters": {
-					"Filename": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SRCDemo')]",
-				"[concat(variables('factoryId'), '/datasets/TRGDemo')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/backup')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3880,8 +3795,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
-						"type": "Copy",
+						"name": "dataflow3",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -3892,217 +3807,27 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
+							"dataflow": {
+								"referenceName": "dataflow3",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
 								}
 							},
-							"enableStaging": false,
-							"parallelCopies": 1,
-							"dataIntegrationUnits": 2,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "VENDORID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "VENDORID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TPEP_PICKUP_DATETIME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TPEP_PICKUP_DATETIME",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "TPEP_DROPOFF_DATETIME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TPEP_DROPOFF_DATETIME",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PASSENGER_COUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "PASSENGER_COUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TRIP_DISTANCE",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TRIP_DISTANCE",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "RATECODEID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "RATECODEID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "STORE_AND_FWD_FLAG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "STORE_AND_FWD_FLAG",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PULOCATIONID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "PULOCATIONID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "DOLOCATIONID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "DOLOCATIONID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "PAYMENT_TYPE",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "PAYMENT_TYPE",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "FARE_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "FARE_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "EXTRA",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "EXTRA",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "MTA_TAX",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "MTA_TAX",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TIP_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TIP_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TOLLS_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TOLLS_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "IMPROVEMENT_SURCHARGE",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "IMPROVEMENT_SURCHARGE",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TOTAL_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TOTAL_AMOUNT",
-											"type": "Decimal"
-										}
-									}
-								]
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
 							}
-						},
-						"inputs": [
-							{
-								"referenceName": "OracleDemo",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "TargetGen2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						}
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OracleDemo')]",
-				"[concat(variables('factoryId'), '/datasets/TargetGen2')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow3')]"
 			]
 		},
 		{
@@ -7056,6 +6781,48 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DemoSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "AGENTS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DemoTarget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "AGENTS_TRG"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SQLDB')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_291')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -7671,6 +7438,252 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Business.json",
+						"folderPath": "source",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"results": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"func_area": {
+										"type": "string"
+									},
+									"avg_volume": {
+										"type": "string"
+									},
+									"aging_avg_volume": {
+										"type": "string"
+									},
+									"rep_volume": {
+										"type": "string"
+									},
+									"stg_volume": {
+										"type": "string"
+									},
+									"years": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"execution": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"current_min_2_vol_perc": {
+										"type": "number"
+									},
+									"current_min_1_vol_perc": {
+										"type": "number"
+									},
+									"current_year_vol_perc": {
+										"type": "number"
+									},
+									"old_year_vol_perc": {
+										"type": "number"
+									},
+									"data": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "integer"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"rep_perc": {
+										"type": "integer"
+									},
+									"stg_perc": {
+										"type": "integer"
+									},
+									"volume": {
+										"type": "number"
+									},
+									"func_size": {
+										"type": "number"
+									},
+									"volume_per_tb": {
+										"type": "number"
+									},
+									"func_size_per_tb": {
+										"type": "number"
+									},
+									"RSCS": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"warm_potential": {
+										"type": "number"
+									},
+									"total": {
+										"type": "number"
+									},
+									"WarmPotential": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Test_Input')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sid.json",
+						"folderPath": "target",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Test_Input')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Jsoninput')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Demo.json",
+						"folderPath": "source",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"time": {
+							"type": "string"
+						},
+						"callingimsi": {
+							"type": "string"
+						},
+						"callingnum1": {
+							"type": "string"
+						},
+						"callingnum2": {
+							"type": "string"
+						},
+						"switch1": {
+							"type": "string"
+						},
+						"switch2": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Test_Input')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OracleDemo')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -7815,11 +7828,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().FileName",
-							"type": "Expression"
-						},
-						"folderPath": "target",
+						"fileName": "target.csv",
+						"folderPath": "one",
 						"fileSystem": "onedemo"
 					},
 					"columnDelimiter": ",",
@@ -8752,177 +8762,79 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Json1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_Input",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
+				"type": "MappingDataFlow",
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Business.json",
-						"folderPath": "source",
-						"fileSystem": "onedemo"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"results": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"id": {
-										"type": "integer"
-									},
-									"func_area": {
-										"type": "string"
-									},
-									"avg_volume": {
-										"type": "string"
-									},
-									"aging_avg_volume": {
-										"type": "string"
-									},
-									"rep_volume": {
-										"type": "string"
-									},
-									"stg_volume": {
-										"type": "string"
-									},
-									"years": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"execution": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"current_min_2_vol_perc": {
-										"type": "number"
-									},
-									"current_min_1_vol_perc": {
-										"type": "number"
-									},
-									"current_year_vol_perc": {
-										"type": "number"
-									},
-									"old_year_vol_perc": {
-										"type": "number"
-									},
-									"data": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "integer"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"rep_perc": {
-										"type": "integer"
-									},
-									"stg_perc": {
-										"type": "integer"
-									},
-									"volume": {
-										"type": "number"
-									},
-									"func_size": {
-										"type": "number"
-									},
-									"volume_per_tb": {
-										"type": "number"
-									},
-									"func_size_per_tb": {
-										"type": "number"
-									},
-									"RSCS": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"warm_potential": {
-										"type": "number"
-									},
-									"total": {
-										"type": "number"
-									},
-									"WarmPotential": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									}
-								}
-							}
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Jsoninput",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
 						}
-					}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Json2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\ttime as string,\n\t\tcallingimsi as string,\n\t\tcallingnum1 as string,\n\t\tcallingnum2 as string,\n\t\tswitch1 as string,\n\t\tswitch2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource1 derive(time = time,\n\t\tswitch1 = switch1) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Test_Input')]"
+				"[concat(variables('factoryId'), '/datasets/Jsoninput')]",
+				"[concat(variables('factoryId'), '/datasets/Json2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DemoSource",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DemoTarget",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 derive(AGENTCODE = toString(byName('AGENT_CODE'))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tAGENTCODE\n\t)) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DemoSource')]",
+				"[concat(variables('factoryId'), '/datasets/DemoTarget')]"
 			]
 		}
 	]

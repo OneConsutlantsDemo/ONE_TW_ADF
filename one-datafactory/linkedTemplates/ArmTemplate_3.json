@@ -41,6 +41,175 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Json2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sid.json",
+						"folderPath": "target",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Jsoninput')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Demo.json",
+						"folderPath": "source",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"time": {
+							"type": "string"
+						},
+						"callingimsi": {
+							"type": "string"
+						},
+						"callingnum1": {
+							"type": "string"
+						},
+						"callingnum2": {
+							"type": "string"
+						},
+						"switch1": {
+							"type": "string"
+						},
+						"switch2": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SRCDemo')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().FileName",
+							"type": "Expression"
+						},
+						"folderPath": "source",
+						"fileSystem": "onedemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "TableName;FileName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TRGDemo')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "target.csv",
+						"folderPath": "one",
+						"fileSystem": "onedemo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "TableName;FileName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TargetGen2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Sid",
+						"folderPath": "Output",
+						"fileSystem": "onefilesystemgen2"
+					},
+					"compressionCodec": "gzip"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TestTRG')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -332,260 +501,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Json1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_Input",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Business.json",
-						"folderPath": "source",
-						"fileSystem": "onedemo"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"results": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"id": {
-										"type": "integer"
-									},
-									"func_area": {
-										"type": "string"
-									},
-									"avg_volume": {
-										"type": "string"
-									},
-									"aging_avg_volume": {
-										"type": "string"
-									},
-									"rep_volume": {
-										"type": "string"
-									},
-									"stg_volume": {
-										"type": "string"
-									},
-									"years": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"execution": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"current_min_2_vol_perc": {
-										"type": "number"
-									},
-									"current_min_1_vol_perc": {
-										"type": "number"
-									},
-									"current_year_vol_perc": {
-										"type": "number"
-									},
-									"old_year_vol_perc": {
-										"type": "number"
-									},
-									"data": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "integer"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"rep_perc": {
-										"type": "integer"
-									},
-									"stg_perc": {
-										"type": "integer"
-									},
-									"volume": {
-										"type": "number"
-									},
-									"func_size": {
-										"type": "number"
-									},
-									"volume_per_tb": {
-										"type": "number"
-									},
-									"func_size_per_tb": {
-										"type": "number"
-									},
-									"RSCS": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"warm_potential": {
-										"type": "number"
-									},
-									"total": {
-										"type": "number"
-									},
-									"WarmPotential": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Test')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": false,
-									"wildcardFileName": "*",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SRCDemo",
-								"type": "DatasetReference",
-								"parameters": {
-									"FileName": {
-										"value": "@pipeline().parameters.Filename",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "TRGDemo",
-								"type": "DatasetReference",
-								"parameters": {
-									"FileName": {
-										"value": "@pipeline().parameters.Filename",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					}
-				],
-				"parameters": {
-					"Filename": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Test"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DS_ACQ_HANA_SRC_TE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -730,69 +645,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SapHanaShell')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OracleDemo')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Oracle1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "SYSTEM",
-					"table": "TAXI_2018"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Oracle1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_291')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "_SYS_BI",
-					"table": "M_TIME_DIMENSION"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_rwb')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaOne",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "ONE",
-					"table": "one.hr.dd::CT_EMPLOYEE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
 			]
 		}
 	]

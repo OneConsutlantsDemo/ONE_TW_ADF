@@ -874,6 +874,44 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DemoSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "AGENTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DemoTarget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "AGENTS_TRG"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_291')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1481,7 +1519,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SRCDemo')]",
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1489,98 +1527,166 @@
 					"referenceName": "Test_Input",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"FileName": {
-						"type": "string"
-					}
-				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "Json",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().FileName",
-							"type": "Expression"
-						},
+						"fileName": "Business.json",
 						"folderPath": "source",
 						"fileSystem": "onedemo"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "TableName;FileName",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TRGDemo')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_Input",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FileName": {
-						"type": "string"
 					}
 				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().FileName",
-							"type": "Expression"
-						},
-						"folderPath": "target",
-						"fileSystem": "onedemo"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "TableName;FileName",
-						"type": "String"
+				"schema": {
+					"type": "object",
+					"properties": {
+						"results": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"func_area": {
+										"type": "string"
+									},
+									"avg_volume": {
+										"type": "string"
+									},
+									"aging_avg_volume": {
+										"type": "string"
+									},
+									"rep_volume": {
+										"type": "string"
+									},
+									"stg_volume": {
+										"type": "string"
+									},
+									"years": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"execution": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"current_min_2_vol_perc": {
+										"type": "number"
+									},
+									"current_min_1_vol_perc": {
+										"type": "number"
+									},
+									"current_year_vol_perc": {
+										"type": "number"
+									},
+									"old_year_vol_perc": {
+										"type": "number"
+									},
+									"data": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "integer"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"rep_perc": {
+										"type": "integer"
+									},
+									"stg_perc": {
+										"type": "integer"
+									},
+									"volume": {
+										"type": "number"
+									},
+									"func_size": {
+										"type": "number"
+									},
+									"volume_per_tb": {
+										"type": "number"
+									},
+									"func_size_per_tb": {
+										"type": "number"
+									},
+									"RSCS": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"warm_potential": {
+										"type": "number"
+									},
+									"total": {
+										"type": "number"
+									},
+									"WarmPotential": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TargetGen2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_Input",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Sid",
-						"folderPath": "Output",
-						"fileSystem": "onefilesystemgen2"
-					},
-					"compressionCodec": "gzip"
-				},
-				"schema": []
+				}
 			},
 			"dependsOn": []
 		}

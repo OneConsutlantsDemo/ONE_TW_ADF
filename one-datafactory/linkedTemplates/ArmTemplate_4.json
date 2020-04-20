@@ -13,6 +13,63 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/OracleDemo')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "SYSTEM",
+					"table": "TAXI_2018"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_291')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "_SYS_BI",
+					"table": "M_TIME_DIMENSION"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_rwb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SapHanaOne",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapHanaTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "ONE",
+					"table": "one.hr.dd::CT_EMPLOYEE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_v6d')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -442,6 +499,76 @@
 						}
 					],
 					"script": "source(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'NONE',\n\tformat: 'table') ~> ASQLLOYALTY\nASQLLOYALTY derive({Merged Date} = toTimestamp(concat(Date,' ',{Transaction Time}),'yyyy-MM-dd HH24:mm:ss.SSS')) ~> DerivedColumn1\nDerivedColumn1 derive({Merged Date Ahead} = add({Merged Date} , seconds(240)),\n\t\t{Merged Date Behind} = add({Merged Date} , seconds(-240))) ~> DerivedColumn3\nDerivedColumn3 sink(input(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as integer,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as integer,\n\t\t{Card Number} as integer,\n\t\t{Transaction Value} as decimal(9,3),\n\t\t{Transaction Quantity} as decimal(9,3),\n\t\tdatefurture as binary,\n\t\tdatepast as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\t{Matching value LMDB},\n\t\t{Matching value LMDB II},\n\t\t{Site Ship To (char)},\n\t\tDate,\n\t\t{Transaction Time},\n\t\t{Transaction ID},\n\t\t{Card Number},\n\t\t{Transaction Value},\n\t\t{Transaction Quantity},\n\t\tdatefurture = {Merged Date Behind},\n\t\tdatepast = {Merged Date Ahead}\n\t)) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Jsoninput",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Json2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\ttime as string,\n\t\tcallingimsi as string,\n\t\tcallingnum1 as string,\n\t\tcallingnum2 as string,\n\t\tswitch1 as string,\n\t\tswitch2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource1 derive(time = time,\n\t\tswitch1 = switch1) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DemoSource",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DemoTarget",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 derive(AGENTCODE = toString(byName('AGENT_CODE'))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tAGENTCODE\n\t)) ~> sink1"
 				}
 			},
 			"dependsOn": []
@@ -3745,8 +3872,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
-						"type": "Copy",
+						"name": "dataflow3",
+						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -3757,215 +3884,28 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
+							"dataflow": {
+								"referenceName": "dataflow3",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
 								}
 							},
-							"enableStaging": false,
-							"parallelCopies": 1,
-							"dataIntegrationUnits": 2,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "VENDORID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "VENDORID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TPEP_PICKUP_DATETIME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TPEP_PICKUP_DATETIME",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "TPEP_DROPOFF_DATETIME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TPEP_DROPOFF_DATETIME",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PASSENGER_COUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "PASSENGER_COUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TRIP_DISTANCE",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TRIP_DISTANCE",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "RATECODEID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "RATECODEID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "STORE_AND_FWD_FLAG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "STORE_AND_FWD_FLAG",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PULOCATIONID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "PULOCATIONID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "DOLOCATIONID",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "DOLOCATIONID",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "PAYMENT_TYPE",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "PAYMENT_TYPE",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "FARE_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "FARE_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "EXTRA",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "EXTRA",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "MTA_TAX",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "MTA_TAX",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TIP_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TIP_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TOLLS_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TOLLS_AMOUNT",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "IMPROVEMENT_SURCHARGE",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "IMPROVEMENT_SURCHARGE",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"name": "TOTAL_AMOUNT",
-											"type": "Decimal"
-										},
-										"sink": {
-											"name": "TOTAL_AMOUNT",
-											"type": "Decimal"
-										}
-									}
-								]
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
 							}
-						},
-						"inputs": [
-							{
-								"referenceName": "OracleDemo",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "TargetGen2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						}
 					}
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow3')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_ACQ_ADLS_SQL_TE')]",
@@ -4164,202 +4104,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET1')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_SQL_TRANSFORM_LOAD_DATASET2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_ONE_TW_DATA_REFRESH')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "Transform",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Extract",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "Web_Tabular_Model_Refresh_Compliance",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Transform",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://s2events.azure-automation.net/webhooks?token=wJjk0qpVBna4SupqoHRyZGUEU2CL6o8uvwdmiK3FSxA%3d",
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"body": {
-								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Complaince",
-								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
-								"DatabaseRefreshType": "Full"
-							}
-						}
-					},
-					{
-						"name": "Web_Tabular_Model_Refresh_Expense",
-						"description": "",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Web_Tabular_Model_Refresh_Compliance",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://s2events.azure-automation.net/webhooks?token=wJjk0qpVBna4SupqoHRyZGUEU2CL6o8uvwdmiK3FSxA%3d",
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"body": {
-								"AnalysisServicesDatabaseName": "ONE_MODEL_TW_Expense",
-								"AnalysisServicesServer": "asazure://westeurope.asazure.windows.net/oneanalysis",
-								"DatabaseRefreshType": "Full"
-							}
-						}
-					}
-				],
-				"folder": {
-					"name": "ONE_TIMESHEET_PROJECT"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/backup')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Extract",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_EXTRACT_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "Transform",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Extract",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "PL_ONE_TW_TRANSFORMATION_ETL",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_EXTRACT_ETL')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_TRANSFORMATION_ETL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ONE_TW_DATA_REFRESH_DAILY')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PL_ONE_TW_DATA_REFRESH",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 24,
-						"startTime": "2019-10-27T08:00:00.000Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_ONE_TW_DATA_REFRESH')]"
 			]
 		}
 	]
