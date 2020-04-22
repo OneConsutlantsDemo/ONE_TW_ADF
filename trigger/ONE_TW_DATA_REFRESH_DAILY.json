@@ -2,7 +2,7 @@
 	"name": "ONE_TW_DATA_REFRESH_DAILY",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
