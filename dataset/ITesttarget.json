@@ -1,0 +1,19 @@
+{
+	"name": "ITesttarget",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_Input",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "onedemo"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
