@@ -1,0 +1,28 @@
+{
+	"name": "dataflow4",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ItestSrc",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ITesttarget",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"script": "source(output(\n\t\tid_expense_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_project as string,\n\t\tid_code_expense as string,\n\t\tamount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_code_currency as string,\n\t\tid_code_expense_source as string,\n\t\tid_domain as string,\n\t\tread_only_comment as string,\n\t\tflags as string,\n\t\tid_picture as string,\n\t\treserved1 as string,\n\t\treserved2 as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tmileage as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}

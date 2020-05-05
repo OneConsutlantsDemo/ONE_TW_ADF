@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow3",
+				"name": "dataflow4",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,11 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow3",
+						"referenceName": "dataflow4",
 						"type": "DataFlowReference"
 					},
 					"compute": {
-						"coreCount": 48,
+						"coreCount": 8,
 						"computeType": "General"
 					}
 				}
