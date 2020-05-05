@@ -1,0 +1,116 @@
+{
+	"name": "ItestSrc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id_expense_rec",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_user",
+				"type": "nvarchar"
+			},
+			{
+				"name": "record_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_project",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_code_expense",
+				"type": "nvarchar"
+			},
+			{
+				"name": "amount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "comment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "commit_state",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_code_currency",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_code_expense_source",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_domain",
+				"type": "nvarchar"
+			},
+			{
+				"name": "read_only_comment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "flags",
+				"type": "nvarchar"
+			},
+			{
+				"name": "id_picture",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reserved1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reserved2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "creator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "create_timestamp",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "modifier",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modify_timestamp",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "mileage",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_assignment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ACQ",
+			"table": "TE_EXPENSE_RECS"
+		}
+	}
+}
