@@ -6,23 +6,15 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DemoSource",
+						"referenceName": "DS_SHELL_POC_LOYALTY_ADLS_SRC_SHELL",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "DelimitedText2",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
-				}
-			],
+			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false) ~> sink1"
+			"script": "source(output(\n\t\t{Matching value LMDB} as string,\n\t\t{Matching value LMDB II} as string,\n\t\t{Site Ship To (char)} as string,\n\t\tDate as string,\n\t\t{Transaction Time} as string,\n\t\t{Transaction ID} as string,\n\t\t{Card Number} as string,\n\t\t{Transaction Value} as string,\n\t\t{Transaction Quantity} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
 		}
 	}
 }
