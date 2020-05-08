@@ -1,0 +1,318 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "one-datafactory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow4",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow4",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Gen1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "sid.csv",
+						"folderPath": "Demo"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ItestSrc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_expense_rec",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "record_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_project",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_expense",
+						"type": "nvarchar"
+					},
+					{
+						"name": "amount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "commit_state",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_code_currency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_expense_source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_domain",
+						"type": "nvarchar"
+					},
+					{
+						"name": "read_only_comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "flags",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_picture",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "creator",
+						"type": "nvarchar"
+					},
+					{
+						"name": "create_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "modifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modify_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "mileage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_assignment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "ACQ",
+					"table": "TE_EXPENSE_RECS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ITesttarget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "onedemo"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ONE_TW_DATA_REFRESH_DAILY')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PL_ONE_TW_DATA_REFRESH",
+							"type": "PipelineReference"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 24,
+						"startTime": "2019-10-27T08:00:00.000Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ItestSrc",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ITesttarget",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"script": "source(output(\n\t\tid_expense_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_project as string,\n\t\tid_code_expense as string,\n\t\tamount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_code_currency as string,\n\t\tid_code_expense_source as string,\n\t\tid_domain as string,\n\t\tread_only_comment as string,\n\t\tflags as string,\n\t\tid_picture as string,\n\t\treserved1 as string,\n\t\treserved2 as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tmileage as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ItestSrc')]",
+				"[concat(variables('factoryId'), '/datasets/ITesttarget')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ItestSrc",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ITesttarget",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Aggregate1"
+						}
+					],
+					"script": "source(output(\n\t\tid_expense_rec as string,\n\t\tid_user as string,\n\t\trecord_date as string,\n\t\tid_project as string,\n\t\tid_code_expense as string,\n\t\tamount as integer,\n\t\tcomment as string,\n\t\tcommit_state as integer,\n\t\tid_code_currency as string,\n\t\tid_code_expense_source as string,\n\t\tid_domain as string,\n\t\tread_only_comment as string,\n\t\tflags as string,\n\t\tid_picture as string,\n\t\treserved1 as string,\n\t\treserved2 as string,\n\t\tcreator as string,\n\t\tcreate_timestamp as integer,\n\t\tmodifier as string,\n\t\tmodify_timestamp as integer,\n\t\tmileage as integer,\n\t\tid_assignment as string,\n\t\tload_time as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource1 aggregate(groupBy(id_user),\n\tproject_collection = collect(id_project)) ~> Aggregate1\nAggregate1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ItestSrc')]",
+				"[concat(variables('factoryId'), '/datasets/ITesttarget')]"
+			]
+		}
+	]
+}

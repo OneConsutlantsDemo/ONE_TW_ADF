@@ -41,6 +41,200 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ITesttarget')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "onedemo"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_Input",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Business.json",
+						"folderPath": "source",
+						"fileSystem": "onedemo"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"results": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"func_area": {
+										"type": "string"
+									},
+									"avg_volume": {
+										"type": "string"
+									},
+									"aging_avg_volume": {
+										"type": "string"
+									},
+									"rep_volume": {
+										"type": "string"
+									},
+									"stg_volume": {
+										"type": "string"
+									},
+									"years": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"execution": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"current_min_2_vol_perc": {
+										"type": "number"
+									},
+									"current_min_1_vol_perc": {
+										"type": "number"
+									},
+									"current_year_vol_perc": {
+										"type": "number"
+									},
+									"old_year_vol_perc": {
+										"type": "number"
+									},
+									"data": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "integer"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"rep_perc": {
+										"type": "integer"
+									},
+									"stg_perc": {
+										"type": "integer"
+									},
+									"volume": {
+										"type": "number"
+									},
+									"func_size": {
+										"type": "number"
+									},
+									"volume_per_tb": {
+										"type": "number"
+									},
+									"func_size_per_tb": {
+										"type": "number"
+									},
+									"RSCS": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"warm_potential": {
+										"type": "number"
+									},
+									"total": {
+										"type": "number"
+									},
+									"WarmPotential": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "integer"
+												},
+												"title": {
+													"type": "string"
+												},
+												"value": {
+													"type": "number"
+												},
+												"color": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Json2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -604,47 +798,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SapHanaOne')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_LOYALTY_HANA_TRG_SHELL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SAPHANAViaODBCLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "OdbcTable",
-				"schema": [],
-				"typeProperties": {
-					"tableName": "\"SHELL_POC\".\"CT_EDAM_LOYALTY_REWARD_FACT_FF\""
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SAPHANAViaODBCLinkedService')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SHELL_POC_POS_HANA_SRC_SHELL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SapHanaShell",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "SHELL_POC",
-					"table": "CT_EDAM_RETAIL_TRANSACTION_LINE_FACT_FF"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SapHanaShell')]"
 			]
 		}
 	]

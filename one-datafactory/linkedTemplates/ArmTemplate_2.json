@@ -840,36 +840,15 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
-						"fileName": "1000_Companies_output.csv",
-						"folderPath": "MachineLearning"
+						"fileName": "sid.csv",
+						"folderPath": "Demo"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": [
-					{
-						"name": "R&D Spend",
-						"type": "String"
-					},
-					{
-						"name": "Administration",
-						"type": "String"
-					},
-					{
-						"name": "Marketing Spend",
-						"type": "String"
-					},
-					{
-						"name": "State",
-						"type": "String"
-					},
-					{
-						"name": "Profit",
-						"type": "String"
-					}
-				]
+				"schema": []
 			},
 			"dependsOn": []
 		},
@@ -1519,173 +1498,120 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"name": "[concat(parameters('factoryName'), '/ItestSrc')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "Test_Input",
+					"referenceName": "SQLDB",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Json",
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id_expense_rec",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_user",
+						"type": "nvarchar"
+					},
+					{
+						"name": "record_date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_project",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_expense",
+						"type": "nvarchar"
+					},
+					{
+						"name": "amount",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "commit_state",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_code_currency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_code_expense_source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_domain",
+						"type": "nvarchar"
+					},
+					{
+						"name": "read_only_comment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "flags",
+						"type": "nvarchar"
+					},
+					{
+						"name": "id_picture",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "reserved2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "creator",
+						"type": "nvarchar"
+					},
+					{
+						"name": "create_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "modifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "modify_timestamp",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "mileage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id_assignment",
+						"type": "nvarchar"
+					},
+					{
+						"name": "load_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Business.json",
-						"folderPath": "source",
-						"fileSystem": "onedemo"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"results": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"id": {
-										"type": "integer"
-									},
-									"func_area": {
-										"type": "string"
-									},
-									"avg_volume": {
-										"type": "string"
-									},
-									"aging_avg_volume": {
-										"type": "string"
-									},
-									"rep_volume": {
-										"type": "string"
-									},
-									"stg_volume": {
-										"type": "string"
-									},
-									"years": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"execution": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"current_min_2_vol_perc": {
-										"type": "number"
-									},
-									"current_min_1_vol_perc": {
-										"type": "number"
-									},
-									"current_year_vol_perc": {
-										"type": "number"
-									},
-									"old_year_vol_perc": {
-										"type": "number"
-									},
-									"data": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "integer"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"rep_perc": {
-										"type": "integer"
-									},
-									"stg_perc": {
-										"type": "integer"
-									},
-									"volume": {
-										"type": "number"
-									},
-									"func_size": {
-										"type": "number"
-									},
-									"volume_per_tb": {
-										"type": "number"
-									},
-									"func_size_per_tb": {
-										"type": "number"
-									},
-									"RSCS": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									},
-									"warm_potential": {
-										"type": "number"
-									},
-									"total": {
-										"type": "number"
-									},
-									"WarmPotential": {
-										"type": "array",
-										"items": {
-											"type": "object",
-											"properties": {
-												"id": {
-													"type": "integer"
-												},
-												"title": {
-													"type": "string"
-												},
-												"value": {
-													"type": "number"
-												},
-												"color": {
-													"type": "string"
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
+					"schema": "ACQ",
+					"table": "TE_EXPENSE_RECS"
 				}
 			},
 			"dependsOn": []
